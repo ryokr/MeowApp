@@ -1,6 +1,6 @@
 const status = "AUTOMATIC";
-const botName = "🎸 MUSIC BOT";
-const rtxText = "RTX";
+const botName = "MEOW BOT";
+const rText = "RyoKr";
 const version = "Latest@ v3.6"; 
 const startTime = Date.now();
 
@@ -13,7 +13,7 @@ function printWatermark() {
   console.log(`\x1b[1m\x1b[36m            👑 Authorization : ${status}    `);
   console.log(`\x1b[1m\x1b[36m            💡 Version: ${version}`);
   console.log(`\x1b[1m\x1b[36m            📅 Uptime: ${uptimeInSeconds}s`);
-  console.log(`\x1b[1m\x1b[36m            🚀 Powered by ${rtxText}`);
+  console.log(`\x1b[1m\x1b[36m            🚀 Powered by ${rText}`);
   console.log('\x1b[1m\x1b[36m║                                            ║');
   console.log('\x1b[1m\x1b[36m╚════════════════════════════════════════════╝\x1b[0m');
 }
@@ -21,20 +21,3 @@ function printWatermark() {
 module.exports = {
   printWatermark,
 };
-
-
-/*
-
-  ██████╗░████████╗██╗░░██╗           
-  ██╔══██╗╚══██╔══╝╚██╗██╔╝          
-  ██████╔╝░░░██║░░░░╚███╔╝░          
-  ██╔══██╗░░░██║░░░░██╔██╗░          
-  ██║░░██║░░░██║░░░██╔╝╚██╗          
-  ╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░╚═╝          
-
-   
-   # MADE BY RTX!! FEEL FREE TO USE ANY PART OF CODE
-   ## FOR HELP CONTACT ME ON DISCORD
-   ## Contact    [ DISCORD SERVER :  https://discord.gg/FUEHs7RCqz ]
-   ## YT : https://www.youtube.com/channel/UCPbAvYWBgnYhliJa1BIrv0A
-*/

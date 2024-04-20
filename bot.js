@@ -37,11 +37,12 @@ fs.readdir("./events", (_err, files) => {
   files.forEach((file) => {
     if (!file.endsWith(".js")) return;
     const event = require(`./events/${file}`);
-    let eventName = file.split(".")[0]; 
+    let eventName = file.split(".")[0];
     client.on(eventName, event.bind(null, client));
     delete require.cache[require.resolve(`./events/${file}`)];
   });
 });
+
 fs.readdir("./events/player", (_err, files) => {
   files.forEach((file) => {
     if (!file.endsWith(".js")) return;
@@ -72,7 +73,6 @@ fs.readdir(config.commandsDir, (err, files) => {
 });
 
 
-
 if (config.TOKEN || process.env.TOKEN) {
   client.login(config.TOKEN || process.env.TOKEN).catch((e) => {
     console.log('TOKEN ERROR❌❌');
@@ -83,19 +83,19 @@ if (config.TOKEN || process.env.TOKEN) {
   }, 2000);
 }
 
-
-if(config.mongodbURL || process.env.MONGO){
+if (config.mongodbURL || process.env.MONGO) {
   const mongoose = require("mongoose")
   mongoose.connect(config.mongodbURL || process.env.MONGO, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   }).then(async () => {
     console.log('\x1b[32m%s\x1b[0m', `|    🍔 Connected MongoDB!`)
   }).catch((err) => {
-    console.log('\x1b[32m%s\x1b[0m', `|    🍔 Failed to connect MongoDB!`)})
-  } else {
+    console.log('\x1b[32m%s\x1b[0m', `|    🍔 Failed to connect MongoDB!`)
+  })
+} else {
   console.log('\x1b[32m%s\x1b[0m', `|    🍔 Error MongoDB!`)
-  }
+}
 
 const express = require("express");
 const app = express();

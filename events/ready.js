@@ -6,7 +6,7 @@ module.exports = async (client) => {
       const { REST } = require("@discordjs/rest");
       const { Routes } = require("discord-api-types/v10");
       const rest = new REST({ version: "10" }).setToken(config.TOKEN || process.env.TOKEN);
-     
+
       (async () => {
          try {
             await rest.put(Routes.applicationCommands(client.user.id), {
@@ -24,22 +24,13 @@ module.exports = async (client) => {
          name: `Pussy C̶̶a̶̶t̶`,
          type: ActivityType.Watching
       }), 10000);
-     
+
       client.errorLog = config.errorLog
-     
+
    } else {
       console.log('\x1b[36m%s\x1b[0m', `|    🍔 Error MongoDB!`)
    }
    console.log('\x1b[36m%s\x1b[0m', `|    🎯 Activity sucessfully set!`);
-
-
-   client.user.setPresence({
-      status: 'online',
-      activity: {
-         name: 'Ola Ola',
-         type: 'PLAYING'
-      }
-   });
 
    if (client.config.voteManager.status === true && client.config.voteManager.api_key) {
       const { AutoPoster } = require('topgg-autoposter')

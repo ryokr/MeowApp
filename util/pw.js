@@ -1,7 +1,7 @@
 const status = "AUTOMATIC";
 const botName = "MEOW BOT";
 const rText = "RyoKr";
-const version = "Latest@ v3.6"; 
+const version = "Latest@ v3.6";
 const startTime = Date.now();
 
 function printWatermark() {

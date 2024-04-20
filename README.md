@@ -8,8 +8,3 @@
 /help: for available commands.
 /play: plays music.
 ...
-
-
-# 📚 Copyright 
-
-All code in this project is authored by GlaceYT. Please do not use this code for any public usage, such as creating YouTube videos, Git repositories, etc., without my explicit permission.

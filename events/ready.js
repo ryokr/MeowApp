@@ -20,10 +20,10 @@ module.exports = async (client) => {
 
       console.log('\x1b[32m%s\x1b[0m', `|    🌼 Logged in as ${client.user.username}`);
 
-      setInterval(() => client.user.setActivity({
-         name: `Pussy C̶̶a̶̶t̶`,
-         type: ActivityType.Watching
-      }), 10000);
+      // setInterval(() => client.user.setActivity({
+      //    name: `Pussy C̶̶a̶̶t̶`,
+      //    type: ActivityType.Watching
+      // }), 10000);
 
       client.errorLog = config.errorLog
 

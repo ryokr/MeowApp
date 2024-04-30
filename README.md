@@ -4,7 +4,3 @@
 2. **Install Dependencies**: Install all required Node.js modules using the following command:
 > npm install
 
-## 📜 Commands
-/help: for available commands.
-/play: plays music.
-...

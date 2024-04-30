@@ -101,7 +101,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 app.get('/', (req, res) => {
-  const imagePath = path.join(__dirname, 'index.html');
+  const imagePath = path.join(__dirname, 'z.html');
   res.sendFile(imagePath);
 });
 app.listen(port, () => {

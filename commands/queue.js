@@ -1,23 +1,3 @@
-/*
-
-  ________.__                        _____.___.___________
- /  _____/|  | _____    ____  ____   \__  |   |\__    ___/
-/   \  ___|  | \__  \ _/ ___\/ __ \   /   |   |  |    |   
-\    \_\  \  |__/ __ \\  \__\  ___/   \____   |  |    |   
- \______  /____(____  /\___  >___  >  / ______|  |____|   
-        \/          \/     \/    \/   \/                  
-
-╔════════════════════════════════════════════════════════════════════════╗
-║                                                                        ║
-║  ## Created by GlaceYT!                                                ║
-║  ## Feel free to utilize any portion of the code                       ║
-║  ## DISCORD :  https://discord.com/invite/xQF9f9yUEM                   ║
-║  ## YouTube : https://www.youtube.com/@GlaceYt                         ║
-║                                                                        ║
-╚════════════════════════════════════════════════════════════════════════╝
-
-
-*/
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require("../mongoDB");
 module.exports = {
@@ -131,31 +111,6 @@ module.exports = {
           }
         })
 
-        collector.on("end", async (button) => {
-          button = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-              .setStyle(ButtonStyle.Secondary)
-              .setEmoji("⬅️")
-              .setCustomId(backId)
-              .setDisabled(true),
-            new ButtonBuilder()
-              .setStyle(ButtonStyle.Secondary)
-              .setEmoji("❌")
-              .setCustomId("close")
-              .setDisabled(true),
-            new ButtonBuilder()
-              .setStyle(ButtonStyle.Secondary)
-              .setEmoji("➡️")
-              .setCustomId(forwardId)
-              .setDisabled(true))
-
-          const embed = new EmbedBuilder()
-            .setTitle('Command Timeout')
-            .setColor(`#ecfc03`)
-            .setDescription('▶️ Execute the Queue command again!!')
-          return interaction?.editReply({ embeds: [embed], components: [button] }).catch(e => { })
-
-        })
       }).catch(e => { })
 
     } catch (e) {
@@ -163,23 +118,3 @@ module.exports = {
   }
   }
 }
-/*
-
-  ________.__                        _____.___.___________
- /  _____/|  | _____    ____  ____   \__  |   |\__    ___/
-/   \  ___|  | \__  \ _/ ___\/ __ \   /   |   |  |    |   
-\    \_\  \  |__/ __ \\  \__\  ___/   \____   |  |    |   
- \______  /____(____  /\___  >___  >  / ______|  |____|   
-        \/          \/     \/    \/   \/                  
-
-╔════════════════════════════════════════════════════════════════════════╗
-║                                                                        ║
-║  ## Created by GlaceYT!                                                ║
-║  ## Feel free to utilize any portion of the code                       ║
-║  ## DISCORD :  https://discord.com/invite/xQF9f9yUEM                   ║
-║  ## YouTube : https://www.youtube.com/@GlaceYt                         ║
-║                                                                        ║
-╚════════════════════════════════════════════════════════════════════════╝
-
-
-*/

@@ -74,11 +74,11 @@ fs.readdir(config.commandsDir, (err, files) => {
 
 if (config.TOKEN) {
    client.login(config.TOKEN).catch((e) => {
-      console.log('TOKEN ERROR❌❌');
+      console.log('TOKEN ERROR ❌❌');
    });
 } else {
    setTimeout(() => {
-      console.log('TOKEN ERROR❌❌');
+      console.log('TOKEN ERROR ❌❌');
    }, 2000);
 }
 

@@ -1,7 +1,7 @@
 {
    "name": "musicbot",
    "author": "RyoKr",
-   "license": "XX",
+   "license": "MIT",
    "version": "4.0.0",
    "description": "",
    "main": "index.js",

@@ -27,8 +27,8 @@ module.exports = {
    },
 
    playlistSettings: {
-      maxPlaylist: 100,
-      maxMusic: 2400,
+      maxPlaylist: 1000,
+      maxMusic: 24000,
    },
 
    opt: {

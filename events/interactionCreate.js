@@ -2,8 +2,8 @@ const config = require("../config.js");
 const { EmbedBuilder, InteractionType, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } = require('discord.js');
 const db = require("../mongoDB");
 const fs = require("fs")
-module.exports = async (client, interaction) => {
 
+module.exports = async (client, interaction) => {
    try {
       if (!interaction?.guild) {
          return interaction?.reply({ content: "Rate Limited.", ephemeral: true })

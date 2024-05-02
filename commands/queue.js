@@ -87,10 +87,8 @@ module.exports = {
 
             })
          }).catch(e => { })
-
       } catch (e) {
          console.error(e);
       }
    }
 }
-

@@ -7,11 +7,13 @@ const musicbot = Schema({
   channels: Array,
 });
 
+
 const playlist = Schema({
   userID: String,
   playlist: Array,
   musics: Array,
 });
+
 
 module.exports = {
   musicbot: model("musicbot", musicbot),

@@ -1,10 +1,12 @@
 const { ApplicationCommandOptionType } = require('discord.js');
+const db = require("../mongoDB");
+
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { ButtonStyle } = require('discord.js');
 
 module.exports = {
    name: "help",
-   description: "Commands infomation",
+   description: "Get information about bot and commands.",
    permissions: "0x0000000000000800",
    options: [],
 
@@ -12,7 +14,7 @@ module.exports = {
       try {
          const musicCommandsEmbed = new EmbedBuilder()
             .setColor(client.config.embedColor)
-            .setTitle('**Music Commands**')
+            .setTitle('🎸 **Music Commands**')
             .addFields(
                { name: '🎹 Play', value: 'Stream a song from a given link or text from sources' },
                { name: '⏹️ Stop', value: 'Makes the bot stop playing music and leave the voice' },

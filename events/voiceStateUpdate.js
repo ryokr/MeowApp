@@ -1,3 +1,5 @@
+const db = require("../mongoDB");
+
 module.exports = async (client, oldState, newState) => {
    const queue = client.player.getQueue(oldState.guild.id);
    if (queue || queue?.playing) {
@@ -8,7 +10,7 @@ module.exports = async (client, oldState, newState) => {
                if (botChannel.id == oldState.channelId) {
                   if (botChannel?.members?.find(x => x == client?.user?.id)) {
                      if (botChannel?.members?.size == 1) {
-                        await queue?.textChannel?.send({ content: `Users left channel` }).catch(e => { })
+                        await queue?.textChannel?.send({ content: `🔴 Users left channel!!` }).catch(e => { })
                         if (queue || queue?.playing) {
                            return queue?.stop(oldState.guild.id)
                         }
@@ -28,7 +30,7 @@ module.exports = async (client, oldState, newState) => {
                } catch (e) {
                   return
                }
-               await queue?.textChannel?.send({ content: `Muted` }).catch(e => { })
+               await queue?.textChannel?.send({ content: `🔴 Muted` }).catch(e => { })
             }
          }
 

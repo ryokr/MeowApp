@@ -1,24 +1,10 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const db = require("../mongoDB");
-
 module.exports = {
    name: "playsong",
    description: "Play a track.",
    permissions: "0x0000000000000800",
    options: [
-      {
-         name: "playlist",
-         description: "Write your playlist name.",
-         type: ApplicationCommandOptionType.Subcommand,
-         options: [
-            {
-               name: "name",
-               description: "Write the name of the playlist you want to create.",
-               type: ApplicationCommandOptionType.String,
-               required: true
-            }
-         ]
-      },
       {
          name: "normal",
          description: "Open music from other platforms.",
@@ -27,6 +13,19 @@ module.exports = {
             {
                name: "name",
                description: "Write your music name.",
+               type: ApplicationCommandOptionType.String,
+               required: true
+            }
+         ]
+      },
+      {
+         name: "playlist",
+         description: "Write your playlist name.",
+         type: ApplicationCommandOptionType.Subcommand,
+         options: [
+            {
+               name: "name",
+               description: "Write the name of the playlist you want to create.",
                type: ApplicationCommandOptionType.String,
                required: true
             }
@@ -78,9 +77,9 @@ module.exports = {
                         .setAuthor({
                            name: 'Added Album Songs to Queue',
                            iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157218651179597884/1213-verified.gif',
-                           url: ''
+                           url: 'https://discord.gg/FUEHs7RCqz'
                         })
-                        .setColor('#ff4400')
+                        .setColor('#14bdff')
                         .setFooter({ text: 'Use /queue for more Information' });
 
                      await interaction.editReply({ content: '', embeds: [qembed] }).catch(e => {
@@ -94,7 +93,7 @@ module.exports = {
                            interaction
                         })
                      } catch (e) {
-                        await interaction.editReply({ content: `❌ No results found`, ephemeral: true }).catch(e => { })
+                        await interaction.editReply({ content: `❌ No results found!!`, ephemeral: true }).catch(e => { })
                      }
 
                      playlist[i]?.playlist?.filter(p => p.name === playlistw).map(async p => {
@@ -132,12 +131,12 @@ module.exports = {
          if (stp === "normal") {
             const name = interaction.options.getString('name');
             if (!name) {
-               return interaction.reply({ content: 'Give Text or link', ephemeral: true }).catch(e => { });
+               return interaction.reply({ content: '▶️ Give Text or link', ephemeral: true }).catch(e => { });
             }
 
             const embed = new EmbedBuilder()
                .setColor('#FF0000')
-               .setDescription('**🎸 Get ready for a musical journey**');
+               .setDescription('**🎸 Get ready for a musical journey!**');
 
             await interaction.reply({ embeds: [embed] }).catch(e => { });
 
@@ -150,7 +149,7 @@ module.exports = {
             } catch (e) {
                const errorEmbed = new EmbedBuilder()
                   .setColor('#FF0000')
-                  .setDescription('❌ No results found');
+                  .setDescription('❌ No results found!!');
 
                await interaction.editReply({ embeds: [errorEmbed], ephemeral: true }).catch(e => { });
             }

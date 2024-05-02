@@ -1,1 +1,2 @@
-module.exports = async (client, queue) => {}
+const db = require("../../mongoDB");
+module.exports = async (client, queue) => { }

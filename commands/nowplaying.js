@@ -25,11 +25,10 @@ module.exports = {
       > **Filter**: \`${queue.filters.names.join(', ') || 'Off'}\`
       > **By :** <@${track.user.id}>`);
 
-
       interaction.reply({ embeds: [embed] }).catch(e => { })
 
-    }  catch (e) {
-    console.error(e); 
-  }
+    } catch (e) {
+      console.error(e);
+    }
   },
 };

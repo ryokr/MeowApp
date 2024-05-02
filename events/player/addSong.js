@@ -12,7 +12,7 @@ module.exports = async (client, queue, song) => {
                url: ''
             })
             .setDescription(`<@${song.user.id}>, **${song.name}**`)
-            .setColor('#14bdff')
+            .setColor(client.config.embedColor)
             .setFooter({ text: '' });
          queue?.textChannel?.send({ embeds: [embed] }).catch(e => { });
       }

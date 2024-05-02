@@ -85,7 +85,6 @@ module.exports = {
                }).catch(e => { })
                await button?.deferUpdate().catch(e => { })
 
-<<<<<<< HEAD
             })
          }).catch(e => { })
 
@@ -94,12 +93,4 @@ module.exports = {
       }
    }
 }
-=======
-      }).catch(e => { })
 
-    } catch (e) {
-    console.error(e); 
-  }
-  }
-}
->>>>>>> 6d4c4dfa0217ed7e525d3fadf311fc27313ada4c

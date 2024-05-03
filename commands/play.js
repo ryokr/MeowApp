@@ -109,7 +109,7 @@ module.exports = {
 
             collector.on('end', (msg, reason) => {
                if (reason === 'time') {
-                  embed.setDescription('meow');
+                  embed.setDescription('Meow');
                   return interaction.editReply({ embeds: [embed], components: [] }).catch(e => { });
                }
             });
@@ -119,5 +119,4 @@ module.exports = {
       }
    },
 };
-
 module.exports.selectedThumbnailURL = selectedThumbnailURL;

@@ -1,18 +1,19 @@
 const { ApplicationCommandOptionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const db = require("../mongoDB");
+
 let selectedThumbnailURL;
 
 module.exports = {
    name: "play",
-   description: "Play a song",
+   description: "Play music",
    permissions: "0x0000000000000800",
    options: [{
       name: 'name',
-      description: 'Type the name of song',
+      description: 'Type song name',
       type: ApplicationCommandOptionType.String,
       required: true
    }],
    voiceChannel: true,
-
    run: async (client, interaction) => {
       try {
 
@@ -85,7 +86,7 @@ module.exports = {
                      await interaction.editReply({ embeds: [embed], components: [] }).catch(e => { });
                      return collector.stop();
                   }
-                  
+                     break;
                   default: {
                      selectedThumbnailURL = maxTracks[Number(button.customId) - 1].thumbnail;
                      embed.setThumbnail(selectedThumbnailURL);

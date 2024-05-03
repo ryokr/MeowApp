@@ -13,7 +13,7 @@ module.exports = async (client, queue, song) => {
             .setDescription(`\n ‎ \n**Now Playing :** **${song?.name}**`)
             .setImage(queue.songs[0].thumbnail)
             .setColor('#FF0000')
-            .setFooter({ text: '' });
+            .setFooter({ text: 'Meow' });
 
          queue?.textChannel?.send({ embeds: [embed] }).catch(e => { });
       }

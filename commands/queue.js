@@ -1,14 +1,14 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require("../mongoDB");
+
 module.exports = {
    name: "queue",
-   description: "It shows you the queue list.",
+   description: "Show the queue",
    permissions: "0x0000000000000800",
    options: [],
+   
    run: async (client, interaction) => {
-
       try {
-
          const queue = client.player.getQueue(interaction.guild.id);
          if (!queue || !queue.playing) return interaction.reply({ content: '⚠️ No music playing!!', ephemeral: true }).catch(e => { })
          if (!queue.songs[0]) return interaction.reply({ content: '⚠️ Queue is empty!!', ephemeral: true }).catch(e => { })
@@ -57,7 +57,7 @@ module.exports = {
                .setTitle(`${interaction.guild.name} Queue`)
                .setAuthor(interaction.guild.iconURL({ size: 2048, dynamic: true }))
                .setColor(client.config.embedColor)
-               .setDescription(`Current: \`${queue.songs[0].name}\`${current.map((data, index) => `\n\`${index + 1}\` | [${data.title}](${data.url})`)}`)
+               .setDescription(`Current: ${queue.songs[0].name}${current.map((data, index) => `\n${index + 1} | [${data.title}](${data.url})`)}`)
                .setFooter(`Page ${page}/${Math.floor(a + 1)}`);
          }
          // | (Executed by <@${data.user.id}>)

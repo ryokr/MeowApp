@@ -10,7 +10,7 @@ module.exports = async (client, oldState, newState) => {
                if (botChannel.id == oldState.channelId) {
                   if (botChannel?.members?.find(x => x == client?.user?.id)) {
                      if (botChannel?.members?.size == 1) {
-                        await queue?.textChannel?.send({ content: `🔴 Users left channel!!` }).catch(e => { })
+                        await queue?.textChannel?.send({ content: `Users left channel` }).catch(e => { })
                         if (queue || queue?.playing) {
                            return queue?.stop(oldState.guild.id)
                         }
@@ -19,7 +19,7 @@ module.exports = async (client, oldState, newState) => {
                }
             }
          }, client?.config?.opt?.voiceConfig?.leaveOnEmpty?.cooldown || 600000000000)
-         
+
       }
 
       if (newState.id === client.user.id) {
@@ -30,7 +30,7 @@ module.exports = async (client, oldState, newState) => {
                } catch (e) {
                   return
                }
-               await queue?.textChannel?.send({ content: `🔴 Muted` }).catch(e => { })
+               await queue?.textChannel?.send({ content: `Muted` }).catch(e => { })
             }
          }
 
@@ -43,7 +43,6 @@ module.exports = async (client, oldState, newState) => {
                }
             }
          }
-         
       }
    }
 }

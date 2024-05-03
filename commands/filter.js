@@ -2,10 +2,11 @@ const db = require("../mongoDB");
 
 module.exports = {
    name: "filter",
-   description: "Adds audio filter to ongoing music.",
+   description: "Add filter",
    permissions: "0x0000000000000800",
    options: [],
    voiceChannel: true,
+
    run: async (client, interaction) => {
       try {
          const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -53,11 +54,11 @@ module.exports = {
          let embed = new EmbedBuilder()
             .setColor('#01fe66')
             .setAuthor({
-               name: 'Audio Filters',
+               name: '**Audio Filters**',
                iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157534645311766558/2353-arrowrightglow.gif?ex=6518f5a5&is=6517a425&hm=ce55696f7ed85e2f7a97a3505eb39016fa9cd0c50be043efdf0cce06d7126b4c&',
-               url: 'https://discord.gg/FUEHs7RCqz'
+               url: 'https://discord.gg/fTuGFk9ayG'
             })
-            .setDescription('** Explore the Beat, Choose Your Sound Magic Below!**');
+            .setDescription('Meow');
 
          interaction.reply({ embeds: [embed], components: [buttons, buttons2] }).then(async Message => {
 

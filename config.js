@@ -1,5 +1,5 @@
 module.exports = {
-   TOKEN: "",
+   TOKEN: process.env.TOKEN,
    ownerID: ["677857271530651649", ""],
    botInvite: "",
    supportServer: "",
@@ -7,7 +7,7 @@ module.exports = {
    status: 'RyoKr',
    commandsDir: './commands',
    language: "en",
-   embedColor: "00fbff",
+   embedColor: "ff4400",
    errorLog: "",
 
    voteManager: {
@@ -36,7 +36,7 @@ module.exports = {
          leaveOnStop: false,
          leaveOnEmpty: {
             status: false,
-            cooldown: 10000000,
+            cooldown: 100000000,
          },
 
       },

@@ -1,6 +1,8 @@
 {
    "name": "musicbot",
    "version": "4.0",
+   "author": "Ryo",
+   "license": "MIT",
    "description": "",
    "main": "index.js",
    "dependencies": {
@@ -31,8 +33,6 @@
    "scripts": {
       "start": "node index.js"
    },
-   "author": "Ryo",
-   "license": "MIT",
    "engines": {
       "node": "18.x"
    }

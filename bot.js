@@ -73,8 +73,8 @@ fs.readdir(config.commandsDir, (err, files) => {
 });
 
 
-if (config.TOKEN || process.env.TOKEN) {
-   client.login(config.TOKEN || process.env.TOKEN).catch((e) => {
+if (config.TOKEN) {
+   client.login(config.TOKEN).catch((e) => {
       console.log('TOKEN ERROR❌❌');
    });
 } else {
@@ -83,9 +83,9 @@ if (config.TOKEN || process.env.TOKEN) {
    }, 2000);
 }
 
-if (config.mongodbURL || process.env.MONGO) {
+if (config.mongodbURL) {
    const mongoose = require("mongoose")
-   mongoose.connect(config.mongodbURL || process.env.MONGO, {
+   mongoose.connect(config.mongodbURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
    }).then(async () => {
@@ -105,7 +105,7 @@ app.get('/', (req, res) => {
    res.sendFile(imagePath);
 });
 app.listen(port, () => {
-   console.log(`🔗 Listening to RyoKr: http://localhost:${port}`);
+   console.log(`🔗 Listening: http://localhost:${port}`);
 });
 printWatermark();
 

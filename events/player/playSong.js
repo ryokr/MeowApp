@@ -8,7 +8,7 @@ module.exports = async (client, queue, song) => {
             .setAuthor({
                name: 'Currently playing a Track',
                iconURL: 'https://cdn.discordapp.com/attachments/1140841446228897932/1144671132948103208/giphy.gif',
-               url: ''
+               url:'https://www.facebook.com/ryomeow69'
             })
             .setDescription(`\n ‎ \n**Now Playing :** **${song?.name}**`)
             .setImage(queue.songs[0].thumbnail)

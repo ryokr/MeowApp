@@ -155,7 +155,7 @@ module.exports = {
                .setAuthor({
                   name: 'Album Created Sucessfully',
                   iconURL: 'https://cdn.discordapp.com/attachments/1213421081226903552/1215554404527116288/7762-verified-blue.gif',
-                  url: ''
+                  url:'https://www.facebook.com/ryomeow69'
                })
                .setDescription(`Hey <@${interaction.member.id}>, your album has been created successfully! 🎉`)
                .setTimestamp();
@@ -214,7 +214,7 @@ module.exports = {
                .setAuthor({
                   name: 'Album Deleted Sucessfully',
                   iconURL: 'https://cdn.discordapp.com/attachments/1213421081226903552/1215554404527116288/7762-verified-blue.gif',
-                  url: ''
+                  url:'https://www.facebook.com/ryomeow69'
                })
                .setDescription(`Hey <@${interaction.member.id}>, your album has been Deleted successfully! ✨`)
                .setTimestamp();
@@ -324,7 +324,7 @@ module.exports = {
                .setAuthor({
                   name: 'Song Removed Sucessfully',
                   iconURL: 'https://cdn.discordapp.com/attachments/1213421081226903552/1215554404527116288/7762-verified-blue.gif',
-                  url: ''
+                  url:'https://www.facebook.com/ryomeow69'
                })
                .setDescription(`Hey <@${interaction.member.id}>, your song has been Removed successfully! ✨`)
                .setTimestamp();
@@ -404,7 +404,7 @@ module.exports = {
                   .setAuthor({
                      name: 'Album Songs',
                      iconURL: 'https://cdn.discordapp.com/attachments/1213421081226903552/1213422313035407360/8218-alert.gif',
-                     url: ''
+                     url:'https://www.facebook.com/ryomeow69'
                   })
                   .setThumbnail(interaction.user.displayAvatarURL({ size: 2048, dynamic: true }))
                   .setColor(client.config.embedColor)
@@ -644,7 +644,7 @@ module.exports = {
                      .setAuthor({
                         name: 'Top Albums',
                         iconURL: 'https://cdn.discordapp.com/attachments/1213421081226903552/1213422313035407360/8218-alert.gif',
-                        url: ''
+                        url:'https://www.facebook.com/ryomeow69'
                      })
                      .setThumbnail(interaction.user.displayAvatarURL({ size: 2048, dynamic: true }))
                      .setColor(client.config.embedColor)

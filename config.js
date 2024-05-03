@@ -1,5 +1,5 @@
 module.exports = {
-   TOKEN: "",
+   TOKEN: process.env.TOKEN,
    ownerID: ["", ""],
    botInvite: "",
    supportServer: "",

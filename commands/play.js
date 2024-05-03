@@ -13,7 +13,7 @@ module.exports = {
     type: ApplicationCommandOptionType.String,
     required: true
   }],
-  voiceChannel: true;
+  voiceChannel: true,
 
   run: async (client, interaction) => {
     try {

@@ -7,11 +7,11 @@ module.exports = async (client, queue, song) => {
       if (queue?.textChannel) {
          const embed = new EmbedBuilder()
             .setAuthor({
-               name: `**Now Playing**`,
+               name: `Now Playing`,
                iconURL: 'https://cdn.discordapp.com/attachments/1140841446228897932/1144671132948103208/giphy.gif',
                url: 'https://discord.gg/fTuGFk9ayG'
             })
-            .setDescription(`\n ‎ \n▶️ **${song?.name}**`)
+            .setDescription(`\n ‎ \n**${song?.name}**`)
             .setImage(queue.songs[0].thumbnail)
             .setColor('#FF0000')
             .setFooter({ text: 'Meow' });

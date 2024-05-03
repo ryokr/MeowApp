@@ -109,7 +109,7 @@ module.exports = {
 
             collector.on('end', (msg, reason) => {
                if (reason === 'time') {
-                  embed.setDescription(lang.msg80);
+                  embed.setDescription('meow');
                   return interaction.editReply({ embeds: [embed], components: [] }).catch(e => { });
                }
             });

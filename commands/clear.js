@@ -1,9 +1,8 @@
-const db = require("../mongoDB");
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
    name: "clear",
-   description: "Clears the music queue.",
+   description: "Clears the queue",
    permissions: "0x0000000000000800",
    options: [],
    voiceChannel: true,
@@ -23,13 +22,13 @@ module.exports = {
          await queue.stop(interaction.guild.id);
 
          const embed = new EmbedBuilder()
-            .setColor('#3498db')
+            .setColor(client.config.embedColor)
             .setAuthor({
-               name: 'Cleared List',
+               name: '**Queue cleared**',
                iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157314241393598585/4618-no-slides.png?ex=65182861&is=6516d6e1&hm=dac8fed5a18e1574485e833d4c017591c50f59d161e1bde7fed5f6a92543f951&',
-               url: 'https://discord.gg/FUEHs7RCqz'
+               url: ''
             })
-            .setDescription('**Queue cleared**');
+            .setDescription('');
 
          interaction.reply({ embeds: [embed] });
       } catch (e) {

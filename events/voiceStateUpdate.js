@@ -12,13 +12,13 @@ module.exports = async (client, oldState, newState) => {
                      if (botChannel?.members?.size == 1) {
                         await queue?.textChannel?.send({ content: `🔴 Users left channel!!` }).catch(e => { })
                         if (queue || queue?.playing) {
-                           return queue?.stop(oldState.guild.id)
+                           // return queue?.stop(oldState.guild.id)
                         }
                      }
                   }
                }
             }
-         }, client?.config?.opt?.voiceConfig?.leaveOnEmpty?.cooldown || 600000000000)
+         }, client?.config?.opt?.voiceConfig?.leaveOnEmpty?.cooldown || 100)
          
       }
 

@@ -1,9 +1,8 @@
-const db = require("../mongoDB");
 const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
    name: "autoplay",
-   description: "Toggle the autoplay of the queue",
+   description: "Toggle the autoplay",
    options: [],
    permissions: "0x0000000000000800",
 

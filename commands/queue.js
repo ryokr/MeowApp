@@ -54,11 +54,14 @@ module.exports = {
             const current = trackl.slice(start, start + PAGE_LENGTH)
             if (!current || !current?.length > 0) return interaction.reply({ content: '⚠️ Queue is empty!!', ephemeral: true }).catch(e => { })
             return new EmbedBuilder()
-               .setTitle(`${interaction.guild.name} Queue`)
-               .setAuthor(interaction.guild.iconURL({ size: 2048, dynamic: true }))
+               .setAuthor({
+                  name: `${interaction.guild.name}`,
+                  iconURL: `${interaction.guild.iconURL({ size: 2048, dynamic: true })}`,
+                  url: 'https://discord.gg/fTuGFk9ayG'
+               })
                .setColor(client.config.embedColor)
-               .setDescription(`Current: ${queue.songs[0].name}${current.map((data, index) => `\n${index + 1} | [${data.title}](${data.url})`)}`)
-               .setFooter(`Page ${page}/${Math.floor(a + 1)}`);
+               .setDescription(`Current: \`${queue.songs[0].name}\`${current.map((data, index) => `\n\`${index + 1}\` | [${data.title}](${data.url})`).join('')}`)
+               .setFooter(`Page ${page}/${Math.floor(a) + 1}`);
          }
          // | (Executed by <@${data.user.id}>)
 

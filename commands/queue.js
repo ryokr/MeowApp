@@ -6,12 +6,12 @@ module.exports = {
    description: "Show the queue",
    permissions: "0x0000000000000800",
    options: [],
-   
+
    run: async (client, interaction) => {
       try {
          const queue = client.player.getQueue(interaction.guild.id);
-         if (!queue || !queue.playing) return interaction.reply({ content: '⚠️ No music playing!!', ephemeral: true }).catch(e => { })
-         if (!queue.songs[0]) return interaction.reply({ content: '⚠️ Queue is empty!!', ephemeral: true }).catch(e => { })
+         if (!queue || !queue.playing) return interaction.reply({ content: 'No music playing', ephemeral: true }).catch(e => { })
+         if (!queue.songs[0]) return interaction.reply({ content: 'Queue is empty', ephemeral: true }).catch(e => { })
 
          const trackl = []
          queue.songs.map(async (track, i) => {
@@ -45,14 +45,14 @@ module.exports = {
          });
 
 
-         let PAGE_LENGTH = 8
+         let PAGE_LENGTH = 10
          let page = 1
          let a = trackl.length / PAGE_LENGTH
 
          const generateEmbed = async (start) => {
-            let sayı = page === 1 ? 1 : page * PAGE_LENGTH - PAGE_LENGTH + 1
+            let sayz = page === 1 ? 1 : page * PAGE_LENGTH - PAGE_LENGTH + 1
             const current = trackl.slice(start, start + PAGE_LENGTH)
-            if (!current || !current?.length > 0) return interaction.reply({ content: '⚠️ Queue is empty!!', ephemeral: true }).catch(e => { })
+            if (!current || !current?.length > 0) return interaction.reply({ content: 'Queue is empty', ephemeral: true }).catch(e => { })
             return new EmbedBuilder()
                .setAuthor({
                   name: `${interaction.guild.name}`,
@@ -60,10 +60,9 @@ module.exports = {
                   url: 'https://discord.gg/fTuGFk9ayG'
                })
                .setColor(client.config.embedColor)
-               .setDescription(`Current: \`${queue.songs[0].name}\`${current.map((data, index) => `\n\`${index + 1}\` | [${data.title}](${data.url})`).join('')}`)
-               .setFooter(`Page ${page}/${Math.floor(a) + 1}`);
+               .setDescription(`Current: ${queue.songs[0].name}${current.map((data, index) => `\n${index + 1} | [${data.title}](${data.url})`)}`)
+               .setFooter({ text: `Page ${page}/${Math.floor(a + 1)}` })
          }
-         // | (Executed by <@${data.user.id}>)
 
          const canFitOnOnePage = trackl.length <= PAGE_LENGTH
 
@@ -133,12 +132,11 @@ module.exports = {
             //    const embed = new EmbedBuilder()
             //       .setTitle('Command Timeout')
             //       .setColor(`#ecfc03`)
-            //       .setDescription('▶️ Execute the Queue command again')
+            //       .setDescription('▶️ Execute the Queue command again!!')
             //    return interaction?.editReply({ embeds: [embed], components: [button] }).catch(e => { })
 
             // })
-         }).catch(e => { })
-
+         }).catch(e => {})
       } catch (e) {
          console.error(e);
       }

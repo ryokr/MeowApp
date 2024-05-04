@@ -1,6 +1,7 @@
 const { ApplicationCommandOptionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require("../mongoDB");
 
+
 let selectedThumbnailURL;
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
    permissions: "0x0000000000000800",
    options: [{
       name: 'name',
-      description: 'Type song name',
+      description: 'Type song name.',
       type: ApplicationCommandOptionType.String,
       required: true
    }],
@@ -17,7 +18,6 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
-
          const name = interaction.options.getString('name')
          if (!name) return interaction.reply({ content: `❌ Enter a valid song name.`, ephemeral: true }).catch(e => { });
          let res;
@@ -67,7 +67,7 @@ module.exports = {
                .setCustomId('cancel')
          );
 
-         embed.setDescription(`${maxTracks.map((song, i) => `**${i + 1}**. [${song.name}](${song.url}) | \`${song.uploader.name}\``).join('\n')}\n\n✨Choose a song from below!!`);
+         embed.setDescription(`${maxTracks.map((song, i) => `**${i + 1}**. [${song.name}](${song.url}) | \`${song.uploader.name}\``).join('\n')}\n\n✨ Choose a song from below!!`);
 
          let code;
          if (buttons1 && buttons2) {
@@ -87,7 +87,6 @@ module.exports = {
                      await interaction.editReply({ embeds: [embed], components: [] }).catch(e => { });
                      return collector.stop();
                   }
-                     break;
                   default: {
                      selectedThumbnailURL = maxTracks[Number(button.customId) - 1].thumbnail;
                      embed.setThumbnail(selectedThumbnailURL);
@@ -119,4 +118,5 @@ module.exports = {
       }
    },
 };
+
 module.exports.selectedThumbnailURL = selectedThumbnailURL;

@@ -36,10 +36,12 @@ module.exports = {
          leaveOnStop: false,
          leaveOnEmpty: {
             status: false,
-            cooldown: 100000000,
+            cooldown: 10000000,
          },
 
       },
+
       maxVol: 150,
+
    }
 }

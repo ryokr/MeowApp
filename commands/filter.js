@@ -6,7 +6,7 @@ module.exports = {
    permissions: "0x0000000000000800",
    options: [],
    voiceChannel: true,
-
+   
    run: async (client, interaction) => {
       try {
          const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -52,13 +52,13 @@ module.exports = {
          )
 
          let embed = new EmbedBuilder()
-            .setColor('#01fe66')
+            .setColor(client.config.embedColor)
             .setAuthor({
-               name: '**Audio Filters**',
+               name: 'Audio Filters',
                iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157534645311766558/2353-arrowrightglow.gif?ex=6518f5a5&is=6517a425&hm=ce55696f7ed85e2f7a97a3505eb39016fa9cd0c50be043efdf0cce06d7126b4c&',
                url: 'https://discord.gg/fTuGFk9ayG'
             })
-            .setDescription('Meow');
+            // .setDescription('** Explore the Beat, Choose Your Sound Magic Below!**');
 
          interaction.reply({ embeds: [embed], components: [buttons, buttons2] }).then(async Message => {
 

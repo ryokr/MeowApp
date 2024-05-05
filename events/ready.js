@@ -1,11 +1,11 @@
-const config = require("../config.js");
 const { ActivityType } = require("discord.js")
+const config = require("../config.js");
 
 module.exports = async (client) => {
-   if (config.mongodbURL || process.env.MONGO) {
+   if (config.mongodbURL) {
       const { REST } = require("@discordjs/rest");
       const { Routes } = require("discord-api-types/v10");
-      const rest = new REST({ version: "10" }).setToken(config.TOKEN || process.env.TOKEN);
+      const rest = new REST({ version: "10" }).setToken(config.TOKEN);
 
       (async () => {
          try {
@@ -25,6 +25,11 @@ module.exports = async (client) => {
       //    type: ActivityType.Watching
       // }), 10000);
 
+      setInterval(() => client.user.setActivity({
+         name: `Pussy C̶̶a̶̶t̶`,
+         type: ActivityType.Watching
+      }), 10000);
+
       client.errorLog = config.errorLog
 
    } else {
@@ -35,6 +40,7 @@ module.exports = async (client) => {
    if (client.config.voteManager.status === true && client.config.voteManager.api_key) {
       const { AutoPoster } = require('topgg-autoposter')
       const ap = AutoPoster(client.config.voteManager.api_key, client)
-      ap.on('posted', () => {})
+      ap.on('posted', () => {
+      })
    }
 }

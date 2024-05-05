@@ -4,16 +4,16 @@ const db = require("../mongoDB");
 
 module.exports = {
    name: "volume",
-   description: "Adjust volumn.",
+   description: "Adjust volume",
    permissions: "0x0000000000000800",
    options: [{
       name: 'volume',
-      description: 'Type a number.',
+      description: 'Type a number',
       type: ApplicationCommandOptionType.Integer,
       required: true
    }],
    voiceChannel: true,
-   
+
    run: async (client, interaction) => {
       try {
          const queue = client.player.getQueue(interaction.guild.id);
@@ -25,7 +25,7 @@ module.exports = {
 
          if (!vol) {
             return interaction.reply({
-               content: `Current volume: **${queue.volume}** 🔊\nType a number between \`1\` and \`${maxVol}\`.`,
+               content: `Current volume: **${queue.volume}** \nType a number between \`1\` and \`${maxVol}\`.`,
                ephemeral: true
             });
          }
@@ -45,17 +45,17 @@ module.exports = {
 
          if (success) {
             const embed = new EmbedBuilder()
-               .setColor('#d291fe')
+               .setColor(client.config.embedColor)
                .setAuthor({
-                  name: `**Adjusting Volume : ** **${vol}/${maxVol}**`,
+                  name: `Volume adjusted: ${vol}/${maxVol}`,
                   iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157528025739563088/5657-volume-icon.png?ex=6518ef7b&is=65179dfb&hm=1797c2830537a28b5c6a57564517cc509146d02383a69fb4239d7b5d55aceeed&',
                   url: 'https://discord.gg/fTuGFk9ayG'
                })
-               .setDescription("Meow");
+            //.setDescription(`**Adjusting Volume : ** **${vol}/${maxVol}**`);
 
             return interaction.reply({ embeds: [embed] });
          } else {
-            return interaction.reply({ content: '❌ Something went wrong while changing the volume.', ephemeral: true });
+            return interaction.reply({ content: '❌ Cannot adjust volume', ephemeral: true });
          }
       } catch (e) {
          console.error(e);

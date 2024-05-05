@@ -3,17 +3,17 @@ const db = require("../mongoDB");
 
 module.exports = {
    name: "playsong",
-   description: "Play a track.",
+   description: "Play music",
    permissions: "0x0000000000000800",
    options: [
       {
          name: "normal",
-         description: "Open music from other platforms.",
+         description: "Play music or list",
          type: ApplicationCommandOptionType.Subcommand,
          options: [
             {
                name: "name",
-               description: "Write your music name.",
+               description: "Type music name",
                type: ApplicationCommandOptionType.String,
                required: true
             }
@@ -21,12 +21,12 @@ module.exports = {
       },
       {
          name: "playlist",
-         description: "Write your playlist name.",
+         description: "Type playlist name",
          type: ApplicationCommandOptionType.Subcommand,
          options: [
             {
                name: "name",
-               description: "Write the name of the playlist you want to create.",
+               description: "Play playlist",
                type: ApplicationCommandOptionType.String,
                required: true
             }
@@ -61,8 +61,8 @@ module.exports = {
                   if (!music_filter?.length > 0) return interaction.reply({ content: `No music with Name`, ephemeral: true }).catch(e => { })
                   const listembed = new EmbedBuilder()
                      .setTitle('Loading Your Album')
-                     .setColor('#FF0000')
-                     .setDescription('**Meowing**');
+                     .setColor(client.config.embedColor)
+                     .setDescription('**🎸 Get ready for a musical journey!**');
                   interaction.reply({ content: '', embeds: [listembed] }).catch(e => { })
 
                   let songs = []
@@ -81,7 +81,7 @@ module.exports = {
                            url: 'https://discord.gg/fTuGFk9ayG'
                         })
                         .setColor('#14bdff')
-                        .setFooter({ text: 'Meow' });
+                        .setFooter({ text: 'Use /queue for more Information' });
 
                      await interaction.editReply({ content: '', embeds: [qembed] }).catch(e => {
                         console.error('Error  reply:', e);
@@ -132,11 +132,11 @@ module.exports = {
          if (stp === "normal") {
             const name = interaction.options.getString('name');
             if (!name) {
-               return interaction.reply({ content: 'Enter song', ephemeral: true }).catch(e => { });
+               return interaction.reply({ content: 'Type name or link', ephemeral: true }).catch(e => { });
             }
 
             const embed = new EmbedBuilder()
-               .setColor('#FF0000')
+               .setColor(client.config.embedColor)
                .setDescription('**Meowing**');
 
             await interaction.reply({ embeds: [embed] }).catch(e => { });
@@ -149,7 +149,7 @@ module.exports = {
                });
             } catch (e) {
                const errorEmbed = new EmbedBuilder()
-                  .setColor('#FF0000')
+                  .setColor(client.config.embedColor)
                   .setDescription('❌ No results found');
 
                await interaction.editReply({ embeds: [errorEmbed], ephemeral: true }).catch(e => { });

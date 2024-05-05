@@ -3,9 +3,10 @@ const db = require("../mongoDB");
 
 module.exports = {
    name: "time",
-   description: "Indicates which minute of the music you are playing",
+   description: "Current time of music",
    permissions: "0x0000000000000800",
    options: [],
+
    run: async (client, interaction) => {
       try {
 

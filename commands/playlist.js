@@ -116,7 +116,7 @@ module.exports = {
             if (playlist?.length > 0) {
                for (let i = 0; i < playlist.length; i++) {
                   if (playlist[i]?.playlist?.filter(p => p.name === name)?.length > 0) {
-                     return interaction.reply({ content: 'Album already Exitst!', ephemeral: true }).catch(e => { })
+                     return interaction.reply({ content: '⚠️ Album already Exitst!', ephemeral: true }).catch(e => { })
                   }
                }
             }
@@ -258,7 +258,7 @@ module.exports = {
                   url: 'https://discord.gg/fTuGFk9ayG'
                })
                .setDescription(`Hey <@${interaction.member.id}>, your song has been Added successfully! ✨`)
-               .setFooter({ text: 'Meow' })
+               .setFooter({ text: 'YouTube - RTX GAMING' })
             await interaction.reply({
                content: '',
                embeds: [loadingembed]
@@ -286,9 +286,9 @@ module.exports = {
 
          if (stp === "delete-music") {
             let name = interaction.options.getString('name')
-            if (!name) return interaction.reply({ content: 'Enter Song Name to Search!', ephemeral: true }).catch(e => { })
+            if (!name) return interaction.reply({ content: '⚠️ Enter Song Name to Search!', ephemeral: true }).catch(e => { })
             let playlist_name = interaction.options.getString('playlist-name')
-            if (!playlist_name) return interaction.reply({ content: 'Enter name of the album to remove song!', ephemeral: true }).catch(e => { })
+            if (!playlist_name) return interaction.reply({ content: '⚠️ Enter name of the album to remove song!', ephemeral: true }).catch(e => { })
 
             const playlist = await db.playlist.findOne({ userID: interaction.user.id }).catch(e => { })
             if (!playlist?.playlist?.filter(p => p.name === playlist_name).length > 0) return interaction.reply({ content: '❌ No album Found!', ephemeral: true }).catch(e => { })
@@ -324,7 +324,7 @@ module.exports = {
                .setAuthor({
                   name: 'Song Removed Sucessfully',
                   iconURL: 'https://cdn.discordapp.com/attachments/1213421081226903552/1215554404527116288/7762-verified-blue.gif',
-                  url: 'https://discord.gg/FUEHs7RCqz'
+                  url: 'https://discord.gg/fTuGFk9ayG'
                })
                .setDescription(`Hey <@${interaction.member.id}>, your song has been Removed successfully! ✨`)
                .setTimestamp();
@@ -340,12 +340,12 @@ module.exports = {
 
          if (stp === "list") {
             let name = interaction.options.getString('name')
-            if (!name) return interaction.reply({ content: 'Enter Album name to find it', ephemeral: true }).catch(e => { })
+            if (!name) return interaction.reply({ content: '⚠️ Enter Album name to find it!', ephemeral: true }).catch(e => { })
 
             let trackl
 
             const playlist = await db.playlist.find().catch(e => { })
-            if (!playlist?.length > 0) return interaction.reply({ content: `No Album name`, ephemeral: true }).catch(e => { })
+            if (!playlist?.length > 0) return interaction.reply({ content: `🚫 No Album name!`, ephemeral: true }).catch(e => { })
 
             let arr = 0
             for (let i = 0; i < playlist.length; i++) {
@@ -356,7 +356,7 @@ module.exports = {
 
                   if (playlist_owner_filter !== interaction.member.id) {
                      if (playlist_public_filter === false) {
-                        return interaction.reply({ content: 'You cannot play this Album', ephemeral: true }).catch(e => { })
+                        return interaction.reply({ content: '🚫 You cannot play this Album!', ephemeral: true }).catch(e => { })
                      }
                   }
 
@@ -649,7 +649,7 @@ module.exports = {
                      .setThumbnail(interaction.user.displayAvatarURL({ size: 2048, dynamic: true }))
                      .setColor(client.config.embedColor)
                      .setDescription('TimeOut!')
-                     .setFooter({ text: 'Meow' })
+                     .setFooter({ text: 'YouTube - RTX GAMING' })
                   return interaction.editReply({ embeds: [embed], components: [button] }).catch(e => { })
 
                })
@@ -658,7 +658,7 @@ module.exports = {
          }
       } catch (e) {
          console.error(e);
-         interaction.reply({ content: 'An error occurred', ephemeral: true }).catch(e => { })
+         interaction.reply({ content: 'An error occurred while executing this command!', ephemeral: true }).catch(e => { })
       }
    }
 }

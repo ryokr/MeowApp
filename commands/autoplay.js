@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
    name: "autoplay",
-   description: "Toggle autoplay",
+   description: "Autoplay",
    options: [],
    permissions: "0x0000000000000800",
 
@@ -17,8 +17,8 @@ module.exports = {
          queue?.toggleAutoplay();
 
          const embed = new EmbedBuilder()
-            .setColor('#2f58fe')
-            .setTitle('Meowing')
+            .setColor(client.config.embedColor)
+            .setTitle('Auto Meowing')
             .setDescription(queue?.autoplay ? '**✅ Autoplay ON**' : '**❌ Autoplay OFF**');
 
          interaction?.reply({ embeds: [embed] });

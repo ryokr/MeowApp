@@ -4,10 +4,10 @@ const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
-const { printWatermark } = require('./util/pw');
-const config = require("./config.js");
 const fs = require("fs");
 const path = require('path');
+
+const config = require("./config.js");
 
 const client = new Client({
    intents: Object.keys(GatewayIntentBits).map((a) => {
@@ -30,6 +30,7 @@ client.player = new DisTube(client, {
       new DeezerPlugin(),
    ],
 });
+
 process.env.YTDL_NO_UPDATE = true;
 const player = client.player;
 
@@ -75,11 +76,11 @@ fs.readdir(config.commandsDir, (err, files) => {
 
 if (config.TOKEN) {
    client.login(config.TOKEN).catch((e) => {
-      console.log('TOKEN ERROR❌❌');
+      console.log('LOGIN FAILED ❌❌');
    });
 } else {
    setTimeout(() => {
-      console.log('TOKEN ERROR❌❌');
+      console.log('TOKEN ERROR ❌❌');
    }, 2000);
 }
 
@@ -100,12 +101,11 @@ if (config.mongodbURL) {
 const express = require("express");
 const app = express();
 const port = 3000;
+
 app.get('/', (req, res) => {
    const imagePath = path.join(__dirname, 'z.html');
    res.sendFile(imagePath);
 });
 app.listen(port, () => {
-   console.log(`🔗 Listening to RyoKr: http://localhost:${port}`);
+   console.log(`Listening: http://localhost:${port}`);
 });
-
-printWatermark();

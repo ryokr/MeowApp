@@ -3,7 +3,7 @@ const db = require("../mongoDB");
 
 module.exports = {
    name: "seek",
-   description: "jump to the timestamp",
+   description: "Jump to the timestamp",
    permissions: "0x0000000000000800",
    options: [{
       name: "time",
@@ -12,6 +12,7 @@ module.exports = {
       required: true
    }],
    voiceChannel: true,
+
    run: async (client, interaction) => {
       try {
 
@@ -19,10 +20,10 @@ module.exports = {
          if (!queue || !queue.playing) return interaction.reply({ content: `No music playing`, ephemeral: true }).catch(e => { })
 
          let position = getSeconds(interaction.options.getString("position"))
-         if (isNaN(position)) return interaction.reply({ content: `usage : 2:40`, ephemeral: true }).catch(e => { })
+         if (isNaN(position)) return interaction.reply({ content: `Usage : 2:40`, ephemeral: true }).catch(e => { })
 
          queue.seek(position)
-         interaction.reply({ content: `**Meow**` }).catch(e => { })
+         interaction.reply({ content: `**Meowing**` }).catch(e => { })
 
       } catch (e) {
          console.error(e);

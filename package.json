@@ -1,16 +1,10 @@
 {
    "name": "musicbot",
-   "version": "4.0.0",
-   "description": "Discord music bot",
-   "main": "index.js",
-   "author": "RyoKr",
+   "version": "4.0",
+   "author": "Ryo",
    "license": "MIT",
-   "engines": {
-      "node": "18.x"
-   },
-   "scripts": {
-      "start": "node index.js"
-   },
+   "description": "Meowing Music",
+   "main": "index.js",
    "dependencies": {
       "@discordjs/builders": "^1.6.5",
       "@discordjs/opus": "^0.9.0",
@@ -34,6 +28,13 @@
       "mongoose": "^6.11.6",
       "random-anime": "^1.0.6",
       "sapphire": "^0.0.3",
-      "topgg-autoposter": "^2.0.1"
+      "topgg-autoposter": "^2.0.1",
+      "husky": "^9.0.11"
+   },
+   "scripts": {
+      "start": "node index.js"
+   },
+   "engines": {
+      "node": "18.x"
    }
 }

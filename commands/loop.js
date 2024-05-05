@@ -29,13 +29,13 @@ module.exports = {
          )
 
          const embed = new EmbedBuilder()
-            .setColor('#fc4e03')
+            .setColor(client.config.embedColor)
             .setAuthor({
-               name: '**Looping**',
+               name: 'Looping',
                iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157318080670728283/7905-repeat.gif?ex=65182bf4&is=6516da74&hm=9ae58f40fcea5dc42a2a992bbd159d50116b3bafe5c5f7728e3a5276442efd2a&',
                url: 'https://discord.gg/fTuGFk9ayG'
             })
-            .setDescription('Meow')
+            // .setDescription('**Looping**')
 
          interaction?.reply({ embeds: [embed], components: [button], fetchReply: true }).then(async Message => {
 
@@ -66,11 +66,27 @@ module.exports = {
                         return interaction?.editReply({ content: 'Looping already Off', ephemeral: true }).catch(e => { })
                      }
                      const success4 = queue.setRepeatMode(0);
-                     interaction?.editReply({ content: '▶️ Looping off' }).catch(e => { })
+                     interaction?.editReply({ content: 'Looping off' }).catch(e => { })
                      await button?.deferUpdate().catch(e => { })
                      break
                }
             })
+
+            // col.on('end', async (button) => {
+            //    button = new ActionRowBuilder().addComponents(
+            //       new ButtonBuilder()
+            //          .setStyle(ButtonStyle.Secondary)
+            //          .setLabel("Timeout")
+            //          .setCustomId("timeend")
+            //          .setDisabled(true))
+
+            //    const embed = new EmbedBuilder()
+            //       .setColor(client.config.embedColor)
+            //       .setTitle('Looping off')
+            //       .setTimestamp()
+
+            //    await interaction?.editReply({ content: "", embeds: [embed], components: [button] }).catch(e => { });
+            // })
          }).catch(e => { })
 
       } catch (e) {

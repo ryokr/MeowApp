@@ -1,7 +1,6 @@
 const { ApplicationCommandOptionType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require("../mongoDB");
 
-
 let selectedThumbnailURL;
 
 module.exports = {
@@ -10,7 +9,7 @@ module.exports = {
    permissions: "0x0000000000000800",
    options: [{
       name: 'name',
-      description: 'Type song name.',
+      description: 'Type music name',
       type: ApplicationCommandOptionType.String,
       required: true
    }],
@@ -18,6 +17,7 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
+
          const name = interaction.options.getString('name')
          if (!name) return interaction.reply({ content: `❌ Enter a valid song name.`, ephemeral: true }).catch(e => { });
          let res;
@@ -35,7 +35,7 @@ module.exports = {
 
          const embed = new EmbedBuilder();
          embed.setColor(client.config.embedColor);
-         embed.setTitle(`Found: ${name}`);
+         // embed.setTitle(`Found: ${name}`);
 
          const maxTracks = res.slice(0, 10);
 
@@ -67,7 +67,7 @@ module.exports = {
                .setCustomId('cancel')
          );
 
-         embed.setDescription(`${maxTracks.map((song, i) => `**${i + 1}**. [${song.name}](${song.url}) | \`${song.uploader.name}\``).join('\n')}\n\n✨ Choose a song from below!!`);
+         embed.setDescription(`${maxTracks.map((song, i) => `**${i + 1}**. [${song.name}](${song.url}) | \`${song.uploader.name}\``).join('\n')}\n\n✨ Choose a song`);
 
          let code;
          if (buttons1 && buttons2) {
@@ -87,10 +87,12 @@ module.exports = {
                      await interaction.editReply({ embeds: [embed], components: [] }).catch(e => { });
                      return collector.stop();
                   }
+
                   default: {
                      selectedThumbnailURL = maxTracks[Number(button.customId) - 1].thumbnail;
+                     embed.setTitle(`Added`);
                      embed.setThumbnail(selectedThumbnailURL);
-                     embed.setDescription(`**${res[Number(button.customId) - 1].name}**`);
+                     embed.setDescription(`${res[Number(button.customId) - 1].name}`);
                      await interaction.editReply({ embeds: [embed], components: [] }).catch(e => { });
                      try {
                         await client.player.play(interaction.member.voice.channel, res[Number(button.customId) - 1].url, {
@@ -99,7 +101,7 @@ module.exports = {
                            interaction
                         });
                      } catch (e) {
-                        await interaction.editReply({ content: `❌ No results!`, ephemeral: true }).catch(e => { });
+                        await interaction.editReply({ content: `❌ No results`, ephemeral: true }).catch(e => { });
                      }
                      return collector.stop();
                   }
@@ -108,7 +110,7 @@ module.exports = {
 
             collector.on('end', (msg, reason) => {
                if (reason === 'time') {
-                  embed.setDescription('Meow');
+                  embed.setDescription('meow');
                   return interaction.editReply({ embeds: [embed], components: [] }).catch(e => { });
                }
             });

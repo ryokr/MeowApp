@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
    name: "pause",
-   description: "Pause music",
+   description: "Pause playing",
    permissions: "0x0000000000000800",
    options: [],
    voiceChannel: true,
@@ -19,13 +19,13 @@ module.exports = {
          const success = queue.pause();
 
          const embed = new EmbedBuilder()
-            .setColor('#7645fe')
+            .setColor(client.config.embedColor)
             .setAuthor({
-               name: 'Song Paused',
+               name: 'Paused',
                iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157296313013117049/8061-purple-pause-icon.png?ex=651817ae&is=6516c62e&hm=4596c9fab9d8b66de8b5215b2750572ced352eed67440a1134550b846b5693b9&',
                url: 'https://discord.gg/fTuGFk9ayG'
             })
-            .setDescription(success ? '**The music has been Paused for a moment!!**' : '❌ Command Error: Unable to pause song')
+            //.setDescription(success ? '**The music has been Paused for a moment!!**' : '❌ Command Error: Unable to pause song')
 
 
          return interaction.reply({ embeds: [embed] });

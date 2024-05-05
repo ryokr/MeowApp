@@ -7,6 +7,7 @@ module.exports = {
    description: "Shuffle the queue",
    options: [],
    permissions: "0x0000000000000800",
+
    run: async (client, interaction) => {
       try {
 
@@ -14,7 +15,7 @@ module.exports = {
          if (!queue || !queue.playing) return interaction.reply({ content: `No music playing`, ephemeral: true }).catch(e => { })
          try {
             queue.shuffle(interaction)
-            return interaction.reply({ content: `Queue Shuffled` }).catch(e => { })
+            return interaction.reply({ content: `Shuffled the queue` }).catch(e => { })
          } catch (err) {
             return interaction.reply({ content: `**${err}**` }).catch(e => { })
          }

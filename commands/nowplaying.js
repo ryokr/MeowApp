@@ -1,15 +1,13 @@
 const { EmbedBuilder } = require('discord.js');
 const db = require("../mongoDB");
-
 module.exports = {
    name: "nowplaying",
-   description: "Current song",
+   description: "Current song info",
    permissions: "0x0000000000000800",
    options: [],
 
    run: async (client, interaction) => {
       try {
-
          const queue = client.player.getQueue(interaction.guild.id);
          if (!queue || !queue.playing) return interaction.reply({ content: `No music playing`, ephemeral: true }).catch(e => { })
 

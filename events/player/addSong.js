@@ -12,8 +12,8 @@ module.exports = async (client, queue, song) => {
                url: 'https://discord.gg/fTuGFk9ayG'
             })
             .setDescription(`**${song.name}** Requested by <@${song.user.id}>`)
-            .setColor(client.config.embedColor)
-            .setFooter({ text: 'Meow' });
+            .setColor('#14bdff')
+         // .setFooter({ text: 'Use /queue for more Information' });
          queue?.textChannel?.send({ embeds: [embed] }).catch(e => { });
       }
    }

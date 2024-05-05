@@ -1,6 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const db = require("../mongoDB");
-
 module.exports = {
    name: "queue",
    description: "Show the queue",
@@ -10,8 +9,8 @@ module.exports = {
    run: async (client, interaction) => {
       try {
          const queue = client.player.getQueue(interaction.guild.id);
-         if (!queue || !queue.playing) return interaction.reply({ content: 'No music playing', ephemeral: true }).catch(e => { })
-         if (!queue.songs[0]) return interaction.reply({ content: 'Queue is empty', ephemeral: true }).catch(e => { })
+         if (!queue || !queue.playing) return interaction.reply({ content: '⚠️ No music playing!!', ephemeral: true }).catch(e => { })
+         if (!queue.songs[0]) return interaction.reply({ content: '⚠️ Queue is empty!!', ephemeral: true }).catch(e => { })
 
          const trackl = []
          queue.songs.map(async (track, i) => {
@@ -45,26 +44,27 @@ module.exports = {
          });
 
 
-         let PAGE_LENGTH = 10
+         let page_length = 10
          let page = 1
-         let a = trackl.length / PAGE_LENGTH
+         let total = trackl.length / page_length
 
          const generateEmbed = async (start) => {
-            let sayz = page === 1 ? 1 : page * PAGE_LENGTH - PAGE_LENGTH + 1
-            const current = trackl.slice(start, start + PAGE_LENGTH)
+            let index = page === 1 ? 1 : page * page_length - page_length + 1
+            const current = trackl.slice(start, start + page_length)
             if (!current || !current?.length > 0) return interaction.reply({ content: 'Queue is empty', ephemeral: true }).catch(e => { })
             return new EmbedBuilder()
-               .setAuthor({
-                  name: `${interaction.guild.name}`,
-                  iconURL: `${interaction.guild.iconURL({ size: 2048, dynamic: true })}`,
-                  url: 'https://discord.gg/fTuGFk9ayG'
-               })
+               // .setTitle(`${interaction.guild.name}  Queue`)
+               // .setThumbnail(interaction.guild.iconURL({ size: 2048, dynamic: true }))
+               //.setAuthor(interaction.guild.iconURL({ size: 2048, dynamic: true }), interaction.guild.name)
                .setColor(client.config.embedColor)
-               .setDescription(`Current: ${queue.songs[0].name}${current.map((data, index) => `\n${index + 1} | [${data.title}](${data.url})`)}`)
-               .setFooter({ text: `Page ${page}/${Math.floor(a + 1)}` })
+               .setDescription(`**Current**: \`${queue.songs[0].name}\`
+                  ${current.map(data =>
+                  `\n**\`${index++}\`** | [${data.title}](${data.url})`
+               )}`)
+               .setFooter({ text: `Page ${page}/${Math.floor(total + 1)}` })
          }
 
-         const canFitOnOnePage = trackl.length <= PAGE_LENGTH
+         const canFitOnOnePage = trackl.length <= page_length
 
          await interaction.reply({
             embeds: [await generateEmbed(0)],
@@ -92,8 +92,8 @@ module.exports = {
                   }
 
                   button.customId === backId
-                     ? (currentIndex -= PAGE_LENGTH)
-                     : (currentIndex += PAGE_LENGTH)
+                     ? (currentIndex -= page_length)
+                     : (currentIndex += page_length)
 
                   await interaction.editReply({
                      embeds: [await generateEmbed(currentIndex)],
@@ -102,7 +102,7 @@ module.exports = {
                            components: [
                               ...(currentIndex ? [backButton] : []),
                               deleteButton,
-                              ...(currentIndex + PAGE_LENGTH < trackl.length ? [forwardButton] : []),
+                              ...(currentIndex + page_length < trackl.length ? [forwardButton] : []),
                            ],
                         }),
                      ],
@@ -136,7 +136,8 @@ module.exports = {
             //    return interaction?.editReply({ embeds: [embed], components: [button] }).catch(e => { })
 
             // })
-         }).catch(e => {})
+         }).catch(e => { })
+
       } catch (e) {
          console.error(e);
       }

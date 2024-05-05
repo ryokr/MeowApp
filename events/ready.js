@@ -26,7 +26,7 @@ module.exports = async (client) => {
       // }), 10000);
 
       setInterval(() => client.user.setActivity({
-         name: `Pussy C̶̶a̶̶t̶`,
+         name: config.STATUS,
          type: ActivityType.Watching
       }), 10000);
 

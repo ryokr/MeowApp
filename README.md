@@ -1,33 +1,45 @@
 # MusicBot
 
-This is a simple Discord bot that can play music in voice channels.
+Simple Discord bot that can play music
 
 ## Installation
 
 1. Make sure you have Node.js and npm installed on your system.
-2. Clone this repository to your local machine.
+2. Clone this repo to your local machine.
 3. Navigate to the project directory in your terminal.
 4. Run the following command to install dependencies:
 
 ```bash
 npm install
 ```
-
-## Usage
-
-To start the bot, run the following command:
+5. To start the bot, run the following command:
 
 ```bash
 node index.js
 ```
 
-## Music Bot
+## Hosting
 
-This bot provides functionalities to play, pause, stop, and resume music in a Discord voice channel.
+1. Fork this repo
+2. Go to Render then create a Web Service
+3. Paste the link of repo you have forked
+4. Enter the build command below:
+
+```bash
+npm install
+```
+5. Enter the start command as below:
+
+```bash
+node index.js
+```
+6. Go to Discord Dev Portal to get your app's token
+7. Create env TOKEN then assign the token to it
+8. Start the project
 
 ### Commands
 
-- `play [song_name]` - Play a song. Provide the name or URL of the song to play.
+- `play [name]` - Play a song. Provide the name or URL of the song to play.
 - `pause` - Pause the currently playing song.
 - `resume` - Resume playback of the paused song.
 - `stop` - Stop playback and disconnect the bot from the voice channel.
@@ -40,13 +52,13 @@ This bot provides functionalities to play, pause, stop, and resume music in a Di
 To play a song:
 
 ```
-!play Despacito
+/play Despacito
 ```
 
 To pause the currently playing song:
 
 ```
-!pause
+/pause
 ```
 
 ## Contributing

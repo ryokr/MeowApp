@@ -1,6 +1,6 @@
 module.exports = {
    TOKEN: process.env.TOKEN,
-   STATUS: process.env.STATUS,
+   STATUS: 'Meow',
    ownerID: ["677857271530651649", ""],
    botInvite: "",
    supportServer: "",

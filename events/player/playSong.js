@@ -11,7 +11,7 @@ module.exports = async (client, queue, song) => {
                iconURL: 'https://cdn.discordapp.com/attachments/1140841446228897932/1144671132948103208/giphy.gif',
                url: 'https://discord.gg/fTuGFk9ayG'
             })
-            .setDescription(`\n**${song?.name}**`)
+            .setDescription(`\n[${song.name}](${song.url})`)
             .setImage(queue.songs[0].thumbnail)
             .setColor(client.config.embedColor)
 

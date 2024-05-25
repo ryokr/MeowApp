@@ -1,48 +1,36 @@
+const { ActivityType } = require('discord.js')
+
 module.exports = {
    TOKEN: process.env.TOKEN,
-   STATUS: 'Meow',
-   ownerID: ["677857271530651649", ""],
-   botInvite: "",
-   supportServer: "",
-   mongodbURL: "mongodb+srv://shiva:shiva@musicbotyt.ouljywv.mongodb.net/?retryWrites=true&w=majority",
-   status: 'RyoKr',
+   ownerID: "677857271530651649",
+   guildID: "677858109145874433",
+   ownerIcon: "https://cdn.discordapp.com/avatars/677857271530651649/21fbd6baf54a8f9e82bfe61071b86c79.webp",
+   guildIcon: "https://cdn.discordapp.com/icons/677858109145874433/4629b6907da872a6cb9e539541192a1b.webp",
+   supportServer: "https://discord.gg/fTuGFk9ayG",
+
    commandsDir: './commands',
-   language: "en",
    embedColor: "ff4400",
-   errorLog: "",
 
-   voteManager: {
-      status: false,
-      api_key: "",
-      vote_commands: ["back", "channel", "clear", "dj", "filter", "loop", "nowplaying", "pause", "playnormal", "playlist", "queue", "resume", "save", "play", "skip", "stop", "time", "volume"],
-      vote_url: "",
+   activity: {
+      name: 'Meow',
+      state: 'Meow Meow',
+      type: ActivityType.Playing,
    },
-
-   shardManager: {
-      shardStatus: false
-   },
-
-   playlistSettings: {
-      maxPlaylist: 100,
-      maxMusic: 2400,
-   },
-
+   
    opt: {
-      DJ: {
-         commands: ['back', 'clear', 'filter', 'loop', 'pause', 'resume', 'skip', 'stop', 'volume', 'shuffle']
-      },
+      maxVol: 100,
 
       voiceConfig: {
          leaveOnFinish: false,
          leaveOnStop: false,
          leaveOnEmpty: {
             status: false,
-            cooldown: 10000000,
+            cooldown: 10,
          },
-
       },
+   },
 
-      maxVol: 150,
-
-   }
+   shardManager: {
+      shardStatus: false
+   },
 }

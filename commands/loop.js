@@ -1,96 +1,87 @@
-const db = require("../mongoDB");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 
 module.exports = {
-   name: "loop",
-   description: "Loop music",
-   permissions: "0x0000000000000800",
+   name: 'loop',
+   description: 'Loop music',
+   permissions: '0x0000000000000800',
    options: [],
    voiceChannel: true,
 
    run: async (client, interaction) => {
       try {
-         const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-         const queue = client.player.getQueue(interaction.guild.id);
-         if (!queue || !queue.playing) return interaction.reply({ content: '⚠️ No music playing!!', ephemeral: true }).catch(e => { })
+         const queue = client.player.getQueue(interaction.guild.id)
+         if (!queue || !queue.playing) {
+            return interaction.reply({ content: 'No music playing', ephemeral: true }).catch((e) => {
+               console.log('❌❌❌ Reply error\n' + e)
+            })
+         }
 
-         let button = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-               .setLabel("Queue")
-               .setStyle(ButtonStyle.Secondary)
-               .setCustomId("queue"),
-            new ButtonBuilder()
-               .setLabel("Current Song")
-               .setStyle(ButtonStyle.Secondary)
-               .setCustomId("nowplaying"),
-            new ButtonBuilder()
-               .setLabel("Stop Loop!")
-               .setStyle(ButtonStyle.Danger)
-               .setCustomId("close")
+         const buttons = new ActionRowBuilder().addComponents(
+            new ButtonBuilder().setLabel('Queue').setStyle(ButtonStyle.Secondary).setCustomId('queue'),
+            new ButtonBuilder().setLabel('Current Song').setStyle(ButtonStyle.Secondary).setCustomId('nowplaying'),
+            new ButtonBuilder().setLabel('Stop Loop').setStyle(ButtonStyle.Danger).setCustomId('close')
          )
 
          const embed = new EmbedBuilder()
             .setColor(client.config.embedColor)
-            .setAuthor({
-               name: 'Looping',
-               iconURL: 'https://cdn.discordapp.com/attachments/1156866389819281418/1157318080670728283/7905-repeat.gif?ex=65182bf4&is=6516da74&hm=9ae58f40fcea5dc42a2a992bbd159d50116b3bafe5c5f7728e3a5276442efd2a&',
-               url: 'https://discord.gg/fTuGFk9ayG'
-            })
-            // .setDescription('**Looping**')
+            .setAuthor({ name: 'Looping', iconURL: interaction.guild.iconURL() })
 
-         interaction?.reply({ embeds: [embed], components: [button], fetchReply: true }).then(async Message => {
-
-            const filter = i => i.user.id === interaction.user.id
-            let col = await Message.createMessageComponentCollector({ filter, time: 120000 });
-
-            col.on('collect', async (button) => {
-               if (button.user.id !== interaction.user.id) return
-               const queue1 = client.player.getQueue(interaction.guild.id);
-               if (!queue1 || !queue1.playing) {
-                  await interaction?.editReply({ content: 'No music playing', ephemeral: true }).catch(e => { })
-                  await button?.deferUpdate().catch(e => { })
-               }
-               switch (button.customId) {
-                  case 'queue':
-                     const success = queue.setRepeatMode(2);
-                     interaction?.editReply({ content: `✅ Looping Queue` }).catch(e => { })
-                     await button?.deferUpdate().catch(e => { })
-                     break
-                  case 'nowplaying':
-                     const success2 = queue.setRepeatMode(1);
-                     interaction?.editReply({ content: `✅ Looping activated` }).catch(e => { })
-                     await button?.deferUpdate().catch(e => { })
-                     break
-                  case 'close':
-                     if (queue.repeatMode === 0) {
-                        await button?.deferUpdate().catch(e => { })
-                        return interaction?.editReply({ content: 'Looping already Off', ephemeral: true }).catch(e => { })
-                     }
-                     const success4 = queue.setRepeatMode(0);
-                     interaction?.editReply({ content: 'Looping off' }).catch(e => { })
-                     await button?.deferUpdate().catch(e => { })
-                     break
-               }
+         const message = await interaction
+            .reply({ embeds: [embed], components: [buttons], fetchReply: true })
+            .catch((e) => {
+               console.log('❌❌❌ Initial reply error\n' + e)
             })
 
-            // col.on('end', async (button) => {
-            //    button = new ActionRowBuilder().addComponents(
-            //       new ButtonBuilder()
-            //          .setStyle(ButtonStyle.Secondary)
-            //          .setLabel("Timeout")
-            //          .setCustomId("timeend")
-            //          .setDisabled(true))
+         const collector = message.createMessageComponentCollector()
 
-            //    const embed = new EmbedBuilder()
-            //       .setColor(client.config.embedColor)
-            //       .setTitle('Looping off')
-            //       .setTimestamp()
+         collector.on('collect', async (btnInteraction) => {
+            if (btnInteraction.user.id !== interaction.user.id) return
 
-            //    await interaction?.editReply({ content: "", embeds: [embed], components: [button] }).catch(e => { });
-            // })
-         }).catch(e => { })
+            const currentQueue = client.player.getQueue(interaction.guild.id)
+            if (!currentQueue || !currentQueue.playing) {
+               await btnInteraction.deferUpdate().catch((e) => {
+                  console.log('❌❌❌ Defer update error\n' + e)
+               })
+               return interaction.editReply({ content: 'No music playing', ephemeral: true }).catch((e) => {
+                  console.log('❌❌❌ Edit reply error\n' + e)
+               })
+            }
 
-      } catch (e) {
-         console.error(e);
+            let newEmbed
+            switch (btnInteraction.customId) {
+               case 'queue':
+                  currentQueue.setRepeatMode(2)
+                  newEmbed = embed.setAuthor({ name: 'Looping queue', iconURL: interaction.guild.iconURL() })
+                  break
+               case 'nowplaying':
+                  currentQueue.setRepeatMode(1)
+                  newEmbed = embed.setAuthor({ name: 'Looping current song', iconURL: interaction.guild.iconURL() })
+                  break
+               case 'close':
+                  if (currentQueue.repeatMode === 0) {
+                     newEmbed = embed.setAuthor({ name: 'Looping already Off', iconURL: interaction.guild.iconURL() })
+                  } else {
+                     currentQueue.setRepeatMode(0)
+                     newEmbed = embed.setAuthor({ name: 'Loop Off', iconURL: interaction.guild.iconURL() })
+                  }
+                  break
+            }
+
+            await interaction.editReply({ embeds: [newEmbed] }).catch((e) => {
+               console.log('❌❌❌ Edit embed error\n' + e)
+            })
+            await btnInteraction.deferUpdate().catch((e) => {
+               console.log('❌❌❌ Defer interaction error\n' + e)
+            })
+         })
+
+         collector.on('end', () => {
+            message.delete().catch((e) => {
+               console.log('❌❌❌ Delete message error\n' + e)
+            })
+         })
+      } catch (error) {
+         console.log('❌❌❌ Loop error\n' + error)
       }
-   }
+   },
 }

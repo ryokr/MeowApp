@@ -1,6 +1,6 @@
 const config = require('./config.js');
 
-if (config.shardManager.shardStatus == true) {
+if (config.shardManager.shardStatus) {
 
    const { ShardingManager } = require('discord.js');
    const manager = new ShardingManager('./bot.js', { token: config.TOKEN});

@@ -1,145 +1,114 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const db = require("../mongoDB");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+
 module.exports = {
-   name: "queue",
-   description: "Show the queue",
-   permissions: "0x0000000000000800",
+   name: 'queue',
+   description: 'Show the queue',
+   permissions: '0x0000000000000800',
    options: [],
 
    run: async (client, interaction) => {
       try {
-         const queue = client.player.getQueue(interaction.guild.id);
-         if (!queue || !queue.playing) return interaction.reply({ content: '⚠️ No music playing!!', ephemeral: true }).catch(e => { })
-         if (!queue.songs[0]) return interaction.reply({ content: '⚠️ Queue is empty!!', ephemeral: true }).catch(e => { })
+         const queue = client.player.getQueue(interaction.guild.id)
 
-         const trackl = []
+         if (!queue || !queue.playing)
+            return interaction.reply({ content: 'No music playing', ephemeral: true }).catch((e) => {
+               console.log(e)
+            })
+         if (!queue.songs[0])
+            return interaction.reply({ content: 'Queue is empty', ephemeral: true }).catch((e) => {
+               console.log(e)
+            })
+
+         const trackList = []
          queue.songs.map(async (track, i) => {
-            trackl.push({
+            trackList.push({
                title: track.name,
                author: track.uploader.name,
                user: track.user,
                url: track.url,
-               duration: track.duration
+               duration: track.duration,
             })
          })
 
-         const backId = "emojiBack"
-         const forwardId = "emojiForward"
-         const backButton = new ButtonBuilder({
-            style: ButtonStyle.Secondary,
-            emoji: "⬅️",
-            customId: backId
-         });
+         const backId = 'emojiBack'
+         const nextId = 'emojiNext'
 
-         const deleteButton = new ButtonBuilder({
-            style: ButtonStyle.Secondary,
-            emoji: "❌",
-            customId: "close"
-         });
+         const backButton = new ButtonBuilder()
+            .setLabel('Previous Page')
+            .setStyle(ButtonStyle.Danger)
+            .setCustomId(backId)
+         const nextButton = new ButtonBuilder().setLabel('Next Page').setStyle(ButtonStyle.Danger).setCustomId(nextId)
 
-         const forwardButton = new ButtonBuilder({
-            style: ButtonStyle.Secondary,
-            emoji: "➡️",
-            customId: forwardId
-         });
-
-
-         let page_length = 10
+         let pageLength = 10
          let page = 1
-         let total = trackl.length / page_length
+         let total = trackList.length / pageLength
 
          const generateEmbed = async (start) => {
-            let index = page === 1 ? 1 : page * page_length - page_length + 1
-            const current = trackl.slice(start, start + page_length)
-            if (!current || !current?.length > 0) return interaction.reply({ content: 'Queue is empty', ephemeral: true }).catch(e => { })
-            return new EmbedBuilder()
-               // .setTitle(`${interaction.guild.name}  Queue`)
-               // .setThumbnail(interaction.guild.iconURL({ size: 2048, dynamic: true }))
-               //.setAuthor(interaction.guild.iconURL({ size: 2048, dynamic: true }), interaction.guild.name)
-               .setColor(client.config.embedColor)
-               .setDescription(`**Current**: \`${queue.songs[0].name}\`
-                  ${current.map(data =>
-                  `\n**\`${index++}\`** | [${data.title}](${data.url})`
-               )}`)
-               .setFooter({ text: `Page ${page}/${Math.floor(total + 1)}` })
+            let index = page === 1 ? 1 : page * pageLength - pageLength + 1
+            const current = trackList.slice(start, start + pageLength)
+            if (!current || !current?.length > 0)
+               return interaction.reply({ content: 'Queue is empty', ephemeral: true }).catch((e) => {
+                  console.log(e)
+               })
+            return (
+               new EmbedBuilder()
+                  .setColor(client.config.embedColor)
+                  // .setThumbnail(queue.songs[0].thumbnail)
+                  .setAuthor({
+                     name: 'Queue • 🌱',
+                     iconURL: client.config.guildIcon,
+                  })
+                  .setDescription(`${current.map((data) => `\n${index++}. [${data.title}](${data.url})`)}`)
+                  .setFooter({
+                     text: `💽 • Page ${page} / ${Math.floor(total + 1)}`,
+                  })
+            )
          }
 
-         const canFitOnOnePage = trackl.length <= page_length
+         const inOnePage = trackList.length <= pageLength
 
-         await interaction.reply({
-            embeds: [await generateEmbed(0)],
-            components: canFitOnOnePage
-               ? []
-               : [new ActionRowBuilder({ components: [deleteButton, forwardButton] })],
-            fetchReply: true
-         }).then(async Message => {
-            const filter = i => i.user.id === interaction.user.id
-            const collector = Message.createMessageComponentCollector({ filter, time: 120000 });
-
-
-            let currentIndex = 0
-            collector.on("collect", async (button) => {
-               if (button?.customId === "close") {
-                  collector?.stop()
-                  return button?.reply({ content: 'Command Cancelled', ephemeral: true }).catch(e => { })
-               } else {
-
-                  if (button.customId === backId) {
-                     page--
-                  }
-                  if (button.customId === forwardId) {
-                     page++
-                  }
-
-                  button.customId === backId
-                     ? (currentIndex -= page_length)
-                     : (currentIndex += page_length)
-
-                  await interaction.editReply({
-                     embeds: [await generateEmbed(currentIndex)],
-                     components: [
-                        new ActionRowBuilder({
-                           components: [
-                              ...(currentIndex ? [backButton] : []),
-                              deleteButton,
-                              ...(currentIndex + page_length < trackl.length ? [forwardButton] : []),
-                           ],
-                        }),
-                     ],
-                  }).catch(e => { })
-                  await button?.deferUpdate().catch(e => { })
-               }
+         await interaction
+            .reply({
+               embeds: [await generateEmbed(0)],
+               components: inOnePage ? [] : [new ActionRowBuilder({ components: [nextButton] })],
+               fetchReply: true,
             })
+            .then(async (Message) => {
+               const filter = (i) => i.user.id === interaction.user.id
+               const collector = Message.createMessageComponentCollector({
+                  filter,
+               })
 
-            // collector.on("end", async (button) => {
-            //    button = new ActionRowBuilder().addComponents(
-            //       new ButtonBuilder()
-            //          .setStyle(ButtonStyle.Secondary)
-            //          .setEmoji("⬅️")
-            //          .setCustomId(backId)
-            //          .setDisabled(true),
-            //       new ButtonBuilder()
-            //          .setStyle(ButtonStyle.Secondary)
-            //          .setEmoji("❌")
-            //          .setCustomId("close")
-            //          .setDisabled(true),
-            //       new ButtonBuilder()
-            //          .setStyle(ButtonStyle.Secondary)
-            //          .setEmoji("➡️")
-            //          .setCustomId(forwardId)
-            //          .setDisabled(true))
+               let currentIndex = 0
+               collector.on('collect', async (button) => {
+                  if (button.customId === backId) page--
+                  if (button.customId === nextId) page++
 
-            //    const embed = new EmbedBuilder()
-            //       .setTitle('Command Timeout')
-            //       .setColor(`#ecfc03`)
-            //       .setDescription('▶️ Execute the Queue command again!!')
-            //    return interaction?.editReply({ embeds: [embed], components: [button] }).catch(e => { })
+                  button.customId === backId ? (currentIndex -= pageLength) : (currentIndex += pageLength)
 
-            // })
-         }).catch(e => { })
-
+                  await interaction
+                     .editReply({
+                        embeds: [await generateEmbed(currentIndex)],
+                        components: [
+                           new ActionRowBuilder({
+                              components: [
+                                 ...(currentIndex ? [backButton] : []),
+                                 ...(currentIndex + pageLength < trackList.length ? [nextButton] : []),
+                              ],
+                           }),
+                        ],
+                     })
+                     .catch((e) => {})
+                  await button?.deferUpdate().catch((e) => {
+                     console.log(e)
+                  })
+               })
+            })
+            .catch((e) => {
+               console.log(e)
+            })
       } catch (e) {
-         console.error(e);
+         console.error(e)
       }
-   }
+   },
 }

@@ -1,21 +1,21 @@
-const { Client, GatewayIntentBits, Partials } = require("discord.js");
-const { DisTube } = require("distube");
-const { SpotifyPlugin } = require("@distube/spotify");
-const { SoundCloudPlugin } = require("@distube/soundcloud");
-const { DeezerPlugin } = require("@distube/deezer");
-const { YtDlpPlugin } = require("@distube/yt-dlp");
-const fs = require("fs");
-const path = require('path');
+const { Client, GatewayIntentBits } = require('discord.js')
+const { YtDlpPlugin } = require('@distube/yt-dlp')
+const { DisTube } = require('distube')
 
-const config = require("./config.js");
+const config = require('./config')
+const serverStart = require('./host')
+const { loadDiscordEvents, loadPlayerEvents, loadCommands } = require('./loader')
+
+if (!config.TOKEN) {
+   console.log('❌    TOKEN ERROR')
+   process.exit(1)
+}
 
 const client = new Client({
-   intents: Object.keys(GatewayIntentBits).map((a) => {
-      return GatewayIntentBits[a];
-   }),
-});
+   intents: Object.values(GatewayIntentBits),
+})
 
-client.config = config;
+client.config = config
 client.player = new DisTube(client, {
    leaveOnStop: config.opt.voiceConfig.leaveOnStop,
    leaveOnFinish: config.opt.voiceConfig.leaveOnFinish,
@@ -23,89 +23,18 @@ client.player = new DisTube(client, {
    emitNewSongOnly: true,
    emitAddSongWhenCreatingQueue: false,
    emitAddListWhenCreatingQueue: false,
-   plugins: [
-      new SpotifyPlugin(),
-      new SoundCloudPlugin(),
-      new YtDlpPlugin(),
-      new DeezerPlugin(),
-   ],
-});
+   plugins: [new YtDlpPlugin()],
+})
 
-process.env.YTDL_NO_UPDATE = true;
-const player = client.player;
+const player = client.player
 
-fs.readdir("./events", (_err, files) => {
-   files.forEach((file) => {
-      if (!file.endsWith(".js")) return;
-      const event = require(`./events/${file}`);
-      let eventName = file.split(".")[0];
-      client.on(eventName, event.bind(null, client));
-      delete require.cache[require.resolve(`./events/${file}`)];
-   });
-});
+loadDiscordEvents(client)
+loadPlayerEvents(player, client)
+loadCommands(client)
 
-fs.readdir("./events/player", (_err, files) => {
-   files.forEach((file) => {
-      if (!file.endsWith(".js")) return;
-      const player_events = require(`./events/player/${file}`);
-      let playerName = file.split(".")[0];
-      player.on(playerName, player_events.bind(null, client));
-      delete require.cache[require.resolve(`./events/player/${file}`)];
-   });
-});
+client.login(config.TOKEN).catch((error) => {
+   console.error('❌    LOGIN FAILED', error)
+   process.exit(1)
+})
 
-client.commands = [];
-fs.readdir(config.commandsDir, (err, files) => {
-   if (err) throw err;
-   files.forEach(async (f) => {
-      try {
-         if (f.endsWith(".js")) {
-            let props = require(`${config.commandsDir}/${f}`);
-            client.commands.push({
-               name: props.name,
-               description: props.description,
-               options: props.options,
-            });
-         }
-      } catch (err) {
-         console.log(err);
-      }
-   });
-});
-
-
-if (config.TOKEN) {
-   client.login(config.TOKEN).catch((e) => {
-      console.log('LOGIN FAILED ❌❌');
-   });
-} else {
-   setTimeout(() => {
-      console.log('TOKEN ERROR ❌❌');
-   }, 2000);
-}
-
-if (config.mongodbURL) {
-   const mongoose = require("mongoose")
-   mongoose.connect(config.mongodbURL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-   }).then(async () => {
-      console.log('\x1b[32m%s\x1b[0m', `|    🍔 Connected MongoDB!`)
-   }).catch((err) => {
-      console.log('\x1b[32m%s\x1b[0m', `|    🍔 Failed to connect MongoDB!`)
-   })
-} else {
-   console.log('\x1b[32m%s\x1b[0m', `|    🍔 Error MongoDB!`)
-}
-
-const express = require("express");
-const app = express();
-const port = 3000;
-
-app.get('/', (req, res) => {
-   const imagePath = path.join(__dirname, 'z.html');
-   res.sendFile(imagePath);
-});
-app.listen(port, () => {
-   console.log(`Listening: http://localhost:${port}`);
-});
+serverStart()

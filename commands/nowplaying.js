@@ -1,36 +1,41 @@
-const { EmbedBuilder } = require('discord.js');
-const db = require("../mongoDB");
 module.exports = {
-   name: "nowplaying",
-   description: "Current song info",
-   permissions: "0x0000000000000800",
+   name: 'nowplaying',
+   description: 'Current music info',
+   permissions: '0x0000000000000800',
    options: [],
 
    run: async (client, interaction) => {
       try {
-         const queue = client.player.getQueue(interaction.guild.id);
-         if (!queue || !queue.playing) return interaction.reply({ content: `No music playing`, ephemeral: true }).catch(e => { })
+         const queue = client.player.getQueue(interaction.guild.id)
+         const track = queue.songs[0]
 
-         const track = queue.songs[0];
-         if (!track) return interaction.reply({ content: `No music playing`, ephemeral: true }).catch(e => { })
+         if (!queue || !queue.playing || !track) 
+            return interaction.reply({ content: `No music playing`, ephemeral: true }).catch((e) => {})
+         
+         const { EmbedBuilder } = require('discord.js')
+         const embed = new EmbedBuilder()
+            .setColor(client.config.embedColor)
+            .setThumbnail(track.thumbnail)
+            .setAuthor({
+               name: 'Now Playing',
+               iconURL: interaction.guild.iconURL(),
+            })
+            .setDescription(`**[${track.name}](${track.url})**`)
+            .addFields(
+               { name: 'Duration', value: `${track.formattedDuration}`, inline: true },
+               { name: 'Author', value: `${track.uploader.name}`, inline: true },
+               { name: 'Volume', value: `${queue.volume}`, inline: true },
+               { name: 'Loop Mode', value: `${queue.repeatMode ? queue.repeatMode === 2 ? "Queue" : "This Song" : "Off"}`, inline: true },
+            )
+            .setFooter({
+               text: `🌱 • ${track.user.tag}`,
+               iconURL: track.user.avatarURL(),
+            })
+            .setTimestamp()
 
-         const embed = new EmbedBuilder();
-         embed.setColor(client.config.embedColor);
-         embed.setThumbnail(track.thumbnail);
-         embed.setTitle(track.name)
-         embed.setDescription(`
-            > **Audio** \`%${queue.volume}\`
-            > **Duration :** \`${track.formattedDuration}\`
-            > **URL :** **${track.url}**
-            > **Loop Mode :** \`${queue.repeatMode ? (queue.repeatMode === 2 ? 'All Queue' : 'This Song') : 'Off'}\`
-            > **Filter**: \`${queue.filters.names.join(', ') || 'Off'}\`
-            > **By :** <@${track.user.id}>
-         `);
-
-         interaction.reply({ embeds: [embed] }).catch(e => { })
-
-      } catch (e) {
-         console.error(e);
-      }
-   },
-};
+         interaction.reply({ embeds: [embed] }).catch((e) => {
+            console.log(e)
+         })
+      } catch (e) {}
+   }
+}

@@ -1,29 +1,26 @@
-const db = require("../mongoDB");
-const { EmbedBuilder } = require('discord.js');
-
 module.exports = {
-   name: "autoplay",
-   description: "Autoplay",
+   name: 'autoplay',
+   description: 'Toggle autoplay',
    options: [],
-   permissions: "0x0000000000000800",
+   permissions: '0x0000000000000800',
 
    run: async (client, interaction) => {
       try {
-         const queue = client?.player?.getQueue(interaction?.guild?.id);
-         if (!queue || !queue?.playing) {
-            return interaction?.reply({ content: 'No music playing', ephemeral: true });
-         }
+         const queue = client.player.getQueue(interaction.guild.id)
+         if (!queue || !queue.playing || !track) 
+            return interaction.reply({ content: `No music playing`, ephemeral: true }).catch((e) => {})
+         
+         queue.toggleAutoplay()
 
-         queue?.toggleAutoplay();
-
+         const { EmbedBuilder } = require('discord.js')
          const embed = new EmbedBuilder()
             .setColor(client.config.embedColor)
             .setTitle('Auto Meowing')
-            .setDescription(queue?.autoplay ? '**✅ Autoplay ON**' : '**❌ Autoplay OFF**');
+            .setDescription(queue.autoplay ? '✅   ON' : '❌   OFF')
 
-         interaction?.reply({ embeds: [embed] });
+         interaction.reply({ embeds: [embed] })
       } catch (e) {
-         console.error(e);
+         console.error(e)
       }
    },
-};
+}

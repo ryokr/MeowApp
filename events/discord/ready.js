@@ -5,18 +5,17 @@ module.exports = async (client) => {
 
    try {
       await rest.put(Routes.applicationCommands(client.user.id), { body: await client.commands })
-
-      console.log('\x1b[35m%s\x1b[0m', '⭕    🌑 Commands Loaded')
+      console.log('\x1b[35m%s\x1b[0m', `⭕    🌑 ⬪ Commands Loaded`)
    } catch (e) {
-      console.log('\x1b[35m%s\x1b[0m', '❌    🌑 Commands Distracted')
+      console.log('\x1b[35m%s\x1b[0m', `❌    🌑 ⬪ Commands Distracted`)
    }
 
-   console.log('\x1b[32m%s\x1b[0m', `⭕    🥙 Logged in as ${client.user.username}`)
+   console.log('\x1b[32m%s\x1b[0m', `⭕    🐸 ⬪ Logged in as -- ${client.user.username}`)
 
    setInterval(() => {
-      const hh = String(new Date().getHours()).padStart(2, '0')
-      const mm = String(new Date().getMinutes()).padStart(2, '0')
-      const currentTime = `${hh}:${mm}`
+      // const hh = String(new Date().getHours()).padStart(2, '0')
+      // const mm = String(new Date().getMinutes()).padStart(2, '0')
+      // const currentTime = `${hh}:${mm}`
 
       client.user.setActivity({
          name: client.config.activity.name,

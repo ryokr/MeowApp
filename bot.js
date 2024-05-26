@@ -4,7 +4,7 @@ const { DisTube } = require('distube')
 
 const config = require('./config')
 const serverStart = require('./host')
-const { loadDiscordEvents, loadPlayerEvents, loadCommands } = require('./loader')
+const botInit = require('./init')
 
 if (!config.TOKEN) {
    console.log('❌    TOKEN ERROR')
@@ -26,14 +26,10 @@ client.player = new DisTube(client, {
    plugins: [new YtDlpPlugin()],
 })
 
-const player = client.player
+botInit(client)
 
-loadDiscordEvents(client)
-loadPlayerEvents(player, client)
-loadCommands(client)
-
-client.login(config.TOKEN).catch((error) => {
-   console.error('❌    LOGIN FAILED', error)
+client.login(config.TOKEN).catch(() => {
+   console.error('❌    LOGIN FAILED')
    process.exit(1)
 })
 

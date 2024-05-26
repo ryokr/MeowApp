@@ -1,17 +1,15 @@
-const path = require('path')
 const express = require('express')
 
 function serverStart() {
+   const PORT = 3000
    const app = express()
-   const port = 3000
 
    app.get('/', (req, res) => {
-      const view = path.join(__dirname, 'z.html')
-      res.sendFile(view)
+      res.sendFile('./z.html', { root: __dirname })
    })
 
-   app.listen(port, () => {
-      console.log('\x1b[32;33m%s\x1b[0m', `⭕    🍕 Listening: http://localhost:${port}`)
+   app.listen(PORT, () => {
+      console.log('\x1b[32;33m%s\x1b[0m', `⭕    🍕 ⬪ http://localhost:${PORT}`)
    })
 
    process.env.YTDL_NO_UPDATE = true

@@ -47,8 +47,6 @@ module.exports = {
             console.log(e)
          }
 
-         const queue = client.player.getQueue(interaction.guild.id)
-         queue.setVolume(client.config.opt.maxVol -1 )
       } catch (e) {
          console.error(e)
       }

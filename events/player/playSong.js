@@ -1,16 +1,10 @@
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js')
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = async (client, queue, song) => {
    if (queue) {
       if (!client.config.opt.loopMessage && queue.repeatMode !== 0) return
 
       if (queue.textChannel) {
-         const now = new Date()
-         const timestamp = `Today at ${now.getHours().toString().padStart(2, '0')}:${now
-            .getMinutes()
-            .toString()
-            .padStart(2, '0')}`
-
          const embed = new EmbedBuilder()
             .setColor(client.config.embedColor)
             .setThumbnail(queue.songs[0].thumbnail)
@@ -21,19 +15,19 @@ module.exports = async (client, queue, song) => {
             .setDescription(`**[${song.name}](${song.url})**`)
             .addFields(
                { name: 'Duration', value: `${song.formattedDuration}`, inline: true },
-               { name: 'Author', value: `${song.uploader.name}`, inline: true }
+               { name: 'Author', value: `${song.uploader.name}`, inline: true },
             )
             .setFooter({
-               text: `🌱 ⬪ ${song.user.tag} ⬪ ${timestamp}`,
+               text: `🌱 ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`,
                iconURL: song.user.avatarURL(),
             })
 
          const buttons = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setLabel('Shuffle').setStyle(ButtonStyle.Secondary).setCustomId('playerShuffle'),
-            new ButtonBuilder().setLabel('Previous').setStyle(ButtonStyle.Secondary).setCustomId('playerPrevious'),
-            new ButtonBuilder().setLabel('Stop').setStyle(ButtonStyle.Danger).setCustomId('playerStop'),
-            new ButtonBuilder().setLabel('Skip').setStyle(ButtonStyle.Secondary).setCustomId('playerSkip'),
-            new ButtonBuilder().setLabel('Loop').setStyle(ButtonStyle.Secondary).setCustomId('playerLoop'),
+            new ButtonBuilder().setLabel('Shuffle').setStyle('Secondary').setCustomId('playerShuffle'),
+            new ButtonBuilder().setLabel('Previous').setStyle('Secondary').setCustomId('playerPrevious'),
+            new ButtonBuilder().setLabel('Stop').setStyle('Danger').setCustomId('playerStop'),
+            new ButtonBuilder().setLabel('Skip').setStyle('Secondary').setCustomId('playerSkip'),
+            new ButtonBuilder().setLabel('Loop').setStyle('Secondary').setCustomId('playerLoop')
          )
 
          const currentMessage = await queue.textChannel.send({ embeds: [embed], components: [buttons] }).catch((e) => {
@@ -52,43 +46,47 @@ module.exports = async (client, queue, song) => {
                return
             }
 
+            const embed = EmbedBuilder.from(currentMessage.embeds[0])
+
             switch (btnInteraction.customId) {
                case 'playerShuffle':
                   await queue.shuffle()
 
-                  const shuffleEmbed = EmbedBuilder.from(currentMessage.embeds[0]).setFooter({
-                     text: `🌱 ⬪ Shuffled ⬪ ${song.user.tag} ⬪ ${timestamp}`,
+                  embed.setFooter({
+                     text: `🌱 ⬪ Shuffled ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`,
                      iconURL: song.user.avatarURL(),
                   })
 
-                  await currentMessage.edit({ embeds: [shuffleEmbed] }).catch((e) => {
-                     console.log('❌    Edit message error\n' + e)
-                  })
+                  updateEmbed(btnInteraction, currentMessage, embed)
 
-                  await btnInteraction.deferUpdate().catch((e) => {
-                     console.log('❌    Defer update error\n' + e)
-                  })
                   break
 
                case 'playerPrevious':
                   await queue.previous().catch((e) => {
-                     console.log('❌    Previous error\n' + e)
-                     btnInteraction.reply({ content: 'Error going to previous song', ephemeral: true })
+                     embed.setFooter({
+                        text: `🌸 ⬪ No previous ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`,
+                        iconURL: song.user.avatarURL(),
+                     })
+
+                     updateEmbed(btnInteraction, currentMessage, embed)
                   })
                   break
 
                case 'playerStop':
                   await queue.stop().catch((e) => {
                      console.log('❌    Stop error\n' + e)
-                     btnInteraction.reply({ content: 'Error stopping the music', ephemeral: true })
                   })
                   currentMessage.delete().catch((e) => console.log('PS Stop\n' + e))
                   break
 
                case 'playerSkip':
                   await queue.skip().catch((e) => {
-                     console.log('❌    Skip error\n' + e)
-                     btnInteraction.reply({ content: 'Error skipping song', ephemeral: true })
+                     embed.setFooter({
+                        text: `🌸 ⬪ No song ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`,
+                        iconURL: song.user.avatarURL(),
+                     })
+
+                     updateEmbed(btnInteraction, currentMessage, embed)
                   })
                   break
 
@@ -97,27 +95,35 @@ module.exports = async (client, queue, song) => {
 
                   const loopText =
                      queue.repeatMode === 2
-                        ? `🌱 ⬪ Looping ⬪ ${song.user.tag} ⬪ ${timestamp}`
-                        : `🌱 ⬪ ${song.user.tag} ⬪ ${timestamp}`
+                        ? `🌱 ⬪ Looping ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`
+                        : `🌱 ⬪ Loop off ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`
 
-                  const loopEmbed = EmbedBuilder.from(currentMessage.embeds[0]).setFooter({
+                  embed.setFooter({
                      text: loopText,
                      iconURL: song.user.avatarURL(),
                   })
 
-                  await currentMessage.edit({ embeds: [loopEmbed] }).catch((e) => {
-                     console.log('❌    Edit message error\n' + e)
-                  })
+                  updateEmbed(btnInteraction, currentMessage, embed)
 
-                  await btnInteraction.deferUpdate().catch((e) => {
-                     console.log('❌    Defer update error\n' + e)
-                  })
                   break
             }
          })
          client.config.opt.currentMessage = currentMessage
       }
-
-      
    }
+}
+
+function getTimestamp() {
+   const now = new Date()
+   return `Today at ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
+}
+
+async function updateEmbed(btnInteraction, currentMessage, embed) {
+   await currentMessage.edit({ embeds: [embed] }).catch((e) => {
+      console.log('❌    Edit message error\n' + e)
+   })
+
+   await btnInteraction.deferUpdate().catch((e) => {
+      console.log('❌    Defer update error\n' + e)
+   })
 }

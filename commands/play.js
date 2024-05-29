@@ -41,16 +41,13 @@ module.exports = {
          } catch (e) {
             const errorEmbed = new EmbedBuilder()
                .setColor(client.config.embedColor)
-               .setDescription('❌ No results found')
+               .setDescription('❌  No results found')
 
             await interaction.editReply({ embeds: [errorEmbed], ephemeral: true }).catch((e) => {
                console.log(e)
             })
             console.log(e)
          }
-
-         // const queue = client.player.getQueue(interaction.guild.id)
-         // queue.setVolume(client.config.opt.maxVol -1 )
       } catch (e) {
          console.error(e)
       }

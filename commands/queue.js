@@ -58,7 +58,7 @@ module.exports = {
                      name: 'Queue • 🌱',
                      iconURL: client.config.guildIcon,
                   })
-                  .setDescription(`${current.map((data) => `\n${index++}. [${data.title}](${data.url})`)}`)
+                  .setDescription(`${current.map((song) => `\n${index++}. [${song.title}](${song.url})`)}`)
                   .setFooter({
                      text: `💽 • Page ${page} / ${Math.floor(total + 1)}`,
                   })

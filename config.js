@@ -1,5 +1,3 @@
-const { ActivityType } = require('discord.js')
-
 module.exports = {
    TOKEN: process.env.TOKEN,
    ownerID: '677857271530651649',
@@ -14,7 +12,7 @@ module.exports = {
    activity: {
       name: 'Meow',
       state: 'Meow Meow',
-      type: ActivityType.Playing,
+      type: 'Playing',
    },
 
    opt: {

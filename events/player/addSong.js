@@ -20,7 +20,7 @@ module.exports = async (client, queue, song) => {
 
          queue.textChannel
             .send({ embeds: [embed] })
-            .catch(e => { console.log('❌❌❌ Add song error\n' + e) })
+            .catch(e => { console.log('❌    Add song error\n' + e) })
       }
    }
 }

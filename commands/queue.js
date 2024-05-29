@@ -77,6 +77,7 @@ module.exports = {
                const filter = (i) => i.user.id === interaction.user.id
                const collector = Message.createMessageComponentCollector({
                   filter,
+                  time: 60000,
                })
 
                let currentIndex = 0
@@ -102,6 +103,15 @@ module.exports = {
                   await button?.deferUpdate().catch((e) => {
                      console.log(e)
                   })
+               })
+               collector.on('end', async () => {
+                  await interaction
+                     .editReply({
+                        components: [],
+                     })
+                     .catch((e) => {
+                        console.log(e)
+                     })
                })
             })
             .catch((e) => {

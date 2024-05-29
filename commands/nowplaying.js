@@ -9,9 +9,9 @@ module.exports = {
          const queue = client.player.getQueue(interaction.guild.id)
          const track = queue.songs[0]
 
-         if (!queue || !queue.playing || !track) 
+         if (!queue || !queue.playing || !track)
             return interaction.reply({ content: `No music playing`, ephemeral: true }).catch((e) => {})
-         
+
          const { EmbedBuilder } = require('discord.js')
          const embed = new EmbedBuilder()
             .setColor(client.config.embedColor)
@@ -25,7 +25,11 @@ module.exports = {
                { name: 'Duration', value: `${track.formattedDuration}`, inline: true },
                { name: 'Author', value: `${track.uploader.name}`, inline: true },
                { name: 'Volume', value: `${queue.volume}`, inline: true },
-               { name: 'Loop Mode', value: `${queue.repeatMode ? queue.repeatMode === 2 ? "Queue" : "This Song" : "Off"}`, inline: true },
+               {
+                  name: 'Loop Mode',
+                  value: `${queue.repeatMode ? (queue.repeatMode === 2 ? 'Queue' : 'This Song') : 'Off'}`,
+                  inline: true,
+               }
             )
             .setFooter({
                text: `🌱 • ${track.user.tag}`,
@@ -37,5 +41,5 @@ module.exports = {
             console.log(e)
          })
       } catch (e) {}
-   }
+   },
 }

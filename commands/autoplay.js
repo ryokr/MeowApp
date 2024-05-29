@@ -7,9 +7,9 @@ module.exports = {
    run: async (client, interaction) => {
       try {
          const queue = client.player.getQueue(interaction.guild.id)
-         if (!queue || !queue.playing || !track) 
+         if (!queue || !queue.playing)
             return interaction.reply({ content: `No music playing`, ephemeral: true }).catch((e) => {})
-         
+
          queue.toggleAutoplay()
 
          const { EmbedBuilder } = require('discord.js')

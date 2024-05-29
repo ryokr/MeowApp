@@ -33,10 +33,6 @@ async function loadCommands(client) {
             console.log(err)
          }
       }
-
-      client.player.on('initQueue', (queue) => {
-         queue.setVolume(client.config.opt.maxVol - 1)
-      })
    } catch (err) {
       console.log(err)
    }

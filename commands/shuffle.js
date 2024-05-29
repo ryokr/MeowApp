@@ -11,7 +11,7 @@ module.exports = {
             return interaction.reply({ content: `No music playing`, ephemeral: true }).catch((e) => {})
 
          try {
-            queue.shuffle(interaction)
+            queue.shuffle()
 
             const { EmbedBuilder } = require('discord.js')
             const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({

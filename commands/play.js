@@ -23,10 +23,12 @@ module.exports = {
             })
          }
 
-         const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
-            name: 'Meowing',
-            iconURL: interaction.guild.iconURL(),
-         })
+         const embed = new EmbedBuilder()
+            .setColor(client.config.embedColor)
+            .setAuthor({
+               name: 'Meowing',
+               iconURL: interaction.guild.iconURL(),
+            })
 
          await interaction.reply({ embeds: [embed] }).catch((e) => {})
 
@@ -47,6 +49,8 @@ module.exports = {
             console.log(e)
          }
 
+         // const queue = client.player.getQueue(interaction.guild.id)
+         // queue.setVolume(client.config.opt.maxVol -1 )
       } catch (e) {
          console.error(e)
       }

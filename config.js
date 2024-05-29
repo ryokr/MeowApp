@@ -28,6 +28,8 @@ module.exports = {
             cooldown: 10,
          },
       },
+
+      currentMessage: null,
    },
 
    shardManager: {

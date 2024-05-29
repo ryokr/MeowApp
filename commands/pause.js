@@ -15,7 +15,7 @@ module.exports = {
             return interaction.reply({ content: 'No music playing', ephemeral: true });
          }
 
-         const success = queue.pause();
+         await queue.pause();
 
          const embed = new EmbedBuilder()
             .setColor(client.config.embedColor)
@@ -23,8 +23,6 @@ module.exports = {
                name: 'Paused',
                iconURL: interaction.guild.iconURL(),
             })
-            //.setDescription(success ? '**The music has been Paused for a moment!!**' : '❌ Command Error: Unable to pause song')
-
 
          return interaction.reply({ embeds: [embed] });
       } catch (e) {

@@ -1,10 +1,10 @@
 module.exports = async (client, queue) => {
    try {
-      if (client.config.opt.currentMessage != null) {
+      if (queue.lastPlayingMessage != null) {
          await new Promise((resolve) => setTimeout(resolve, 2000))
-   
-         client.config.opt.currentMessage.delete().catch((e) => console.log('FS\n' + e))
-         client.config.opt.currentMessage = null
+
+         queue.lastPlayingMessage.delete().catch((e) => console.log('FS\n' + e))
+         queue.lastPlayingMessage = null
       }
    } catch (e) {
       console.log('FS\n' + e)

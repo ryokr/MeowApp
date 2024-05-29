@@ -108,7 +108,7 @@ module.exports = async (client, queue, song) => {
                   break
             }
          })
-         client.config.opt.currentMessage = currentMessage
+         queue.lastPlayingMessage = currentMessage
       }
    }
 }

@@ -1,45 +1,45 @@
 module.exports = async (client, oldState, newState) => {
    const queue = client.player.getQueue(oldState.guild.id)
 
-   if (queue || queue?.playing) {
-      if (client.config.opt.voiceConfig.leaveOnEmpty.status === true) {
-         setTimeout(async () => {
-            let botChannel = oldState.guild.channels.cache.get(queue.voice.connection.joinConfig.channelId)
-            if (botChannel) {
-               if (botChannel.id == oldState.channelId) {
-                  if (botChannel.members.find((x) => x == client.user.id)) {
-                     if (botChannel.members.size == 1) {
-                        await queue.textChannel.send({ content: `Users left channel` }).catch((e) => {})
-                        if (queue || queue.playing) {
-                           return queue.stop(oldState.guild.id)
-                        }
-                     }
-                  }
-               }
-            }
-         }, client.config.opt.voiceConfig.leaveOnEmpty.cooldown || 1000)
-      }
+   if (!queue || !queue.playing) return
 
-      if (newState.id === client.user.id) {
-         if (oldState.serverMute === false && newState.serverMute === true) {
-            if (queue?.textChannel) {
+   const { leaveOnEmpty } = client.config.voice
+
+   if (leaveOnEmpty.status) {
+      setTimeout(async () => {
+         const botChannel = oldState.guild.channels.cache.get(queue.voice.connection.joinConfig.channelId)
+
+         if (botChannel && botChannel.id === oldState.channelId) {
+            const botMember = botChannel.members.get(client.user.id)
+
+            if (botMember && botChannel.members.size === 1) {
                try {
-                  await queue?.pause()
+                  await queue.textChannel.send({ content: 'Users left channel' })
                } catch (e) {
-                  return
+                  console.log('❌    Failed to send message\n', e)
                }
-               //await queue?.textChannel?.send({ content: `Muted` }).catch(e => { })
+
+               if (queue && queue.playing) {
+                  queue.stop(oldState.guild.id)
+               }
             }
          }
+      }, leaveOnEmpty.cooldown || 1000)
+   }
 
-         if (oldState.serverMute === true && newState.serverMute === false) {
-            if (queue?.textChannel) {
-               try {
-                  await queue.resume()
-               } catch (e) {
-                  return
-               }
+   if (newState.id === client.user.id) {
+      const wasMuted = oldState.serverMute
+      const isMuted = newState.serverMute
+
+      if (wasMuted !== isMuted) {
+         try {
+            if (isMuted) {
+               await queue.pause()
+            } else {
+               await queue.resume()
             }
+         } catch (e) {
+            console.error(`${isMuted ? 'Pause' : 'Resume'} failed\n`, e)
          }
       }
    }

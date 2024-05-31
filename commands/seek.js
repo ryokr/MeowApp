@@ -31,9 +31,18 @@ module.exports = {
 
          queue.seek(position)
 
-         interaction.reply({ content: `Seeked` }).catch((e) => {
-            console.log(e)
+         const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+            name: 'Seeked',
+            iconURL: interaction.guild.iconURL(),
          })
+
+         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+         setTimeout(async () => {
+            if (msg) {
+               await msg.delete().catch((e) => {})
+            }
+         }, 5000)
       } catch (error) {
          console.log(error)
       }

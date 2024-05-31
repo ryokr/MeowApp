@@ -4,6 +4,7 @@ module.exports = {
    name: 'play',
    description: 'Play music',
    permissions: '0x0000000000000800',
+   voiceChannel: true,
    options: [
       {
          name: 'name',
@@ -12,25 +13,20 @@ module.exports = {
          required: true,
       },
    ],
-   voiceChannel: true,
 
    run: async (client, interaction) => {
       try {
          const name = interaction.options.getString('name')
          if (!name) {
-            return interaction.reply({ content: 'Type music name or link', ephemeral: true }).catch((e) => {
-               console.log(e)
-            })
+            return interaction.reply({ content: 'Type music name or link', ephemeral: true }).catch((e) => {})
          }
 
-         const embed = new EmbedBuilder()
-            .setColor(client.config.embedColor)
-            .setAuthor({
-               name: 'Meowing',
-               iconURL: interaction.guild.iconURL(),
-            })
+         const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+            name: 'Meowing',
+            iconURL: interaction.guild.iconURL(),
+         })
 
-         await interaction.reply({ embeds: [embed] }).catch((e) => {})
+         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
 
          try {
             await client.player.play(interaction.member.voice.channel, name, {
@@ -39,17 +35,16 @@ module.exports = {
                interaction,
             })
          } catch (e) {
-            const errorEmbed = new EmbedBuilder()
-               .setColor(client.config.embedColor)
-               .setDescription('❌  No results found')
+            embed.setDescription('❌  No results found')
 
-            await interaction.editReply({ embeds: [errorEmbed], ephemeral: true }).catch((e) => {
-               console.log(e)
-            })
-            console.log(e)
+            await interaction.editReply({ embeds: [embed] }).catch()
          }
-      } catch (e) {
-         console.error(e)
-      }
+
+         setTimeout(async () => {
+            if (msg) {
+               await msg.delete().catch((e) => {})
+            }
+         }, 2000)
+      } catch (e) {}
    },
 }

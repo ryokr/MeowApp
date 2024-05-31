@@ -13,10 +13,6 @@ module.exports = async (client) => {
    console.log('\x1b[32m%s\x1b[0m', `⭕    🐸 ⬪ Logged in as -- ${client.user.username}`)
 
    setInterval(() => {
-      // const hh = String(new Date().getHours()).padStart(2, '0')
-      // const mm = String(new Date().getMinutes()).padStart(2, '0')
-      // const currentTime = `${hh}:${mm}`
-
       client.user.setActivity({
          name: client.config.activity.name,
          state: client.config.activity.state,

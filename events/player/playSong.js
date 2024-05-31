@@ -2,7 +2,7 @@ const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = async (client, queue, song) => {
    if (queue) {
-      if (!client.config.opt.loopMessage && queue.repeatMode !== 0) return
+      if (queue.repeatMode !== 0) return
 
       if (queue.textChannel) {
          const embed = new EmbedBuilder()
@@ -15,7 +15,7 @@ module.exports = async (client, queue, song) => {
             .setDescription(`**[${song.name}](${song.url})**`)
             .addFields(
                { name: 'Duration', value: `${song.formattedDuration}`, inline: true },
-               { name: 'Author', value: `${song.uploader.name}`, inline: true },
+               { name: 'Author', value: `${song.uploader.name}`, inline: true }
             )
             .setFooter({
                text: `🌱 ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`,
@@ -91,20 +91,17 @@ module.exports = async (client, queue, song) => {
                   break
 
                case 'playerLoop':
-                  queue.setRepeatMode(queue.repeatMode === 2 ? 0 : 2)
+                  const isLooping = queue.repeatMode === 2
+                  queue.setRepeatMode(isLooping ? 0 : 2)
 
-                  const loopText =
-                     queue.repeatMode === 2
-                        ? `🌱 ⬪ Looping ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`
-                        : `🌱 ⬪ Loop off ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`
+                  const loopStatus = isLooping ? 'Loop off' : 'Looping'
 
                   embed.setFooter({
-                     text: loopText,
+                     text: `🌱 ⬪ ${loopStatus} ⬪ ${song.user.tag} ⬪ ${getTimestamp()}`,
                      iconURL: song.user.avatarURL(),
                   })
 
                   updateEmbed(btnInteraction, currentMessage, embed)
-
                   break
             }
          })
@@ -114,8 +111,13 @@ module.exports = async (client, queue, song) => {
 }
 
 function getTimestamp() {
-   const now = new Date()
-   return `Today at ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
+   const time = new Date().toLocaleString('en-GB', {
+      timeZone: 'Asia/Bangkok',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+   })
+   return `Today at ${time}`
 }
 
 async function updateEmbed(btnInteraction, currentMessage, embed) {

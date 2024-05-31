@@ -12,7 +12,6 @@ module.exports = {
          if (!queue.songs[0]) {
             return interaction.reply({ content: 'Queue is empty', ephemeral: true })
          }
-         
 
          queue.songs = []
 
@@ -24,7 +23,13 @@ module.exports = {
             })
             .setColor(client.config.embedColor)
 
-         interaction.reply({ embeds: [embed] })
+         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+         setTimeout(async () => {
+            if (msg) {
+               await msg.delete().catch((e) => {})
+            }
+         }, 5000)
       } catch (e) {
          console.error(e)
       }

@@ -8,28 +8,24 @@ module.exports = {
    guildIcon: 'https://cdn.discordapp.com/icons/677858109145874433/4629b6907da872a6cb9e539541192a1b.webp',
    supportServer: 'https://discord.gg/fTuGFk9ayG',
 
-   commandsDir: './commands',
+   path: 'commands',
    embedColor: 'ff4400',
 
    activity: {
-      name: 'Meow',
+      name: 'Cốn Lào',
       state: 'Meow Meow',
       type: Activity.Playing,
    },
 
-   opt: {
+   voice: {
       maxVol: 100,
-
-      voiceConfig: {
-         leaveOnFinish: false,
-         leaveOnStop: false,
-         leaveOnEmpty: {
-            status: false,
-            cooldown: 10,
-         },
+      
+      leaveOnFinish: false,
+      leaveOnStop: false,
+      leaveOnEmpty: {
+         status: false,
+         cooldown: 10,
       },
-
-      currentMessage: null,
    },
 
    shardManager: {

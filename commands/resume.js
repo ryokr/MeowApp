@@ -19,17 +19,21 @@ module.exports = {
             return interaction.reply({ content: 'No paused music', ephemeral: true })
          }
 
-         const success = queue.resume()
+         await queue.resume()
 
-         const embed = new EmbedBuilder()
-            .setColor(client.config.embedColor)
-            .setAuthor({
-               name: 'Resumed',
-               iconURL: interaction.guild.iconURL(),
-            })
+         const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+            name: 'Resumed',
+            iconURL: interaction.guild.iconURL(),
+         })
          //.setDescription(success ? '**Resumed**' : '❌ Error: Unable to resume')
 
-         return interaction.reply({ embeds: [embed] })
+         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+         setTimeout(async () => {
+            if (msg) {
+               await msg.delete().catch((e) => {})
+            }
+         }, 5000)
       } catch (e) {
          console.error(e)
       }

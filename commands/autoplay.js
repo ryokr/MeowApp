@@ -18,7 +18,13 @@ module.exports = {
             .setTitle('Auto Meowing')
             .setDescription(queue.autoplay ? '✅   ON' : '❌   OFF')
 
-         interaction.reply({ embeds: [embed] })
+         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+         setTimeout(async () => {
+            if (msg) {
+               await msg.delete().catch((e) => {})
+            }
+         }, 5000)
       } catch (e) {
          console.error(e)
       }

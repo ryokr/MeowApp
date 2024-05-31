@@ -1,50 +1,38 @@
 const { InteractionType } = require('discord.js')
-const fs = require('fs')
+const fs = require('fs').promises
 
 module.exports = async (client, interaction) => {
    try {
-      if (!interaction?.guild) {
-         return interaction?.reply({ content: 'Rate Limited', ephemeral: true })
-      } else {
-         async function loadCommand() {
-            if (interaction?.type === InteractionType.ApplicationCommand) {
-               fs.readdir(client.config.commandsDir, (err, files) => {
-                  if (err) throw err
+      if (!interaction.guild) {
+         await interaction.reply({ content: 'Rate Limited', ephemeral: true })
+         return
+      }
 
-                  files.forEach(async (f) => {
-                     let props = require(`../.${client.config.commandsDir}/${f}`)
+      if (interaction.type === InteractionType.ApplicationCommand) {
+         const loadCommand = async (path) => {
+            try {
+               const files = await fs.readdir(path)
+               for (const file of files) {
+                  const props = require(`${path}/${file}`)
 
-                     if (interaction.commandName === props.name) {
-                        try {
-                           if (props && props.voiceChannel) {
-                              const memberVoiceChannelId = interaction?.member?.voice?.channelId
-                              const guildMeVoiceChannelId = interaction?.guild?.me?.voice?.channelId
-
-                              if (!memberVoiceChannelId) {
-                                 return interaction
-                                    ?.reply({ content: `Join Voice Channel`, ephemeral: true })
-                                    .catch(() => {})
-                              }
-
-                              if (guildMeVoiceChannelId && guildMeVoiceChannelId !== memberVoiceChannelId) {
-                                 return interaction
-                                    ?.reply({ content: `Enter Same Voice Channel`, ephemeral: true })
-                                    .catch(() => {})
-                              }
-                           }
-
-                           return props.run(client, interaction)
-                        } catch (e) {
-                           return interaction?.reply({ content: `❌ Error`, ephemeral: true })
-                        }
+                  if (interaction.commandName === props.name) {
+                     if (props.voiceChannel && !interaction.member.voice.channelId) {
+                        await interaction?.reply({ content: 'Join Voice Channel', ephemeral: true })
+                        return
                      }
-                  })
-               })
+
+                     await props.run(client, interaction)
+                     return
+                  }
+               }
+            } catch (e) {
+               console.log('❌    Load error\n', e)
             }
          }
-         await loadCommand()
+
+         await loadCommand(__dirname + '/../../commands')
       }
    } catch (e) {
-      console.error('❌ Cannot Load Commands')
+      console.log('❌    Error\n', e)
    }
 }

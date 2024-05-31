@@ -28,10 +28,18 @@ module.exports = {
             if (1 > number) return interaction.reply({ content: 'Invalid Number', ephemeral: true }).catch((e) => {})
 
             try {
-               let old = queue.songs[0]
-               await client.player.jump(interaction, number).then((song) => {
-                  return interaction.reply({ content: `Skipped : **${old.name}**` }).catch((e) => {})
-               })
+               await client.player.jump(interaction, number)
+               const embed = new EmbedBuilder()
+                  .setColor(client.config.embedColor)
+                  .setDescription(success ? `Skipped` : '❌ Queue is empty')
+
+               const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+               setTimeout(async () => {
+                  if (msg) {
+                     await msg.delete().catch((e) => {})
+                  }
+               }, 5000)
             } catch (e) {
                return interaction.reply({ content: '❌ Queue is empty', ephemeral: true }).catch((e) => {})
             }
@@ -49,7 +57,13 @@ module.exports = {
                   .setColor(client.config.embedColor)
                   .setDescription(success ? `Skipped [${old.name}](${old.url})` : '❌ Queue is empty')
 
-               return interaction.reply({ embeds: [embed] })
+               const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+               setTimeout(async () => {
+                  if (msg) {
+                     await msg.delete().catch((e) => {})
+                  }
+               }, 5000)
             } catch (e) {
                return interaction.reply({ content: '❌ Queue is empty', ephemeral: true }).catch((e) => {
                   console.log(e)

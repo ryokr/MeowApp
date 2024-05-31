@@ -10,19 +10,21 @@ module.exports = {
          if (!queue || !queue.playing)
             return interaction.reply({ content: `No music playing`, ephemeral: true }).catch((e) => {})
 
-         try {
-            queue.shuffle()
+         queue.shuffle()
 
-            const { EmbedBuilder } = require('discord.js')
-            const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
-               name: 'Queue shuffled',
-               iconURL: interaction.guild.iconURL(),
-            })
+         const { EmbedBuilder } = require('discord.js')
+         const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+            name: 'Queue shuffled',
+            iconURL: interaction.guild.iconURL(),
+         })
 
-            return interaction.reply({ embeds: [embed] })
-         } catch (err) {
-            console.log(err)
-         }
+         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+         setTimeout(async () => {
+            if (msg) {
+               await msg.delete().catch((e) => {})
+            }
+         }, 5000)
       } catch (e) {
          console.error(e)
       }

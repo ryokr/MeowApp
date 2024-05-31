@@ -37,9 +37,13 @@ module.exports = {
             })
             .setTimestamp()
 
-         interaction.reply({ embeds: [embed] }).catch((e) => {
-            console.log(e)
-         })
+         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+         setTimeout(async () => {
+            if (msg) {
+               await msg.delete().catch((e) => {})
+            }
+         }, 60000)
       } catch (e) {}
    },
 }

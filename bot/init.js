@@ -11,37 +11,37 @@ async function loadEvents(client, emitter, path) {
          emitter.on(eventName, module.bind(null, client))
          delete require.cache[require.resolve(`${path}/${file}`)]
       }
-   } catch (err) {
-      console.log(err)
+   } catch (e) {
+      console.log('At init.js\n' + e)
    }
 }
 
-async function loadCommands(client) {
+async function loadCommands(client, path) {
    client.commands = []
    try {
-      const files = await fs.readdir(client.config.commandsDir)
+      const files = await fs.readdir(path)
 
       for (const file of files) {
          try {
-            const props = require(`${client.config.commandsDir}/${file}`)
+            const props = require(`${path}/${file}`)
             client.commands.push({
                name: props.name,
                description: props.description,
                options: props.options,
             })
-         } catch (err) {
-            console.log(err)
+         } catch (e) {
+            console.log('At init.js\n' + e)
          }
       }
-   } catch (err) {
-      console.log(err)
+   } catch (e) {
+      console.log('At init.js\n' + e)
    }
 }
 
 async function botInit(client) {
-   await loadEvents(client, client, './events/discord')
-   await loadEvents(client, client.player, './events/player')
-   await loadCommands(client)
+   await loadEvents(client, client, __dirname + '/../events/discord')
+   await loadEvents(client, client.player, __dirname + '/../events/player')
+   await loadCommands(client, __dirname + '/../commands')
 }
 
 module.exports = botInit

@@ -13,10 +13,20 @@ module.exports = {
                console.log(e)
             })
          try {
-            let song = await queue.previous()
-            interaction.reply({ content: `**Meowing**` }).catch((e) => {
-               console.log(e)
+            await queue.previous()
+
+            const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+               name: 'Meowing',
+               iconURL: interaction.guild.iconURL(),
             })
+            
+            const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+
+            setTimeout(async () => {
+               if (msg) {
+                  await msg.delete().catch((e) => {})
+               }
+            }, 5000)
          } catch (e) {
             return interaction.reply({ content: `❌ No previous track`, ephemeral: true }).catch((e) => {
                console.log(e)

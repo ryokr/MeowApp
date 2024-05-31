@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, time } = require('discord.js')
 
 module.exports = {
    name: 'loop',
@@ -32,7 +32,7 @@ module.exports = {
                console.log('❌❌❌ Initial reply error\n' + e)
             })
 
-         const collector = message.createMessageComponentCollector()
+         const collector = message.createMessageComponentCollector({ time: 60000 })
 
          collector.on('collect', async (btnInteraction) => {
             if (btnInteraction.user.id !== interaction.user.id) return

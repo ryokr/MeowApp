@@ -4,6 +4,7 @@ const {
    ActionRowBuilder,
    ButtonBuilder,
    ButtonStyle,
+   time,
 } = require('discord.js')
 let selectedThumbnailURL
 
@@ -102,7 +103,7 @@ module.exports = {
             .reply(code)
             .then(async (Message) => {
                const filter = (i) => i.user.id === interaction.user.id
-               let collector = await Message.createMessageComponentCollector({ filter })
+               let collector = await Message.createMessageComponentCollector({ filter, time: 60000 })
 
                collector.on('collect', async (button) => {
                   switch (button.customId) {

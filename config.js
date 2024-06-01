@@ -19,7 +19,7 @@ module.exports = {
 
    voice: {
       maxVol: 100,
-      
+
       leaveOnFinish: false,
       leaveOnStop: false,
       leaveOnEmpty: {

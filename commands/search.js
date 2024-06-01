@@ -1,12 +1,4 @@
-const {
-   ApplicationCommandOptionType,
-   EmbedBuilder,
-   ActionRowBuilder,
-   ButtonBuilder,
-   ButtonStyle,
-   time,
-} = require('discord.js')
-let selectedThumbnailURL
+const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
 
 module.exports = {
    name: 'search',
@@ -56,7 +48,7 @@ module.exports = {
          let track_button_creator = maxTracks.map((song, index) => {
             return new ButtonBuilder()
                .setLabel(`${index + 1}`)
-               .setStyle(ButtonStyle.Secondary)
+               .setStyle('Secondary')
                .setCustomId(`${index + 1}`)
          })
 
@@ -77,7 +69,7 @@ module.exports = {
          }
 
          let cancel = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setLabel('Cancel').setStyle(ButtonStyle.Danger).setCustomId('cancel')
+            new ButtonBuilder().setLabel('Cancel').setStyle('Danger').setCustomId('cancel')
          )
 
          embed
@@ -116,13 +108,12 @@ module.exports = {
                      }
 
                      default: {
-                        selectedThumbnailURL = maxTracks[Number(button.customId) - 1].thumbnail
                         embed
                            .setAuthor({
                               name: 'Added',
                               iconURL: client.config.guildIcon,
                            })
-                           .setThumbnail(selectedThumbnailURL)
+                           .setThumbnail(maxTracks[Number(button.customId) - 1].thumbnail)
                            .setDescription(
                               `**[${res[Number(button.customId) - 1].name}](${res[Number(button.customId) - 1].url})**`
                            )
@@ -167,5 +158,3 @@ module.exports = {
       }
    },
 }
-
-module.exports.selectedThumbnailURL = selectedThumbnailURL

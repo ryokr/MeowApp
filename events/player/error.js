@@ -1,5 +1,3 @@
-module.exports = async (client, textChannel, e) => {
-   if (textChannel) {
-      console.log(e)
-   }
+module.exports = async (client, textChannel, error) => {
+   if (textChannel) console.log('❌    Errorn', error)
 }

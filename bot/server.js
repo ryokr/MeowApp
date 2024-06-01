@@ -1,7 +1,7 @@
 const express = require('express')
 
 function serverStart() {
-   const PORT = 3000
+   const PORT = 4000
    const app = express()
 
    app.get('/', (req, res) => {

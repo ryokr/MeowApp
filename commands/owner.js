@@ -22,13 +22,13 @@ module.exports = {
             })
             .setTimestamp()
 
-         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+         const msg = await interaction.reply({ embeds: [embed] }).catch(() => {})
 
          setTimeout(async () => {
             if (msg) {
-               await msg.delete().catch((e) => {})
+               await msg.delete().catch(() => {})
             }
-         }, 60000)
-      } catch (e) {}
-   },
+         }, 40000)
+      } catch {}
+   }
 }

@@ -19,7 +19,7 @@ module.exports = {
                name: 'Meowing',
                iconURL: interaction.guild.iconURL(),
             })
-            
+
             const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
 
             setTimeout(async () => {
@@ -32,8 +32,6 @@ module.exports = {
                console.log(e)
             })
          }
-      } catch (e) {
-         console.error(e)
-      }
-   },
+      } catch {}
+   }
 }

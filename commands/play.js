@@ -18,7 +18,7 @@ module.exports = {
       try {
          const name = interaction.options.getString('name')
          if (!name) {
-            return interaction.reply({ content: 'Type music name or link', ephemeral: true }).catch((e) => {})
+            return interaction.reply({ content: 'Type music name or link', ephemeral: true }).catch(() => {})
          }
 
          const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
@@ -26,7 +26,7 @@ module.exports = {
             iconURL: interaction.guild.iconURL(),
          })
 
-         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+         const msg = await interaction.reply({ embeds: [embed] }).catch(() => {})
 
          try {
             await client.player.play(interaction.member.voice.channel, name, {
@@ -34,17 +34,16 @@ module.exports = {
                textChannel: interaction.channel,
                interaction,
             })
-         } catch (e) {
+         } catch {
             embed.setDescription('❌  No results found')
-
-            await interaction.editReply({ embeds: [embed] }).catch()
+            await interaction.editReply({ embeds: [embed] }).catch(() => {})
          }
 
          setTimeout(async () => {
             if (msg) {
-               await msg.delete().catch((e) => {})
+               await msg.delete().catch(() => {})
             }
          }, 2000)
-      } catch (e) {}
+      } catch {}
    },
 }

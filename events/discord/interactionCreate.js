@@ -17,7 +17,7 @@ module.exports = async (client, interaction) => {
 
                   if (interaction.commandName === props.name) {
                      if (props.voiceChannel && !interaction.member.voice.channelId) {
-                        await interaction?.reply({ content: 'Join Voice Channel', ephemeral: true })
+                        await interaction?.reply({ content: '🥝 ⬪ Join Voice Channel', ephemeral: true })
                         return
                      }
 

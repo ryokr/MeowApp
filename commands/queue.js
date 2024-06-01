@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js')
 
 module.exports = {
    name: 'queue',
@@ -35,9 +35,9 @@ module.exports = {
 
          const backButton = new ButtonBuilder()
             .setLabel('Previous Page')
-            .setStyle(ButtonStyle.Danger)
+            .setStyle('Danger')
             .setCustomId(backId)
-         const nextButton = new ButtonBuilder().setLabel('Next Page').setStyle(ButtonStyle.Danger).setCustomId(nextId)
+         const nextButton = new ButtonBuilder().setLabel('Next Page').setStyle('Danger').setCustomId(nextId)
 
          let pageLength = 10
          let page = 1

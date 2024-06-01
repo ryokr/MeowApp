@@ -38,8 +38,8 @@ module.exports = async (client, oldState, newState) => {
             } else {
                await queue.resume()
             }
-         } catch (e) {
-            console.error(`${isMuted ? 'Pause' : 'Resume'} failed\n`, e)
+         } catch {
+            console.log('❌    Queue state error')
          }
       }
    }

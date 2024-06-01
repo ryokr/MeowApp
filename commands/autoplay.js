@@ -8,7 +8,7 @@ module.exports = {
       try {
          const queue = client.player.getQueue(interaction.guild.id)
          if (!queue || !queue.playing)
-            return interaction.reply({ content: `No music playing`, ephemeral: true }).catch((e) => {})
+            return interaction.reply({ content: `No music playing`, ephemeral: true }).catch(() => {})
 
          queue.toggleAutoplay()
 
@@ -22,11 +22,11 @@ module.exports = {
 
          setTimeout(async () => {
             if (msg) {
-               await msg.delete().catch((e) => {})
+               await msg.delete().catch(() => {})
             }
          }, 5000)
       } catch (e) {
-         console.error(e)
+         console.log(e)
       }
    },
 }

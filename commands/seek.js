@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType } = require('discord.js')
+const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
 
 module.exports = {
    name: 'seek',
@@ -36,11 +36,11 @@ module.exports = {
             iconURL: interaction.guild.iconURL(),
          })
 
-         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
+         const msg = await interaction.reply({ embeds: [embed] }).catch((e) => { })
 
          setTimeout(async () => {
             if (msg) {
-               await msg.delete().catch((e) => {})
+               await msg.delete().catch((e) => { })
             }
          }, 5000)
       } catch (error) {

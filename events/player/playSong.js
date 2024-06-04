@@ -1,7 +1,7 @@
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder } = require('discord.js')
+
 module.exports = async (client, queue, song) => {
    if (queue && queue.textChannel) {
-      const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
-
       const embed = new EmbedBuilder()
          .setColor(client.config.embedColor)
          .setThumbnail(song.thumbnail)
@@ -13,18 +13,27 @@ module.exports = async (client, queue, song) => {
          )
          .setFooter({ text: `🌱 ⬪ ${song.user.tag} ⬪ ${getTime()}`, iconURL: song.user.avatarURL() })
 
-      const buttons = new ActionRowBuilder().addComponents(
-         new ButtonBuilder().setCustomId('playerShuffle').setLabel('Shuffle').setStyle('Secondary'),
-         new ButtonBuilder().setCustomId('playerPrevious').setLabel('Previous').setStyle('Secondary'),
-         new ButtonBuilder().setCustomId('playerStop').setLabel('Stop').setStyle('Danger'),
-         new ButtonBuilder().setCustomId('playerSkip').setLabel('Skip').setStyle('Secondary'),
-         new ButtonBuilder().setCustomId('playerLoop').setLabel('Loop').setStyle('Secondary')
+      const buttons1 = new ActionRowBuilder().addComponents(
+         new ButtonBuilder({ custom_id: 'playerShuffle', label: 'Shuffle' }).setStyle('Secondary'),
+         new ButtonBuilder({ custom_id: 'playerPrev', label: 'Previous' }).setStyle('Secondary'),
+         new ButtonBuilder({ custom_id: 'playerStop', label: 'Stop' }).setStyle('Danger'),
+         new ButtonBuilder({ custom_id: 'playerSkip', label: 'Skip' }).setStyle('Secondary'),
+         new ButtonBuilder({ custom_id: 'playerLoop', label: 'Loop' }).setStyle('Secondary'),
+         
       )
 
-      const currentMsg = await queue.textChannel.send({ embeds: [embed], components: [buttons] }).catch(() => {})
+      const buttons2 = new ActionRowBuilder().addComponents(
+         new ButtonBuilder({ custom_id: '1', label: '▬▬ From Pooba Saga'}).setStyle('Secondary').setDisabled(true),
+         new ButtonBuilder({ custom_id: '2', label: 'With Luv <3 ▬▬'}).setStyle('Secondary').setDisabled(true),
+         new ButtonBuilder({ custom_id: 'playerAdd', label: 'Add',}).setStyle('Success'),
+      )
+
+      const currentMsg = await queue.textChannel.send({ embeds: [embed], components: [buttons1, buttons2] }).catch(() => {})
       const collector = currentMsg.createMessageComponentCollector()
 
-      collector.on('collect', async (button) => {
+      collector.on('collect', async (interaction) => {
+         if (!interaction.isButton()) return
+
          const embed = EmbedBuilder.from(currentMsg.embeds[0])
 
          const actions = {
@@ -35,7 +44,7 @@ module.exports = async (client, queue, song) => {
                   iconURL: song.user.avatarURL(),
                })
             },
-            playerPrevious: async () => {
+            playerPrev: async () => {
                try {
                   await queue.previous()
                } catch {
@@ -54,7 +63,7 @@ module.exports = async (client, queue, song) => {
                   await queue.skip()
                } catch {
                   embed.setFooter({
-                     text: `🌸 ⬪ No song ⬪ ${song.user.tag} ⬪ ${getTime()}`,
+                     text: `🥕 ⬪ No song ⬪ ${song.user.tag} ⬪ ${getTime()}`,
                      iconURL: song.user.avatarURL(),
                   })
                }
@@ -68,14 +77,55 @@ module.exports = async (client, queue, song) => {
                   iconURL: song.user.avatarURL(),
                })
             },
+            playerAdd: async () => {
+               const modal = new ModalBuilder().setCustomId('playerAddModal').setTitle('Add Music')
+
+               const musicInput = new TextInputBuilder()
+                  .setCustomId('songName')
+                  .setLabel('Name')
+                  .setStyle('Short')
+                  .setPlaceholder('Enter music name')
+                  .setRequired(true)
+
+               modal.addComponents(new ActionRowBuilder().addComponents(musicInput))
+
+               await interaction.showModal(modal)
+
+               embed.setFooter({
+                  text: `🦚 ⬪ Added ⬪ ${song.user.tag} ⬪ ${getTime()}`,
+                  iconURL: song.user.avatarURL(),
+               })
+            },
          }
 
-         const action = actions[button.customId]
+         const action = actions[interaction.customId]
          if (action) {
             await action().catch(() => {})
-            if (button.customId !== 'playerStop') {
-               updateEmbed(button, currentMsg, embed)
+            if (interaction.customId !== 'playerStop') {
+               updateEmbed(interaction, currentMsg, embed)
             }
+         }
+      })
+
+      client.on('interactionCreate', async (interaction) => {
+         if (!interaction.isModalSubmit()) return
+
+         if (interaction.customId === 'playerAddModal') {
+            const songName = interaction.fields.getTextInputValue('songName')
+            const member = interaction.member
+            const voiceChannel = member.voice.channel
+            let msg = null
+
+            if (!voiceChannel) msg = await interaction.reply({ content: 'Join voice channel' }).catch(() => {})
+
+            msg = await interaction.reply({ content: 'Meowing' }).catch(() => {})
+            await client.player.play(voiceChannel, songName, { member }).catch(() => {})
+
+            setTimeout(async () => {
+               if (msg) {
+                  await msg.delete().catch(() => {})
+               }
+            }, 1000)
          }
       })
 
@@ -93,6 +143,6 @@ function getTime() {
    return `Today at ${time}`
 }
 
-async function updateEmbed(button, currentMsg, embed) {
-   await Promise.all([currentMsg.edit({ embeds: [embed] }), button.deferUpdate()]).catch(() => {})
+async function updateEmbed(interaction, currentMsg, embed) {
+   await Promise.all([currentMsg.edit({ embeds: [embed] }), interaction.deferUpdate()]).catch(() => {})
 }

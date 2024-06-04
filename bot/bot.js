@@ -18,8 +18,6 @@ client.player = new DisTube(client, {
    leaveOnStop: config.voice.leaveOnStop,
    leaveOnFinish: config.voice.leaveOnFinish,
    leaveOnEmpty: config.voice.leaveOnEmpty.status,
-   emitNewSongOnly: false,
-   emitAddSongWhenCreatingQueue: false,
    plugins: [new YtDlpPlugin()],
 })
 

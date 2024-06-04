@@ -14,7 +14,7 @@ module.exports = {
    activity: {
       name: process.env.NAME || 'Cốn Lào',
       state: 'Meow Meow',
-      type: Activity.Playing,
+      type: Activity.Watching,
    },
 
    voice: {

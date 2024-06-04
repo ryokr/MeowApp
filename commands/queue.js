@@ -33,10 +33,7 @@ module.exports = {
          const backId = 'emojiBack'
          const nextId = 'emojiNext'
 
-         const backButton = new ButtonBuilder()
-            .setLabel('Previous Page')
-            .setStyle('Danger')
-            .setCustomId(backId)
+         const backButton = new ButtonBuilder().setLabel('Previous Page').setStyle('Danger').setCustomId(backId)
          const nextButton = new ButtonBuilder().setLabel('Next Page').setStyle('Danger').setCustomId(nextId)
 
          let pageLength = 10
@@ -105,13 +102,7 @@ module.exports = {
                   })
                })
                collector.on('end', async () => {
-                  await interaction
-                     .editReply({
-                        components: [],
-                     })
-                     .catch((e) => {
-                        console.log(e)
-                     })
+                  await interaction.editReply({ components: [] }).catch(() => {})
                })
             })
             .catch((e) => {

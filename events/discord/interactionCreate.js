@@ -29,8 +29,25 @@ module.exports = async (client, interaction) => {
                console.log('❌    Load error\n', e)
             }
          }
-
          await loadCommand(__dirname + '/../../commands')
+      }
+
+      if (interaction.isModalSubmit() && interaction.customId === 'playerAddModal') {
+         const songName = interaction.fields.getTextInputValue('songName')
+         const member = interaction.member
+         const voiceChannel = member.voice.channel
+         let msg = null
+
+         if (!voiceChannel) msg = await interaction.reply({ content: 'Join voice channel' }).catch(() => {})
+
+         msg = await interaction.reply({ content: 'Meowing' }).catch(() => {})
+         await client.player.play(voiceChannel, songName, { member }).catch(() => {})
+
+         setTimeout(async () => {
+            if (msg) {
+               await msg.delete().catch(() => {})
+            }
+         }, 1000)
       }
    } catch (e) {
       console.log('❌    Error\n', e)

@@ -39,9 +39,9 @@ async function loadCommands(client, path) {
 }
 
 async function botInit(client) {
-   await loadEvents(client, client, __dirname + '/../events/discord')
-   await loadEvents(client, client.player, __dirname + '/../events/player')
-   await loadCommands(client, __dirname + '/../commands')
+   await loadEvents(client, client, __dirname + '/../Events/Discord')
+   await loadEvents(client, client.player, __dirname + '/../Events/Player')
+   await loadCommands(client, __dirname + '/../Commands')
 }
 
 module.exports = botInit

@@ -1,7 +1,9 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder } = require('discord.js')
+const Function = require('../../Function')
 
 module.exports = async (client, queue, song) => {
    if (queue && queue.textChannel) {
+      const Meower = new Function()
       const embed = new EmbedBuilder()
          .setColor(client.config.embedColor)
          .setThumbnail(song.thumbnail)
@@ -11,10 +13,10 @@ module.exports = async (client, queue, song) => {
             { name: 'Duration', value: `${song.formattedDuration}`, inline: true },
             { name: 'Author', value: `${song.uploader.name}`, inline: true }
          )
-         .setFooter({ text: `🌱 ⬪ ${song.user.tag} ⬪ ${getTime()}`, iconURL: song.user.avatarURL() })
+         .setFooter({ text: `🌱 ⬪ ${song.user.tag} ⬪ ${Meower.getTime()}`, iconURL: song.user.avatarURL() })
 
-      const buttons1 = new ActionRowBuilder().addComponents(
-         new ButtonBuilder({ custom_id: 'playerShuffle', label: 'Shuffle' }).setStyle('Secondary'),
+      const row1 = new ActionRowBuilder().addComponents(
+         new ButtonBuilder({ custom_id: 'playerShuf', label: 'Shuffle' }).setStyle('Secondary'),
          new ButtonBuilder({ custom_id: 'playerPrev', label: 'Previous' }).setStyle('Secondary'),
          new ButtonBuilder({ custom_id: 'playerStop', label: 'Stop' }).setStyle('Danger'),
          new ButtonBuilder({ custom_id: 'playerSkip', label: 'Skip' }).setStyle('Secondary'),
@@ -22,13 +24,13 @@ module.exports = async (client, queue, song) => {
          
       )
 
-      const buttons2 = new ActionRowBuilder().addComponents(
-         new ButtonBuilder({ custom_id: '1', label: '▬▬ From Pooba Saga'}).setStyle('Secondary').setDisabled(true),
-         new ButtonBuilder({ custom_id: '2', label: 'With Luv <3 ▬▬'}).setStyle('Secondary').setDisabled(true),
+      const row2 = new ActionRowBuilder().addComponents(
+         new ButtonBuilder({ custom_id: '111111111', label: '▬▬ From Pooba Saga'}).setStyle('Secondary').setDisabled(true),
          new ButtonBuilder({ custom_id: 'playerAdd', label: 'Add',}).setStyle('Success'),
+         new ButtonBuilder({ custom_id: '222222222', label: 'With Luv <3 ▬▬'}).setStyle('Secondary').setDisabled(true),
       )
 
-      const currentMsg = await queue.textChannel.send({ embeds: [embed], components: [buttons1, buttons2] }).catch(() => {})
+      const currentMsg = await queue.textChannel.send({ embeds: [embed], components: [row1, row2] }).catch(() => {})
       const collector = currentMsg.createMessageComponentCollector()
 
       collector.on('collect', async (interaction) => {
@@ -37,10 +39,10 @@ module.exports = async (client, queue, song) => {
          const embed = EmbedBuilder.from(currentMsg.embeds[0])
 
          const actions = {
-            playerShuffle: async () => {
+            playerShuf: async () => {
                await queue.shuffle()
                embed.setFooter({
-                  text: `🌱 ⬪ Shuffled ⬪ ${song.user.tag} ⬪ ${getTime()}`,
+                  text: `🌱 ⬪ Shuffled ⬪ ${song.user.tag} ⬪ ${Meower.getTime()}`,
                   iconURL: song.user.avatarURL(),
                })
             },
@@ -49,7 +51,7 @@ module.exports = async (client, queue, song) => {
                   await queue.previous()
                } catch {
                   embed.setFooter({
-                     text: `🌸 ⬪ No song ⬪ ${song.user.tag} ⬪ ${getTime()}`,
+                     text: `🌸 ⬪ No song ⬪ ${song.user.tag} ⬪ ${Meower.getTime()}`,
                      iconURL: song.user.avatarURL(),
                   })
                }
@@ -63,17 +65,17 @@ module.exports = async (client, queue, song) => {
                   await queue.skip()
                } catch {
                   embed.setFooter({
-                     text: `🥕 ⬪ No song ⬪ ${song.user.tag} ⬪ ${getTime()}`,
+                     text: `🥕 ⬪ No song ⬪ ${song.user.tag} ⬪ ${Meower.getTime()}`,
                      iconURL: song.user.avatarURL(),
                   })
                }
             },
             playerLoop: async () => {
-               const isLooping = queue.repeatMode === 2
-               await queue.setRepeatMode(isLooping ? 0 : 2)
-               const loopStatus = isLooping ? 'Loop off' : 'Looping'
+               const isLoop = queue.repeatMode === 2
+               await queue.setRepeatMode(isLoop ? 0 : 2)
+               const loopStatus = isLoop ? 'Loop off' : 'Looping'
                embed.setFooter({
-                  text: `🌱 ⬪ ${loopStatus} ⬪ ${song.user.tag} ⬪ ${getTime()}`,
+                  text: `🌱 ⬪ ${loopStatus} ⬪ ${song.user.tag} ⬪ ${Meower.getTime()}`,
                   iconURL: song.user.avatarURL(),
                })
             },
@@ -88,11 +90,10 @@ module.exports = async (client, queue, song) => {
                   .setRequired(true)
 
                modal.addComponents(new ActionRowBuilder().addComponents(musicInput))
-
                await interaction.showModal(modal)
 
                embed.setFooter({
-                  text: `🦚 ⬪ Added ⬪ ${song.user.tag} ⬪ ${getTime()}`,
+                  text: `🦚 ⬪ Added ⬪ ${song.user.tag} ⬪ ${Meower.getTime()}`,
                   iconURL: song.user.avatarURL(),
                })
             },
@@ -102,25 +103,11 @@ module.exports = async (client, queue, song) => {
          if (action) {
             await action().catch(() => {})
             if (interaction.customId !== 'playerStop') {
-               updateEmbed(interaction, currentMsg, embed)
+               Meower.updateEmbed(interaction, currentMsg, embed)
             }
          }
       })
 
       queue.lastPlayingMessage = currentMsg
    }
-}
-
-function getTime() {
-   const time = new Date().toLocaleString('en-GB', {
-      timeZone: 'Asia/Bangkok',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-   })
-   return `Today at ${time}`
-}
-
-async function updateEmbed(interaction, currentMsg, embed) {
-   await Promise.all([currentMsg.edit({ embeds: [embed] }), interaction.deferUpdate()]).catch(() => {})
 }

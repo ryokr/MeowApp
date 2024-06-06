@@ -14,7 +14,7 @@ module.exports = {
 
          const { EmbedBuilder } = require('discord.js')
          const embed = new EmbedBuilder()
-            .setColor(client.config.embedColor)
+            .setColor(client.config.player.embedColor)
             .setThumbnail(song.thumbnail)
             .setAuthor({
                name: 'Now Playing',

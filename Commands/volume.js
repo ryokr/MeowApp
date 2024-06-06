@@ -50,7 +50,7 @@ module.exports = {
          const success = queue.setVolume(vol)
 
          if (success) {
-            const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+            const embed = new EmbedBuilder().setColor(client.config.player.embedColor).setAuthor({
                name: `Volume adjusted: ${vol}/${maxVol}`,
                iconURL:
                   'https://cdn.discordapp.com/attachments/1156866389819281418/1157528025739563088/5657-volume-icon.png?ex=6518ef7b&is=65179dfb&hm=1797c2830537a28b5c6a57564517cc509146d02383a69fb4239d7b5d55aceeed&',

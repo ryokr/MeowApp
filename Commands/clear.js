@@ -21,7 +21,7 @@ module.exports = {
                name: 'Queue cleared',
                iconURL: interaction.guild.iconURL(),
             })
-            .setColor(client.config.embedColor)
+            .setColor(client.config.player.embedColor)
 
          const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
 

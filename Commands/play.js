@@ -22,7 +22,7 @@ module.exports = {
       }
 
       const embed = new EmbedBuilder()
-         .setColor(client.config.embedColor)
+         .setColor(client.config.player.embedColor)
          .setAuthor({ name: 'Meowing', iconURL: interaction.guild.iconURL() })
 
       const msg = await interaction.reply({ embeds: [embed] }).catch(() => {})

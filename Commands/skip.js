@@ -30,7 +30,7 @@ module.exports = {
             try {
                await client.player.jump(interaction, number)
                const embed = new EmbedBuilder()
-                  .setColor(client.config.embedColor)
+                  .setColor(client.config.player.embedColor)
                   .setDescription(success ? `Skipped` : '❌ Queue is empty')
 
                const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})
@@ -54,7 +54,7 @@ module.exports = {
                const success = await queue.skip()
 
                const embed = new EmbedBuilder()
-                  .setColor(client.config.embedColor)
+                  .setColor(client.config.player.embedColor)
                   .setDescription(success ? `Skipped [${old.name}](${old.url})` : '❌ Queue is empty')
 
                const msg = await interaction.reply({ embeds: [embed] }).catch((e) => {})

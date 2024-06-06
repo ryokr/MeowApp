@@ -11,7 +11,7 @@ module.exports = {
          const queue = client.player.getQueue(interaction.guild.id)
 
          const embed = new EmbedBuilder()
-            .setColor(client.config.embedColor)
+            .setColor(client.config.player.embedColor)
             .setAuthor({
                name: 'Commands',
                iconURL: interaction.guild.iconURL(),

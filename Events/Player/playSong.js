@@ -5,7 +5,7 @@ module.exports = async (client, queue, song) => {
    if (queue && queue.textChannel) {
       const Meower = new Function()
       const embed = new EmbedBuilder()
-         .setColor(client.config.embedColor)
+         .setColor(client.config.player.embedColor)
          .setThumbnail(song.thumbnail)
          .setImage(client.config.player.image)
          .setAuthor({ name: 'Now Playing • 🍕', iconURL: client.config.guildIcon })

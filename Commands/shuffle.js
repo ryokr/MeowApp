@@ -13,7 +13,7 @@ module.exports = {
          queue.shuffle()
 
          const { EmbedBuilder } = require('discord.js')
-         const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+         const embed = new EmbedBuilder().setColor(client.config.player.embedColor).setAuthor({
             name: 'Queue shuffled',
             iconURL: interaction.guild.iconURL(),
          })

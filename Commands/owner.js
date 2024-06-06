@@ -9,7 +9,7 @@ module.exports = {
          const { EmbedBuilder } = require('discord.js')
 
          const embed = new EmbedBuilder()
-            .setColor(client.config.embedColor)
+            .setColor(client.config.player.embedColor)
             .setAuthor({
                name: interaction.guild.name,
                iconURL: interaction.guild.iconURL(),

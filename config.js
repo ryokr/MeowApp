@@ -9,9 +9,8 @@ module.exports = {
    guildIcon: 'https://cdn.discordapp.com/icons/677858109145874433/4629b6907da872a6cb9e539541192a1b.webp',
    supportServer: 'https://discord.gg/fTuGFk9ayG',
 
-   embedColor: 'ff4400',
-
    player: {
+      embedColor: 'ff4400',
       image: 'https://cdn.discordapp.com/attachments/1236634193019277322/1248307544804294666/electro.jpg?ex=6663307f&is=6661deff&hm=c5ba2c34127bcfc34aeb1acd9fbb4a2d0e0300b4d8f20915d42d87f531cfc8dc&',
    },
 

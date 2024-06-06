@@ -14,7 +14,7 @@ module.exports = {
 
          const { EmbedBuilder } = require('discord.js')
          const embed = new EmbedBuilder()
-            .setColor(client.config.embedColor)
+            .setColor(client.config.player.embedColor)
             .setTitle('Auto Meowing')
             .setDescription(queue.autoplay ? '✅   ON' : '❌   OFF')
 

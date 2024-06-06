@@ -49,7 +49,7 @@ module.exports = {
                })
             return (
                new EmbedBuilder()
-                  .setColor(client.config.embedColor)
+                  .setColor(client.config.player.embedColor)
                   // .setThumbnail(queue.songs[0].thumbnail)
                   .setAuthor({
                      name: 'Queue • 🌱',

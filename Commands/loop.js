@@ -23,7 +23,7 @@ module.exports = {
          )
 
          const embed = new EmbedBuilder()
-            .setColor(client.config.embedColor)
+            .setColor(client.config.player.embedColor)
             .setAuthor({ name: 'Looping', iconURL: interaction.guild.iconURL() })
 
          const message = await interaction

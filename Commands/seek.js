@@ -31,7 +31,7 @@ module.exports = {
 
          queue.seek(position)
 
-         const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+         const embed = new EmbedBuilder().setColor(client.config.player.embedColor).setAuthor({
             name: 'Seeked',
             iconURL: interaction.guild.iconURL(),
          })

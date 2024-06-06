@@ -15,7 +15,7 @@ module.exports = {
          try {
             await queue.previous()
 
-            const embed = new EmbedBuilder().setColor(client.config.embedColor).setAuthor({
+            const embed = new EmbedBuilder().setColor(client.config.player.embedColor).setAuthor({
                name: 'Meowing',
                iconURL: interaction.guild.iconURL(),
             })

@@ -1,8 +1,8 @@
 const { Activity } = require('discord.js')
 
 module.exports = {
-   TOKEN: process.env.TOKEN,
-   
+   TOKEN: process.env.token,
+
    ownerID: '677857271530651649',
    guildID: '677858109145874433',
    ownerIcon: 'https://cdn.discordapp.com/avatars/677857271530651649/21fbd6baf54a8f9e82bfe61071b86c79.webp',
@@ -12,9 +12,9 @@ module.exports = {
    embedColor: 'ff4400',
 
    activity: {
-      name: process.env.NAME || 'Meow Meow',
-      state: 'Meow Meow',
-      type: Activity.Watching,
+      name: process.env.name || 'Meow',
+      state: process.env.state || 'Meow Meow',
+      type: process.env.type || Activity.Watching,
    },
 
    voice: {

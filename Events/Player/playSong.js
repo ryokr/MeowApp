@@ -7,6 +7,7 @@ module.exports = async (client, queue, song) => {
       const embed = new EmbedBuilder()
          .setColor(client.config.embedColor)
          .setThumbnail(song.thumbnail)
+         .setImage(client.config.player.image)
          .setAuthor({ name: 'Now Playing • 🍕', iconURL: client.config.guildIcon })
          .setDescription(`**[${song.name}](${song.url})**`)
          .addFields(

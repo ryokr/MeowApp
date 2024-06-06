@@ -11,6 +11,10 @@ module.exports = {
 
    embedColor: 'ff4400',
 
+   player: {
+      image: 'https://cdn.discordapp.com/attachments/1236634193019277322/1248307544804294666/electro.jpg?ex=6663307f&is=6661deff&hm=c5ba2c34127bcfc34aeb1acd9fbb4a2d0e0300b4d8f20915d42d87f531cfc8dc&',
+   },
+
    activity: {
       name: process.env.name || 'Meow',
       state: process.env.state || 'Meow Meow',

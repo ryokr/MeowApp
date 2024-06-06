@@ -1,4 +1,4 @@
-const config = require('./config')
+const config = require('./config.js')
 
 if (config.shardManager.shardStatus) {
    const { ShardingManager } = require('discord.js')

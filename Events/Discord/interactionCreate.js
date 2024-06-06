@@ -29,7 +29,7 @@ module.exports = async (client, interaction) => {
                console.log('❌    Load error\n', e)
             }
          }
-         await loadCommand(__dirname + '/../../commands')
+         await loadCommand(__dirname + '/../../Commands')
       }
 
       if (interaction.isModalSubmit() && interaction.customId === 'playerAddModal') {

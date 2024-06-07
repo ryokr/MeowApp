@@ -25,13 +25,13 @@ module.exports = async (client, queue, song) => {
          
       )
 
-      // const row2 = new ActionRowBuilder().addComponents(
-      //    new ButtonBuilder({ custom_id: '111111111', label: '▬▬ From Pooba Saga'}).setStyle('Secondary').setDisabled(true),
-      //    new ButtonBuilder({ custom_id: 'playerAdd', label: 'Add',}).setStyle('Success'),
-      //    new ButtonBuilder({ custom_id: '222222222', label: 'With Luv <3 ▬▬'}).setStyle('Secondary').setDisabled(true),
-      // )
+      const row2 = new ActionRowBuilder().addComponents(
+         new ButtonBuilder({ custom_id: '111111111', label: '▬▬ From Pooba Saga'}).setStyle('Secondary').setDisabled(true),
+         new ButtonBuilder({ custom_id: 'playerAdd', label: 'Add',}).setStyle('Success'),
+         new ButtonBuilder({ custom_id: '222222222', label: 'With Luv <3 ▬▬'}).setStyle('Secondary').setDisabled(true),
+      )
 
-      const currentMsg = await queue.textChannel.send({ embeds: [embed], components: [row1] }).catch(() => {})
+      const currentMsg = await queue.textChannel.send({ embeds: [embed], components: [row1, row2] }).catch(() => {})
       const collector = currentMsg.createMessageComponentCollector()
 
       collector.on('collect', async (interaction) => {

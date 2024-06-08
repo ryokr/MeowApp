@@ -1,0 +1,27 @@
+{
+   "name": "musicbot",
+   "version": "4.0.0",
+   "author": "RyoKr",
+   "license": "MIT",
+   "description": "Meowing Music",
+   "main": "index.js",
+   "dependencies": {
+      "@discordjs/builders": "^1.6.5",
+      "@discordjs/opus": "^0.9.0",
+      "@discordjs/rest": "^1.7.1",
+      "@discordjs/voice": "^0.16.0",
+      "@distube/yt-dlp": "^1.1.3",
+      "discord-api-types": "^0.37.56",
+      "discord.js": "^14.13.0",
+      "distube": "^4.0.6",
+      "express": "^4.18.2",
+      "husky": "^9.0.11",
+      "libsodium-wrappers": "^0.7.11"
+   },
+   "engines": {
+      "node": "18.20.2"
+   },
+   "scripts": {
+      "start": "node index.js"
+   }
+}

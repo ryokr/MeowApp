@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { deleteMessage } = require('../Function')
+const { deleteMessage, formatTime, capFirstChar } = require('../Function')
 
 module.exports = {
    name: 'nowplaying',
@@ -10,7 +10,8 @@ module.exports = {
       try {
          const queue = client.player.getQueue(interaction.guild.id)
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
-
+         const loopMode = ['Off', 'Track', 'Queue']
+         
          if (!queue || !queue.playing) {
             embed.setDescription('No music playing')
          } else {
@@ -20,15 +21,18 @@ module.exports = {
                .setAuthor({ name: 'Now Playing', iconURL: interaction.guild.iconURL() })
                .setDescription(`**[${song.name}](${song.url})**`)
                .addFields(
-                  { name: 'Duration', value: `${song.formattedDuration}`, inline: true },
+                  { name: 'Duration', value: `${formatTime(song.formattedDuration)}`, inline: true },
+                  { name: 'Current time', value: `${formatTime(queue.formattedCurrentTime)}`, inline: true },
                   { name: 'Author', value: `${song.uploader.name}`, inline: true },
                   { name: 'Volume', value: `${queue.volume}`, inline: true },
-                  { name: 'Loop Mode', value: `${queue.repeatMode ? (queue.repeatMode === 2 ? 'Queue' : 'This Song') : 'Off'}`, inline: true,}
+                  { name: 'Loop Mode', value: `${loopMode[queue.repeatMode]}`, inline: true,},
+                  { name: 'Requested by', value: `<@${song.user.id}>`, inline: true,},
                )
-               .setFooter({ text: `🌱 • ${song.user.tag}`, iconURL: song.user.avatarURL() })
+               .setFooter({ text: `🌱 • ${capFirstChar(song.user.tag)}`, iconURL: song.user.avatarURL() })
+               .setTimestamp()
          }
 
-         deleteMessage(await interaction.reply({ embeds: [embed] }), 40000)
+         deleteMessage(await interaction.reply({ embeds: [embed] }), 100000)
       } catch {}
    }
 }

@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder } = require('discord.js')
-const { capFirstChar, getDuration, updateEmbed } = require('../../Function')
+const { capFirstChar, formatTime, updateEmbed } = require('../../Function')
 
 module.exports = async (client, queue, song) => {
    if (queue && queue.textChannel) {
@@ -9,9 +9,9 @@ module.exports = async (client, queue, song) => {
          .setColor(client.config.player.embedColor)
          .setThumbnail(client.config.player.gif)
          .setImage(song.thumbnail)
-         .setAuthor({ name: '────・ L I V E 💖・────', iconURL: queue.textChannel.guild.iconURL() })
-         .setDescription(`**[${song.name}](${song.url})**\n${song.uploader.name}・${getDuration(song.formattedDuration)}`)
-         .setFooter({ text: `🐸 • ${username}`, iconURL: song.user.avatarURL() })
+         .setAuthor({ name: '─────・ L I V E 💖・─────', iconURL: queue.textChannel.guild.iconURL() })
+         .setDescription(`**[${song.name}](${song.url})**\n${song.uploader.name}・${formatTime(song.formattedDuration)}`)
+         .setFooter({ text: `🌱 • ${username}`, iconURL: song.user.avatarURL() })
          .setTimestamp()
 
       // Primary = 1, Secondary = 2, Success = 3, Danger = 4, Link = 5
@@ -60,9 +60,12 @@ module.exports = async (client, queue, song) => {
                }
             },
             playerLoop: async () => {
-               const isLoop = queue.repeatMode === 2
-               await queue.setRepeatMode(isLoop ? 0 : 2)
-               embed.setFooter({ text: `🥝 • ${isLoop ? 'Loop off' : 'Looping'} • ${username}`, iconURL: song.user.avatarURL() })
+               const loopMode = ['Loop off', 'Loop track', 'Loop queue']
+
+               if (queue.repeatMode === 2) await queue.setRepeatMode(0)
+               else await queue.setRepeatMode(queue.repeatMode + 1)
+
+               embed.setFooter({ text: `🥝 • ${loopMode[queue.repeatMode]} • ${username}`, iconURL: song.user.avatarURL() })
             },
             playerAdd: async () => {
                const modal = new ModalBuilder().setCustomId('playerAddModal').setTitle('Add Music')

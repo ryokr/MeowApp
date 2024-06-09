@@ -13,7 +13,7 @@ module.exports = {
    activity: {
       name: process.env.name || 'Meow Meow',
       state: process.env.state || 'From Pooba Saga With 💖',
-      type: parseInt(process.env.type) || 3,
+      type: parseInt(process.env.type) || 0,
    },
 
    voice: {

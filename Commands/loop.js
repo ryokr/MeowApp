@@ -74,5 +74,5 @@ module.exports = {
       } catch {
          console.log('❌    Loop Error')
       }
-   },
+   }
 }

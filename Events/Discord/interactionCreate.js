@@ -1,5 +1,6 @@
-const { InteractionType } = require('discord.js')
+const { EmbedBuilder, InteractionType } = require('discord.js')
 const fs = require('fs').promises
+const { playMusic, deleteMessage } = require('../../Function')
 
 module.exports = async (client, interaction) => {
    try {
@@ -17,10 +18,9 @@ module.exports = async (client, interaction) => {
 
                   if (interaction.commandName === props.name) {
                      if (props.voiceChannel && !interaction.member.voice.channelId) {
-                        await interaction?.reply({ content: '🥝 ⬪ Join Voice Channel', ephemeral: true })
+                        await interaction?.reply({ content: 'Join Voice Channel', ephemeral: true })
                         return
                      }
-
                      await props.run(client, interaction)
                      return
                   }
@@ -33,19 +33,19 @@ module.exports = async (client, interaction) => {
       }
 
       if (interaction.isModalSubmit() && interaction.customId === 'playerAddModal') {
+         const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
          const songName = interaction.fields.getTextInputValue('songName')
-         const member = interaction.member
-         const voiceChannel = member.voice.channel
-         let msg = null
 
-         if (!voiceChannel) msg = await interaction.reply({ content: 'Join voice channel' })
+         if (!interaction.member.voice.channel) {
+            embed.setDescription('Join voice channel')
+            deleteMessage(await interaction.reply({ embeds: [embed]}), 500)
+         } else {
+            embed.setDescription('Meowing')
+            const msg = await interaction.reply({ embeds: [embed] })
 
-         msg = await interaction.reply({ content: 'Meowing' })
-         await client.player.play(voiceChannel, songName, { member })
-
-         setTimeout(async () => {
-            if (msg) await msg.delete()
-         }, 1000)
+            await playMusic(client, interaction, songName)
+            deleteMessage(msg, 500)
+         }
       }
    } catch (e) {
       console.log('❌    Error\n', e)

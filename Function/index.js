@@ -1,13 +1,40 @@
+const { DisTubeHandler, Playlist } = require('distube')
+
 module.exports = {
-   getVideoUrls,
+   playMusic,
    getSecond,
    deleteMessage,
    capFirstChar,
-   getDuration,
+   formatTime,
    getTime,
    updateEmbed,
 }
 
+async function playMusic(client, interaction, name) {
+   if (!name.includes('list=RD')) {
+      playSong(client, interaction, name)
+   } else {
+      const listUrl = await getVideoUrls(name)
+      const first = listUrl.shift()
+      playSong(client, interaction, first)
+
+      const distube = new DisTubeHandler(client.player)
+      const songs = []
+
+      for (const url of listUrl) {
+         songs.push(await distube.resolve(url))
+      }
+      const list = new Playlist(songs)
+      playSong(client, interaction, list)
+   }
+}
+async function playSong(client, interaction, name) {
+   await client.player.play(interaction.member.voice.channel, name, {
+      member: interaction.member,
+      textChannel: interaction.channel,
+      interaction,
+   })
+}
 async function getVideoUrls(url) {
    try {
       const response = await fetch(url)
@@ -59,7 +86,7 @@ function capFirstChar(string) {
    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 }
 
-function getDuration(duration) {
+function formatTime(duration) {
    const parts = duration.split(':').map(Number)
 
    if (parts.length === 3) {

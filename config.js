@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 module.exports = {
    TOKEN: process.env.token,
 
@@ -23,7 +25,7 @@ module.exports = {
       leaveOnStop: process.env.leave || false,
       leaveOnEmpty: {
          status: process.env.leave || false,
-         cooldown: 10,
+         cooldown: 4,
       },
    },
 

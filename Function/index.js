@@ -1,3 +1,4 @@
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder} = require('discord.js')
 const { DisTubeHandler, Playlist } = require('distube')
 
 module.exports = {
@@ -8,8 +9,11 @@ module.exports = {
    formatTime,
    getTime,
    updateEmbed,
+   generateQueuePage,
+   queueActionRow,
 }
 
+// Play
 async function playMusic(client, interaction, name) {
    if (!name.includes('list=RD')) {
       playSong(client, interaction, name)
@@ -56,6 +60,7 @@ async function getVideoUrls(url) {
    }
 }
 
+// Seek
 function getSecond(str) {
    if (!str) return 0
 
@@ -108,7 +113,26 @@ function getTime() {
    })
    return `Today at ${time}`
 }
-
 async function updateEmbed(interaction, currentMsg, embed) {
    await Promise.all([currentMsg.edit({ embeds: [embed] }), interaction.deferUpdate()]).catch(() => {})
+}
+
+// Queue reveal
+function generateQueuePage(client, queue, start, page, total, pageLength, songList) {
+   let index = start + 1
+   const current = songList.slice(start, start + pageLength)
+   return new EmbedBuilder()
+      .setColor(client.config.player.embedColor)
+      .setAuthor({ name: '─────・ Q U E U E 🌱・─────', iconURL: queue.textChannel.guild.iconURL() })
+      .setDescription(current.map((song) => `\n${index++}. [${song.name}](${song.url})`).join(''))
+      .setFooter({ text: `💽 • Page ${page} / ${total}` })
+}
+function queueActionRow(page, total) {
+   return new ActionRowBuilder().addComponents(
+      new ButtonBuilder({ custom_id: 'queueFirst', label: 'First Page' }).setStyle(2).setDisabled(page === 1),
+      new ButtonBuilder({ custom_id: 'queueBack', label: 'Previous Page' }).setStyle(2).setDisabled(page === 1),
+      new ButtonBuilder({ custom_id: 'queueNext', label: 'Next Page' }).setStyle(2).setDisabled(page === total),
+      new ButtonBuilder({ custom_id: 'queueLast', label: 'Last Page' }).setStyle(2).setDisabled(page === total),
+      new ButtonBuilder({ custom_id: 'queueClose', label: 'Close' }).setStyle(4)
+   )
 }

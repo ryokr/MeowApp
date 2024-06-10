@@ -20,14 +20,4 @@ module.exports = async (client) => {
          type: client.config.activity.type,
       })
    }, 10000)
-
-   // const statuses = [
-   //    { name: "Never Gonna Give You Up", state: 'Woah, so high', type: ActivityType.Listening },
-   //    { name: `Pussy C̶̶a̶̶t̶`, state: 'Mlem Mlem', type: ActivityType.Watching },
-   // ]
-
-   // setInterval(() => {
-   //    var randomStatus = statuses[Math.floor(Math.random() * statuses.length)]
-   //    client.user.setActivity(randomStatus)
-   // }, 10000)
 }

@@ -1,6 +1,6 @@
-const { EmbedBuilder, InteractionType } = require('discord.js')
 const fs = require('fs').promises
-const { playMusic, deleteMessage } = require('../../Function')
+const { EmbedBuilder, InteractionType } = require('discord.js')
+const { playMusic, deleteMessage, getSecond} = require('../../Function')
 
 module.exports = async (client, interaction) => {
    try {
@@ -32,19 +32,52 @@ module.exports = async (client, interaction) => {
          await loadCommand(__dirname + '/../../Commands')
       }
 
-      if (interaction.isModalSubmit() && interaction.customId === 'playerAddModal') {
+      if (interaction.isModalSubmit()) {
+         const queue = client.player.getQueue(interaction.guild.id)
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
-         const songName = interaction.fields.getTextInputValue('songName')
 
-         if (!interaction.member.voice.channel) {
-            embed.setDescription('Join voice channel')
-            deleteMessage(await interaction.reply({ embeds: [embed]}), 500)
-         } else {
-            embed.setDescription('Meowing')
-            const msg = await interaction.reply({ embeds: [embed] })
+         if (interaction.customId === 'playerAddModal') {
+            const songName = interaction.fields.getTextInputValue('playerAddInput')
 
-            await playMusic(client, interaction, songName)
-            deleteMessage(msg, 500)
+            if (!interaction.member.voice.channel) {
+               embed.setDescription('Join voice channel')
+               deleteMessage(await interaction.reply({ embeds: [embed] }), 500)
+            } else {
+               embed.setDescription('Meowing')
+               const msg = await interaction.reply({ embeds: [embed] })
+
+               await playMusic(client, interaction, songName)
+               deleteMessage(msg, 500)
+            }
+         } else if (interaction.customId === 'playerSeekModal') {
+            const position = getSecond(interaction.fields.getTextInputValue('playerSeekInput'))
+
+            if (!queue || !queue.playing) {
+               embed.setDescription('No music playing')
+            } else if (isNaN(position)) {
+               embed.setDescription('Usage: 2h 3m 4s')
+            } else {
+               await queue.seek(position)
+               embed.setDescription(`Seeked to ${interaction.fields.getTextInputValue('playerSeekInput')}`)
+            }
+
+            deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
+         } else if (interaction.customId === 'playerVolumeModal') {
+            const maxVol = client.config.voice.maxVol
+            const vol = parseInt(interaction.fields.getTextInputValue('playerVolumeInput'))
+
+            if (!queue || !queue.playing) {
+               embed.setDescription('No music playing')
+            } else if (queue.volume === vol) {
+               embed.setDescription(`Volume is already set to ${vol}`)
+            } else if (!vol || vol < 1 || vol > maxVol) {
+               embed.setDescription(`Type a number between 1 and ${maxVol}`)
+            } else {
+               await queue.setVolume(vol)
+               embed.setDescription(`Set the volume to ${vol}`)
+            }
+
+            deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
          }
       }
    } catch (e) {

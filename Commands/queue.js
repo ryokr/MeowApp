@@ -34,16 +34,16 @@ module.exports = {
          let page = 1
          let total = trackList.length / pageLength
 
-         const generateEmbed = async (start) => {
-            let index = page === 1 ? 1 : page * pageLength - pageLength + 1
-            const current = trackList.slice(start, start + pageLength)
+         const generateEmbed = (start) => {
+            let index = start + 1
+            const current = songList.slice(start, start + pageLength)
             if (!current || !current?.length > 0)
                return interaction.reply({ content: 'Queue is empty', ephemeral: true })
             return new EmbedBuilder()
                .setColor(client.config.player.embedColor)
-               .setAuthor({ name: 'Queue • 🌱', iconURL: client.config.guildIcon })
-               .setDescription(`${current.map((song) => `\n${index++}. [${song.title}](${song.url})`)}`)
-               .setFooter({ text: `💽 • Page ${page} / ${Math.floor(total + 1)}` })
+               .setAuthor({ name: '─────・ Q U E U E 🌱・─────', iconURL: queue.textChannel.guild.iconURL() })
+               .setDescription(`${current.map((song) => `\n${index++}. [${song.name}](${song.url})`).join('')}`)
+               .setFooter({ text: `💽 • Page ${page} / ${total}` })
          }
 
          const inOnePage = trackList.length <= pageLength

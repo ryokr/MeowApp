@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
-const { getSecond,deleteMessage } = require('../Function')
+const { getSecond, deleteMessage } = require('../Function')
 
 module.exports = {
    name: 'seek',

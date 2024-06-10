@@ -1,3 +1,7 @@
 module.exports = async (client, textChannel, error) => {
-   if (textChannel) console.log('❌    Error\n', error)
+   try {
+      if (textChannel) console.log('❌    Error\n', error)
+   } catch {
+      console.log('❌    Error')
+   }
 }

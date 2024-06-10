@@ -2,7 +2,7 @@ const { EmbedBuilder } = require('discord.js')
 const { deleteMessage, formatTime, capFirstChar } = require('../Function')
 
 module.exports = {
-   name: 'nowplaying',
+   name: 'grab',
    description: 'Current music info',
    permissions: '0x0000000000000800',
 

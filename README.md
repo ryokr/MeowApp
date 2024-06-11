@@ -41,6 +41,14 @@ You can change the status of your discord bot by editing the `activity` and vari
 node index.js
 ```
 
+# Hosting
+
+This bot can be host anywhere that support nodejs.
+
+# Support
+
+Contact me [ryokr](https://discord.gg/fTuGFk9ayG) for any issue.
+
 # Credits
 
 > If you consider using this Bot, make sure to credit me ><

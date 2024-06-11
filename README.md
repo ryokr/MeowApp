@@ -1,61 +1,96 @@
-# Requirements
+# MeowBot - Discord Bot
 
-- [Node](https://nodejs.org/en/) - Version 18.20.2
-- [NPM](https://www.npmjs.com/)
-- [FFMPEG](https://www.ffmpeg.org/)
+---
 
-# Installation
+## Prerequisites
 
-```bash
-# Clone the repository
-git clone https://github.com/ryokr/MeowBot.git
+Before you begin, make sure you have the following installed:
 
-# Enter into the directory
-cd MeowBot
+- **[Node.js](https://nodejs.org/en/)** (Version 18.20.2)
+- **[NPM](https://www.npmjs.com/)** (comes bundled with Node.js)
+- **[FFMPEG](https://www.ffmpeg.org/)**
 
-# Install the dependencies
-npm install
+---
 
-# Configure Discord Bot Token
- echo "token=INSERT_YOUR_TOKEN_HERE" > .env
-```
+## Installation
 
-# Required permissions
+Follow these steps to set up MeowBot:
 
-Make sure that your bot has the `applications.commands` application scope enabled, which can be found under the `OAuth2` tab on the [developer portal](https://discord.com/developers/applications/)
+1. **Clone the Repository**
 
-Enable the `Server Members Intent` and `Message Content Intent` which can be found under the `Bot` tab on the [developer portal](https://discord.com/developers/applications/)
+    ```bash
+    git clone https://github.com/ryokr/MeowBot.git
+    ```
 
-# Configuration
+2. **Navigate to the Project Directory**
 
-After cloning the project and installing all dependencies, you need to add your Discord API token in the `.env` file.
+    ```bash
+    cd MeowBot
+    ```
 
-# Changing the status
+3. **Install Dependencies**
 
-You can change the status of your discord bot by editing the `activity` and variables inside the `config.json` file.
+    ```bash
+    npm install
+    ```
 
+4. **Configure Discord Bot Token**
 
-# Starting the application
+    Create a `.env` file and add your token:
+
+    ```bash
+    echo "token=INSERT_YOUR_TOKEN_HERE" > .env
+    ```
+
+---
+
+## Bot Permissions
+
+To ensure MeowBot works properly, set the following permissions:
+
+- **Application Scope:** Enable `applications.commands` in the **OAuth2** tab on the [Developer Portal](https://discord.com/developers/applications/).
+
+- **Intents:** Enable `Server Members Intent` and `Message Content Intent` in the **Bot** tab on the [Developer Portal](https://discord.com/developers/applications/).
+
+---
+
+## Configuration
+
+After installation, configure your bot:
+
+1. **Add Discord API Token:**
+
+    Open the `.env` file and paste your token.
+
+2. **Customize Bot Status:**
+
+    Edit the `activity` and other related variables in the `config.json` file to set your bot's status and other settings.
+
+---
+
+## Starting the Bot
+
+To start MeowBot, run:
 
 ```bash
 node index.js
 ```
 
-# Hosting
+## Hosting
 
 This bot can be host anywhere that support nodejs.
 
-# Support
+## Support
 
 Contact me [ryokr](https://discord.gg/fTuGFk9ayG) for any issue.
 
-# Credits
+## Credits
 
-> If you consider using this Bot, make sure to credit me ><
-> Example: `Bot Coded by [ryohuy2410](https://discord.gg/fTuGFk9ayG) but modified by [modifier/your Name](https://discord.gg/)` :3
+> If you consider using this Bot, make sure to credit me ><.
+> Example: `Bot Coded by [ryohuy2410](https://discord.gg/fTuGFk9ayG) but modified by [modifier/your Name](https://discord.gg/)` :3.
 
-# Contributing
+## Contributing
 
 > If you want to help improve the Bot code, fix spelling or design Errors or if possible even code errors, you may create PULL REQUESTS.
 > Please consider, that [**ryohuy2410**](https://github.com/ryokr) is the main Developer of this Bot, everyone else helped just once or sometimes more often.
-> Thanks to anyone who considers helping me :3
+> Thanks to anyone who considers helping me :3.

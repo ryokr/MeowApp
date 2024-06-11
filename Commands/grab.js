@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { deleteMessage, formatTime, capFirstChar } = require('../Function')
+const { formatTime, capFirstChar } = require('../Function')
 
 module.exports = {
    name: 'grab',
@@ -31,8 +31,6 @@ module.exports = {
                .setFooter({ text: `🌱 • ${capFirstChar(song.user.tag)}`, iconURL: song.user.avatarURL() })
                .setTimestamp()
          }
-
-         deleteMessage(await interaction.reply({ embeds: [embed] }), 100000)
       } catch {}
    }
 }

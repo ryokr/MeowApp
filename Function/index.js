@@ -123,7 +123,7 @@ function generateQueuePage(client, queue, start, page, total, pageLength, songLi
    const current = songList.slice(start, start + pageLength)
    return new EmbedBuilder()
       .setColor(client.config.player.embedColor)
-      .setAuthor({ name: '─────・ Q U E U E 🌱・─────', iconURL: queue.textChannel.guild.iconURL() })
+      .setAuthor({ name: '─────・ P L A Y  L I S T 🌱・─────', iconURL: queue.textChannel.guild.iconURL() })
       .setDescription(current.map((song) => `\n${index++}. [${song.name}](${song.url})`).join(''))
       .setFooter({ text: `💽 • Page ${page} / ${total}` })
 }

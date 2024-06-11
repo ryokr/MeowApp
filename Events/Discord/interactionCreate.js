@@ -47,7 +47,7 @@ module.exports = async (client, interaction) => {
                const msg = await interaction.reply({ embeds: [embed] })
 
                await playMusic(client, interaction, songName)
-               deleteMessage(msg, 500)
+               deleteMessage(msg, 1000)
             }
          } else if (interaction.customId === 'playerSeekModal') {
             const position = getSecond(interaction.fields.getTextInputValue('playerSeekInput'))

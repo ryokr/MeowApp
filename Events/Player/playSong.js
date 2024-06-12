@@ -15,17 +15,17 @@ module.exports = async (client, queue, song) => {
             .setDescription(`**[${song.name}](${song.url})**\n${song.uploader.name}・${formatTime(song.formattedDuration)}`)
             .setFooter({ text: `🧩 • ${username}`, iconURL: avatar })
             .setTimestamp()
-   
+            
          const row1 = new ActionRowBuilder().addComponents(
-            new ButtonBuilder({ custom_id: 'playerQueue', label: 'Queue' }).setStyle(2),
-            new ButtonBuilder({ custom_id: 'playerPrev', label: 'Previous' }).setStyle(2),
+            new ButtonBuilder({ custom_id: 'playerQueue', label: 'List' }).setStyle(2),
+            new ButtonBuilder({ custom_id: 'playerPrev', label: 'Back' }).setStyle(2),
             new ButtonBuilder({ custom_id: 'playerStop', label: 'Stop' }).setStyle(4),
             new ButtonBuilder({ custom_id: 'playerSkip', label: 'Skip' }).setStyle(2),
             new ButtonBuilder({ custom_id: 'playerLoop', label: 'Loop' }).setStyle(2),
          )
          const row2 = new ActionRowBuilder().addComponents(
-            new ButtonBuilder({ custom_id: 'playerShuf', label: 'Shuffle' }).setStyle(2),
-            new ButtonBuilder({ custom_id: 'playerVol', label: 'Volume' }).setStyle(2),
+            new ButtonBuilder({ custom_id: 'playerShuf', label: 'Shuf' }).setStyle(2),
+            new ButtonBuilder({ custom_id: 'playerVol', label: 'Vol' }).setStyle(2),
             new ButtonBuilder({ custom_id: 'playerAdd', label: 'Add' }).setStyle(4),
             new ButtonBuilder({ custom_id: 'playerSeek', label: 'Seek' }).setStyle(2),
             new ButtonBuilder({ custom_id: 'playerClear', label: 'Clear' }).setStyle(2),
@@ -82,7 +82,7 @@ module.exports = async (client, queue, song) => {
    
          queue.lastPlayingMessage = currentMessage
       }
-   } catch {
-      console.log('❌    PlaySong Error')
+   } catch (e) {
+      console.log('❌    PlaySong Error', e)
    }
 }

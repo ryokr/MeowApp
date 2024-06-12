@@ -1,8 +1,6 @@
 const { ActionRowBuilder, ModalBuilder, TextInputBuilder } = require('discord.js')
 
-module.exports = playerVolume
-
-async function playerVolume(interaction) {
+module.exports = async (interaction) => {
    const modal = new ModalBuilder().setCustomId('playerVolumeModal').setTitle('Volume')
 
    const Volume = new TextInputBuilder()

@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, EmbedBuilder} = require('discord.js')
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
 const { DisTubeHandler, Playlist } = require('distube')
 
 module.exports = {

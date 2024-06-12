@@ -1,4 +1,5 @@
 const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
+const { deleteMessage } = require('../Function')
 
 module.exports = {
    name: 'search',
@@ -16,7 +17,9 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
+         const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
          const name = interaction.options.getString('name')
+
          if (!name)
             return interaction.reply({ content: `❌ Enter a valid song name.`, ephemeral: true }).catch((e) => {
                console.log(e)
@@ -39,32 +42,28 @@ module.exports = {
                console.log(e)
             })
 
-         const embed = new EmbedBuilder()
-         embed.setColor(client.config.player.embedColor)
-         // embed.setTitle(`Found: ${name}`);
-
          const maxTracks = res.slice(0, 10)
 
          let track_button_creator = maxTracks.map((song, index) => {
             return new ButtonBuilder()
-               .setLabel(`${index + 1}`)
-               .setStyle('Secondary')
                .setCustomId(`${index + 1}`)
+               .setLabel(`${index + 1}`)
+               .setStyle(2)
          })
 
-         let buttons1
-         let buttons2
+         let row1
+         let row2
          if (track_button_creator.length > 10) {
-            buttons1 = new ActionRowBuilder().addComponents(track_button_creator.slice(0, 5))
-            buttons2 = new ActionRowBuilder().addComponents(track_button_creator.slice(5, 10))
+            row1 = new ActionRowBuilder().addComponents(track_button_creator.slice(0, 5))
+            row2 = new ActionRowBuilder().addComponents(track_button_creator.slice(5, 10))
          } else {
             if (track_button_creator.length > 5) {
-               buttons1 = new ActionRowBuilder().addComponents(track_button_creator.slice(0, 5))
-               buttons2 = new ActionRowBuilder().addComponents(
+               row1 = new ActionRowBuilder().addComponents(track_button_creator.slice(0, 5))
+               row2 = new ActionRowBuilder().addComponents(
                   track_button_creator.slice(5, Number(track_button_creator.length))
                )
             } else {
-               buttons1 = new ActionRowBuilder().addComponents(track_button_creator)
+               row1 = new ActionRowBuilder().addComponents(track_button_creator)
             }
          }
 
@@ -73,22 +72,19 @@ module.exports = {
          )
 
          embed
-            .setAuthor({
-               name: 'Meowing',
-               iconURL: client.config.guildIcon,
-            })
+            .setAuthor({ name: '─────・ R E S U L T S 🌸・─────', iconURL: client.config.guildIcon })
             .setDescription(
                `${maxTracks
-                  .map((song, i) => `${i + 1}. [${song.name}](${song.url}) | \`${song.uploader.name}\``)
+                  .map((song, i) => `${i + 1}. [${song.name}](${song.url})・${song.uploader.name}`)
                   .join('\n')}`
             )
             .setFooter({ text: `✨ Choose a song` })
 
          let code
-         if (buttons1 && buttons2) {
-            code = { embeds: [embed], components: [buttons1, buttons2, cancel] }
+         if (row1 && row2) {
+            code = { embeds: [embed], components: [row1, row2, cancel] }
          } else {
-            code = { embeds: [embed], components: [buttons1, cancel] }
+            code = { embeds: [embed], components: [row1, cancel] }
          }
 
          interaction
@@ -100,27 +96,17 @@ module.exports = {
                collector.on('collect', async (button) => {
                   switch (button.customId) {
                      case 'cancel': {
-                        embed.setDescription(`Search interrupted`)
-                        await interaction.editReply({ embeds: [embed], components: [] }).catch((e) => {
-                           console.log(e)
-                        })
+                        await interaction.editReply({ embeds: [], components: [] }).catch(() => {})
                         return collector.stop()
                      }
 
                      default: {
                         embed
-                           .setAuthor({
-                              name: 'Added',
-                              iconURL: client.config.guildIcon,
-                           })
-                           .setThumbnail(maxTracks[Number(button.customId) - 1].thumbnail)
-                           .setDescription(
-                              `**[${res[Number(button.customId) - 1].name}](${res[Number(button.customId) - 1].url})**`
-                           )
-                           .setFooter({ text: ` ` })
-                        await interaction.editReply({ embeds: [embed], components: [] }).catch((e) => {
-                           console.log(e)
-                        })
+                           .setAuthor({ name: 'Meowing', iconURL: client.config.guildIcon })
+                           .setDescription(' ')
+                           .setFooter({ text: ' ' })
+
+                        deleteMessage(await interaction.editReply({ embeds: [embed], components: [] }), 100)
                         try {
                            await client.player.play(
                               interaction.member.voice.channel,
@@ -132,9 +118,7 @@ module.exports = {
                               }
                            )
                         } catch (e) {
-                           await interaction.editReply({ content: `❌ No results`, ephemeral: true }).catch((e) => {
-                              console.log(e)
-                           })
+                           await interaction.editReply({ content: `❌ No results`, ephemeral: true }).catch(() => {})
                         }
                         return collector.stop()
                      }
@@ -144,9 +128,7 @@ module.exports = {
                collector.on('end', (msg, reason) => {
                   if (reason === 'time') {
                      embed.setDescription('meow')
-                     return interaction.editReply({ embeds: [embed], components: [] }).catch((e) => {
-                        console.log(e)
-                     })
+                     return interaction.editReply({ embeds: [embed], components: [] }).catch(() => {})
                   }
                })
             })
@@ -154,7 +136,7 @@ module.exports = {
                console.log(e)
             })
       } catch (e) {
-         console.error(e)
+         console.log(e)
       }
-   },
+   }
 }

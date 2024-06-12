@@ -1,8 +1,6 @@
-const { generateQueuePage, queueActionRow } = require('../Function')
+const { generateQueuePage, queueActionRow } = require('../../Function')
 
-module.exports = playerQueue
-
-async function playerQueue(client, queue, embed, username, avatar) {
+module.exports = async (client, queue, embed, username, avatar) => {
    if (queue.songs.length > 1) {
       const songList = queue.songs.map((song) => ({
          name: song.name,
@@ -11,12 +9,12 @@ async function playerQueue(client, queue, embed, username, avatar) {
       const pageLength = 10
       const total = Math.ceil(songList.length / pageLength)
       let page = 1
-      
+
       const queueMessage = await queue.textChannel.send({
-         embeds: [generateQueuePage(client, queue, 0, page, total, pageLength, songList) ],
+         embeds: [generateQueuePage(client, queue, 0, page, total, pageLength, songList)],
          components: [queueActionRow(page, total)],
       })
-      
+
       const collector = queueMessage.createMessageComponentCollector({ time: 60000 })
       collector.on('collect', async (button) => {
          switch (button.customId) {
@@ -37,15 +35,17 @@ async function playerQueue(client, queue, embed, username, avatar) {
                page = total
                break
          }
-      
-         await queueMessage.edit({
-            embeds: [generateQueuePage(client, queue, (page - 1) * pageLength, page, total, pageLength, songList) ],
-            components: [queueActionRow(page, total)],
-         }).catch(() => {})
-      
+
+         await queueMessage
+            .edit({
+               embeds: [generateQueuePage(client, queue, (page - 1) * pageLength, page, total, pageLength, songList)],
+               components: [queueActionRow(page, total)],
+            })
+            .catch(() => {})
+
          await button.deferUpdate().catch(() => {})
       })
-      
+
       collector.on('end', async () => {
          await queueMessage.edit({ components: [] }).catch(() => {})
       })

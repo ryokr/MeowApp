@@ -12,12 +12,4 @@ module.exports = async (client) => {
    }
 
    console.log('\x1b[32m%s\x1b[0m', `⭕    🐸 ⬪ Logged in as -- ${client.user.username}`)
-
-   setInterval(() => {
-      client.user.setActivity({
-         name: client.config.activity.name,
-         state: client.config.activity.state,
-         type: client.config.activity.type,
-      })
-   }, 10000)
 }

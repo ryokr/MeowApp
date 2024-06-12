@@ -17,8 +17,8 @@ const client = new Client({
       GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildMessages,
       GatewayIntentBits.GuildVoiceStates,
-      GatewayIntentBits.MessageContent
-  ],
+      GatewayIntentBits.MessageContent,
+   ],
 })
 
 client.config = config
@@ -35,5 +35,13 @@ client.login(config.TOKEN).catch(() => {
    console.log('❌    LOGIN FAILED')
    process.exit(1)
 })
+
+setInterval(() => {
+   client.user.setActivity({
+      name: client.config.activity.name,
+      state: client.config.activity.state,
+      type: client.config.activity.type,
+   })
+}, 10000)
 
 serverStart()

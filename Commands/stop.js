@@ -19,7 +19,7 @@ module.exports = {
             embed.setDescription('Stopped the music and cleared the queue')
          }
 
-         deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
+         deleteMessage(await interaction.reply({ embeds: [embed] }), 5000)
       } catch {
          console.log('❌    Stop Error')
       }

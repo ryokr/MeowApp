@@ -1,8 +1,6 @@
 const { ActionRowBuilder, ModalBuilder, TextInputBuilder } = require('discord.js')
 
-module.exports = playerSeek
-
-async function playerSeek(interaction) {
+module.exports = async (interaction) => {
    const modal = new ModalBuilder().setCustomId('playerSeekModal').setTitle('Seek')
 
    const seekInput = new TextInputBuilder()

@@ -12,6 +12,6 @@ module.exports = async (client, oldState, newState) => {
                if (queue && queue.playing) queue.stop(oldState.guild.id)
             }
          }
-      }, client.config.voice.leaveOnEmpty.cooldown || 1000)
+      }, client.config.voice.leaveOnEmpty.cooldown * 1000 || 10000)
    }
 }

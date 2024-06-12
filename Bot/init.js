@@ -1,6 +1,12 @@
 const fs = require('fs').promises
 
-async function loadEvents(client, emitter, path) {
+module.exports = botInit = async (client) => {
+   await loadEvents(client, client, __dirname + '/../Events/Discord')
+   await loadEvents(client, client.player, __dirname + '/../Events/Player')
+   await loadCommands(client, __dirname + '/../Commands')
+}
+
+const loadEvents = async (client, emitter, path) => {
    try {
       const files = await fs.readdir(path)
 
@@ -13,10 +19,11 @@ async function loadEvents(client, emitter, path) {
       }
    } catch (e) {
       console.log(e)
+      process.exit(1)
    }
 }
 
-async function loadCommands(client, path) {
+const loadCommands = async (client, path) => {
    client.commands = []
    try {
       const files = await fs.readdir(path)
@@ -31,13 +38,6 @@ async function loadCommands(client, path) {
       }
    } catch (e) {
       console.log(e)
+      process.exit(1)
    }
 }
-
-async function botInit(client) {
-   await loadEvents(client, client, __dirname + '/../Events/Discord')
-   await loadEvents(client, client.player, __dirname + '/../Events/Player')
-   await loadCommands(client, __dirname + '/../Commands')
-}
-
-module.exports = botInit

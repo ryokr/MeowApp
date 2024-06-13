@@ -4,11 +4,6 @@ const { playMusic, deleteMessage, getSecond} = require('../../Function')
 
 module.exports = async (client, interaction) => {
    try {
-      if (!interaction.guild) {
-         await interaction.reply({ content: 'Rate Limited', ephemeral: true })
-         return
-      }
-
       if (interaction.type === InteractionType.ApplicationCommand) {
          const loadCommand = async (path) => {
             try {

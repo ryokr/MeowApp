@@ -4,10 +4,11 @@ const { DisTube } = require('distube')
 
 const config = require('../config')
 const botInit = require('./init')
+const login = require('./login')
 const serverStart = require('./server')
 
 if (!config.TOKEN) {
-   console.log('❌    TOKEN ERROR')
+   console.log('❌    TOKEN ERROR, PLEASE PROVIDE A VALID TOKEN')
    process.exit(1)
 }
 
@@ -25,23 +26,10 @@ client.config = config
 client.player = new DisTube(client, {
    leaveOnStop: config.voice.leaveOnStop,
    leaveOnFinish: config.voice.leaveOnFinish,
-   leaveOnEmpty: config.voice.leaveOnEmpty.status,
+   leaveOnEmpty: config.voice.leaveOnEmpty,
    plugins: [new YtDlpPlugin()],
 })
 
 botInit(client)
-
-client.login(config.TOKEN).catch(() => {
-   console.log('❌    LOGIN FAILED')
-   process.exit(1)
-})
-
-setInterval(() => {
-   client.user.setActivity({
-      name: client.config.activity.name,
-      state: client.config.activity.state,
-      type: client.config.activity.type,
-   })
-}, 10000)
-
+login(client)
 serverStart()

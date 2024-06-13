@@ -63,7 +63,7 @@ module.exports = async (client, interaction) => {
 
             deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
          } else if (interaction.customId === 'playerVolumeModal') {
-            const maxVol = client.config.voice.maxVol
+            const maxVol = client.config.player.maxVol
             const vol = parseInt(interaction.fields.getTextInputValue('playerVolumeInput'))
 
             if (!queue || !queue.playing) {

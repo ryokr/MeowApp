@@ -1,9 +1,9 @@
-const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
+const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder, EmbedBuilder, time } = require('discord.js')
 const { deleteMessage } = require('../Function')
 
 module.exports = {
    name: 'search',
-   description: 'Search music',
+   description: 'Search music on youtube',
    permissions: '0x0000000000000800',
    voiceChannel: true,
    options: [
@@ -20,123 +20,66 @@ module.exports = {
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
          const name = interaction.options.getString('name')
 
-         if (!name)
-            return interaction.reply({ content: `❌ Enter a valid song name.`, ephemeral: true }).catch((e) => {
-               console.log(e)
-            })
-         let res
-         try {
-            res = await client.player.search(name, {
+         if (!name) {
+            embed.setDescription('Enter a valid song name')
+         } else {
+            const results = await client.player.search(name, {
                member: interaction.member,
                textChannel: interaction.channel,
                interaction,
             })
-         } catch (e) {
-            return interaction.editReply({ content: `❌ No results` }).catch((e) => {
-               console.log(e)
-            })
-         }
 
-         if (!res || !res.length || !res.length > 1)
-            return interaction.reply({ content: `❌ No results`, ephemeral: true }).catch((e) => {
-               console.log(e)
-            })
-
-         const maxTracks = res.slice(0, 10)
-
-         let track_button_creator = maxTracks.map((song, index) => {
-            return new ButtonBuilder()
-               .setCustomId(`${index + 1}`)
-               .setLabel(`${index + 1}`)
-               .setStyle(2)
-         })
-
-         let row1
-         let row2
-         if (track_button_creator.length > 10) {
-            row1 = new ActionRowBuilder().addComponents(track_button_creator.slice(0, 5))
-            row2 = new ActionRowBuilder().addComponents(track_button_creator.slice(5, 10))
-         } else {
-            if (track_button_creator.length > 5) {
-               row1 = new ActionRowBuilder().addComponents(track_button_creator.slice(0, 5))
-               row2 = new ActionRowBuilder().addComponents(
-                  track_button_creator.slice(5, Number(track_button_creator.length))
-               )
+            if (!results || results.length === 0) {
+               embed.setDescription('No result')
             } else {
-               row1 = new ActionRowBuilder().addComponents(track_button_creator)
+               const songs = results.slice(0, 10)
+
+               embed
+                  .setAuthor({ name: '─────・ R E S U L T S 🌸・─────', iconURL: client.config.guildIcon })
+                  .setDescription(songs.map((song, i) => `${i + 1}. [${song.name}](${song.url})・${song.uploader.name}`).join('\n'))
+                  .setFooter({ text: `✨ Choose a song` })
+
+               const buttons = songs.map((song, i) =>
+                  new ButtonBuilder()
+                     .setCustomId(`${i + 1}`)
+                     .setLabel(`${i + 1}`)
+                     .setStyle(2)
+               )
+               const rows = []
+               for (let i = 0; i < buttons.length; i += 5) {
+                  rows.push(new ActionRowBuilder().addComponents(buttons.slice(i, i + 5)))
+               }
+               const close = new ActionRowBuilder().addComponents(new ButtonBuilder().setLabel('Close').setStyle('Danger').setCustomId('close'))
+
+               const message = await interaction.reply({ embeds: [embed], components: [...rows, close] })
+               const filter = (i) => i.user.id === interaction.user.id
+               const collector = message.createMessageComponentCollector({ filter, time: 60000 })
+
+               collector.on('collect', async (button) => {
+                  if (button.customId === 'close') {
+                     deleteMessage(message, 100)
+                     collector.stop()
+                  } else {
+                     deleteMessage(message, 100)
+
+                     await client.player.play(interaction.member.voice.channel, results[Number(button.customId) - 1].url, {
+                        member: interaction.member,
+                        textChannel: interaction.channel,
+                        interaction,
+                     })
+                     collector.stop()
+                  }
+               })
+               collector.on('end', async () => {
+                  deleteMessage(message, 100)
+               })
+               return
             }
          }
 
-         let cancel = new ActionRowBuilder().addComponents(
-            new ButtonBuilder().setLabel('Cancel').setStyle('Danger').setCustomId('cancel')
-         )
-
-         embed
-            .setAuthor({ name: '─────・ R E S U L T S 🌸・─────', iconURL: client.config.guildIcon })
-            .setDescription(
-               `${maxTracks
-                  .map((song, i) => `${i + 1}. [${song.name}](${song.url})・${song.uploader.name}`)
-                  .join('\n')}`
-            )
-            .setFooter({ text: `✨ Choose a song` })
-
-         let code
-         if (row1 && row2) {
-            code = { embeds: [embed], components: [row1, row2, cancel] }
-         } else {
-            code = { embeds: [embed], components: [row1, cancel] }
-         }
-
-         interaction
-            .reply(code)
-            .then(async (Message) => {
-               const filter = (i) => i.user.id === interaction.user.id
-               let collector = await Message.createMessageComponentCollector({ filter, time: 60000 })
-
-               collector.on('collect', async (button) => {
-                  switch (button.customId) {
-                     case 'cancel': {
-                        await interaction.editReply({ embeds: [], components: [] }).catch(() => {})
-                        return collector.stop()
-                     }
-
-                     default: {
-                        embed
-                           .setAuthor({ name: 'Meowing', iconURL: client.config.guildIcon })
-                           .setDescription(' ')
-                           .setFooter({ text: ' ' })
-
-                        deleteMessage(await interaction.editReply({ embeds: [embed], components: [] }), 100)
-                        try {
-                           await client.player.play(
-                              interaction.member.voice.channel,
-                              res[Number(button.customId) - 1].url,
-                              {
-                                 member: interaction.member,
-                                 textChannel: interaction.channel,
-                                 interaction,
-                              }
-                           )
-                        } catch (e) {
-                           await interaction.editReply({ content: `❌ No results`, ephemeral: true }).catch(() => {})
-                        }
-                        return collector.stop()
-                     }
-                  }
-               })
-
-               collector.on('end', (msg, reason) => {
-                  if (reason === 'time') {
-                     embed.setDescription('meow')
-                     return interaction.editReply({ embeds: [embed], components: [] }).catch(() => {})
-                  }
-               })
-            })
-            .catch((e) => {
-               console.log(e)
-            })
-      } catch (e) {
-         console.log(e)
+         deleteMessage(await interaction.reply({ embed: [embed] }), 10000)
+      } catch {
+         console.log('❌    Search Error')
       }
    }
 }

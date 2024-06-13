@@ -1,18 +1,19 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
-const { capFirstChar, formatTime, updateEmbed } = require('../../Function')
+const { capFirstChar, formatTime, updateEmbed, getSecond } = require('../../Function')
 
 module.exports = async (client, queue, song) => {
    try {
       if (queue && queue.textChannel) {
          const username = capFirstChar(song.user.tag)
          const avatar = song.user.avatarURL()
+         const duration = formatTime(song.formattedDuration)
 
          const embed = new EmbedBuilder()
             .setColor(client.config.player.embedColor)
             .setThumbnail(client.config.player.gif)
             .setImage(song.thumbnail)
             .setAuthor({ name: '─────・ L I V E 💖・─────', iconURL: queue.textChannel.guild.iconURL() })
-            .setDescription(`**[${song.name}](${song.url})**\n${song.uploader.name}・${formatTime(song.formattedDuration)}`)
+            .setDescription(`**[${song.name}](${song.url})**\n${song.uploader.name}・${duration}`)
             .setFooter({ text: `🧩 • ${username}`, iconURL: avatar })
             .setTimestamp()
 
@@ -32,7 +33,7 @@ module.exports = async (client, queue, song) => {
          )
 
          const currentMessage = await queue.textChannel.send({ embeds: [embed], components: [row1, row2] }).catch(() => {})
-         const collector = currentMessage.createMessageComponentCollector()
+         const collector = currentMessage.createMessageComponentCollector({ time: getSecond(duration) * 1000 + 10000 })
 
          collector.on('collect', async (interaction) => {
             if (!interaction.isButton()) return
@@ -47,7 +48,7 @@ module.exports = async (client, queue, song) => {
                playerSeek: async () => await require('../Button/seek')(interaction),
                playerShuf: async () => await require('../Button/shuffle')(queue, embed, username, avatar),
                playerSkip: async () => await require('../Button/skip')(queue, embed, username, avatar),
-               playerStop: async () => await require('../Button/stop')(queue, collector, currentMessage),
+               playerStop: async () => await require('../Button/stop')(queue, song, collector, currentMessage),
                playerVol: async () => await require('../Button/volume')(interaction),
             }
 
@@ -58,6 +59,9 @@ module.exports = async (client, queue, song) => {
                   updateEmbed(interaction, currentMessage, embed)
                }
             }
+         })
+         collector.on('end', async () => {
+            await currentMessage.delete().catch(() => {})
          })
 
          queue.lastPlayingMessage = currentMessage

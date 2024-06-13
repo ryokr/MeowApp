@@ -98,7 +98,7 @@ function formatTime(duration) {
       return `${parts[0]}h ${parts[1]}m ${parts[2]}s`
    } else if (parts.length === 2) {
       if (parts[0] === 0) return `${parts[1]}s`
-      return `${parts[0]}m  ${parts[1]}s`
+      return `${parts[0]}m ${parts[1]}s`
    } else {
       return `${parts[0]}s`
    }

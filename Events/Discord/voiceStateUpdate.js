@@ -2,7 +2,7 @@ module.exports = async (client, oldState, newState) => {
    const queue = client.player.getQueue(oldState.guild.id)
    if (!queue || !queue.playing) return
 
-   if (client.config.voice.leaveOnEmpty.status) {
+   if (client.config.voice.leaveOnEmpty) {
       setTimeout(async () => {
          const botChannel = oldState.guild.channels.cache.get(queue.voice.connection.joinConfig.channelId)
 
@@ -12,6 +12,6 @@ module.exports = async (client, oldState, newState) => {
                if (queue && queue.playing) queue.stop(oldState.guild.id)
             }
          }
-      }, client.config.voice.leaveOnEmpty.cooldown * 1000 || 10000)
+      }, 10000)
    }
 }

@@ -27,6 +27,6 @@ module.exports = {
    },
 
    shardManager: {
-      shardStatus:  process.env.shard || false,
+      shardStatus:  process.env.shard || true,
    }
 }

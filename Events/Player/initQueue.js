@@ -1,6 +1,5 @@
 module.exports = async (client, queue) => {
-   queue
-      .setVolume(99)
-      .setRepeatMode(2)
-      .voice.setSelfDeaf(false)
+   await queue.setVolume(99)
+   await queue.setRepeatMode(2)
+   await queue.voice.setSelfDeaf(false)
 }

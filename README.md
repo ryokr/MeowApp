@@ -32,14 +32,6 @@ Follow these steps to set up MeowBot:
     npm i
     ```
 
-4. **Configure Discord Bot Token**
-
-    Create a `.env` file and add your token:
-
-    ```bash
-    echo "token=INSERT_YOUR_TOKEN_HERE" > .env
-    ```
-
 
 ## Bot Permissions
 
@@ -54,14 +46,47 @@ To ensure MeowBot works properly, set the following permissions:
 
 After installation, configure the bot:
 
-1. **Add Discord API Token**
+1. **Create Variables**
 
-    Open the `.env` file and paste your token.
+    Create the `.env` file in `MeowBot` folder.
 
 2. **Customize Bot Status**
 
-    Edit the `activity` and other related variables in the `config.json` file to set bot's status or simply add it to `.env` file.
+    Copy and paste the content below to `.env` file u have created.
+    `token`:(String) The token of your bot.
+    `status`:(String) Can be `online`, `ilde`, `dnd`.
+    `name`:(String) Name of your activity. Ex: Genshin Impact.
+    `state`:(String) More info about activity. Ex: For 69 hours.
+    `type`:(Integer) 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
+    `color`:(String - HEX Format) ff4400 - Orange for default.
+    `leave`:(Bolean) The bot will leave voice channel when empty.
 
+    ```
+    token = PUT_YOUR_TOKEN_HERE 
+
+    status = BOT_STATUS
+    name = ACTIVITY_NAME
+    state = ACTIVITY_STATE
+    type = ACTIVITY_TYPE
+
+    color = YOUR_BOT_COLOR
+
+    leave = LEAVE_WHEN_FINISH
+    ```
+
+    **Example**
+    ```
+    token = 123456 
+
+    status = idle
+    name = Genshin Impact
+    state = From RyoKr With Luv
+    type = 0
+
+    color = ff4400
+
+    leave = true
+    ```
 
 ## Starting the Bot
 

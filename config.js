@@ -29,9 +29,9 @@ module.exports = {
    },
 
    voice: {
-      leaveOnStop: process.env.leave || false,
-      leaveOnFinish: process.env.leave || false,
-      leaveOnEmpty: process.env.leave || false,
+      leaveOnStop: Boolean(process.env.leave) || false,
+      leaveOnFinish: Boolean(process.env.leave) || false,
+      leaveOnEmpty: Boolean(process.env.leave) || false,
    },
 
    shardManager: {

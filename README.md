@@ -53,14 +53,16 @@ After installation, configure the bot:
 2. **Customize Bot Status**
 
     Copy and paste the content below to `.env` file u have created.
-    `token`:(String) The token of your bot.
-    `status`:(String) Can be `online`, `ilde`, `dnd`.
-    `name`:(String) Name of your activity. Ex: Genshin Impact.
-    `state`:(String) More info about activity. Ex: For 69 hours.
-    `type`:(Integer) 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
-    `color`:(String - HEX Format) ff4400 - Orange for default.
-    `leave`:(Bolean) The bot will leave voice channel when empty.
+    
+    - `token`:(String) The token of your bot.
+    - `status`:(String) Can be `online`, `ilde`, `dnd`.
+    - `name`:(String) Name of your activity. Ex: Genshin Impact.
+    - `state`:(String) More info about activity. Ex: For 69 hours.
+    - `type`:(Integer) 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
+    - `color`:(String - HEX Format) ff4400 - Orange for default.
+    - `leave`:(Bolean) The bot will leave voice channel when empty.
 
+    **Template**
     ```
     token = PUT_YOUR_TOKEN_HERE 
 

@@ -12,6 +12,12 @@ module.exports = {
             type: parseInt(process.env.type) || 0, // 0_Play, 1_Stream, 2_Listen, 3_Watch 4_Custom 5_Compete
             url: process.env.url || 'https://www.youtube.com/watch?v=Rl8uYgzQiJ8',
          },
+         {
+            name: 'Ryo.o 🌸',
+            state: 'From Pooba Saga With 💖',
+            type: 0,
+            url: 'https://www.youtube.com/watch?v=Rl8uYgzQiJ8',
+         },
       ],
    },
 

@@ -63,7 +63,6 @@ module.exports = async (client, queue, song) => {
          collector.on('end', async () => {
             await currentMessage.delete().catch(() => {})
          })
-
          queue.lastPlayingMessage = currentMessage
       }
    } catch {

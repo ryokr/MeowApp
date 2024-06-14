@@ -4,5 +4,5 @@ module.exports = login = async (client) => {
       process.exit(1)
    })
    
-   setInterval(() => client.user.setPresence(client.config.presence), 10000)
+   setInterval(() => client.user.setPresence(client.config.presence), 24100)
 }

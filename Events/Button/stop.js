@@ -8,7 +8,5 @@ module.exports = async (queue, song, collector, currentMessage) => {
          await collector.stop()
          await currentMessage.delete()
       }
-   } catch (e) {
-      console.log(e)
-   }
+   } catch {}
 }

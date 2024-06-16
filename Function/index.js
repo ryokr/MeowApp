@@ -37,7 +37,7 @@ async function playSong(client, interaction, name) {
       member: interaction.member,
       textChannel: interaction.channel,
       interaction,
-   })
+   }).catch(() => {})
 }
 async function getVideoUrls(url) {
    try {

@@ -3,7 +3,7 @@ Ultimate Discord Music Bot
 
 ## Prerequisites
 
-Before you begin, make sure you have the following installed:
+Before you begin, make sure you have the following installed
 
 - **[Node.js](https://nodejs.org/en/)** (Version 18.20.2)
 - **[NPM](https://www.npmjs.com/)** (comes bundled with Node.js)

@@ -3,7 +3,7 @@ Ultimate Discord Music Bot
 
 ## Prerequisites
 
-Before you begin, make sure you have the following installed
+Before you begin, make sure you have the following installed:
 
 - **[Node.js](https://nodejs.org/en/)** (Version 18.20.2)
 - **[NPM](https://www.npmjs.com/)** (comes bundled with Node.js)
@@ -60,7 +60,6 @@ After installation, configure the bot:
     - `state`:(String) More info about activity. Ex: For 69 hours.
     - `type`:(Integer) 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
     - `color`:(String - HEX Format) ff4400 - Orange for default.
-    - `leave`:(Bolean) The bot will leave voice channel when empty.
 
     **Template**
     ```
@@ -72,8 +71,6 @@ After installation, configure the bot:
     type = ACTIVITY_TYPE
 
     color = YOUR_BOT_COLOR
-
-    leave = LEAVE_WHEN_FINISH
     ```
 
     **Example**
@@ -86,8 +83,6 @@ After installation, configure the bot:
     type = 0
 
     color = ff4400
-
-    leave = true
     ```
 
 ## Starting the Bot

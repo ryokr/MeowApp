@@ -2,15 +2,22 @@ const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
 const { DisTubeHandler, Playlist } = require('distube')
 
 module.exports = {
+   getStatus,
    playMusic,
    getSecond,
    deleteMessage,
    capFirstChar,
    formatTime,
+   loadButton,
    getTime,
    updateEmbed,
    generateQueuePage,
    queueActionRow,
+}
+
+function getStatus() {
+   const statuses = ['online', 'idle', 'dnd']
+   return statuses[Math.floor(Math.random()*3)]
 }
 
 // Play
@@ -92,6 +99,8 @@ function capFirstChar(string) {
 }
 
 function formatTime(duration) {
+   if (duration === 'Live') return duration
+   
    const parts = duration.split(':').map(Number)
 
    if (parts.length === 3) {
@@ -102,6 +111,10 @@ function formatTime(duration) {
    } else {
       return `${parts[0]}s`
    }
+}
+
+function loadButton(path, ...args) {
+   return async () => require(path)(...args)
 }
 
 function getTime() {

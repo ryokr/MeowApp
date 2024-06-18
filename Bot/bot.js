@@ -8,7 +8,7 @@ const login = require('./login')
 const serverStart = require('./server')
 
 if (!config.TOKEN) {
-   console.log('❌    TOKEN ERROR, PLEASE PROVIDE A VALID TOKEN')
+   console.log('❌    PLEASE PROVIDE A VALID TOKEN')
    process.exit(1)
 }
 

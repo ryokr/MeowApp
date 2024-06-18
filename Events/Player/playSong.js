@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
-const { capFirstChar, formatTime, updateEmbed, getSecond } = require('../../Function')
+const { capFirstChar, formatTime, loadButton, updateEmbed } = require('../../Function')
 
 module.exports = async (client, queue, song) => {
    try {
@@ -10,7 +10,7 @@ module.exports = async (client, queue, song) => {
 
          const embed = new EmbedBuilder()
             .setColor(client.config.player.embedColor)
-            .setThumbnail(client.config.player.gif)
+            .setThumbnail(client.config.player.embedGif)
             .setImage(song.thumbnail)
             .setAuthor({ name: '─────・ L I V E 💖・─────', iconURL: queue.textChannel.guild.iconURL() })
             .setDescription(`**[${song.name}](${song.url})**\n${song.uploader.name}・${duration}`)
@@ -22,47 +22,45 @@ module.exports = async (client, queue, song) => {
             new ButtonBuilder({ custom_id: 'playerPrev', label: 'Back' }).setStyle(2),
             new ButtonBuilder({ custom_id: 'playerStop', label: 'Stop' }).setStyle(4),
             new ButtonBuilder({ custom_id: 'playerSkip', label: 'Skip' }).setStyle(2),
-            new ButtonBuilder({ custom_id: 'playerLoop', label: 'Loop' }).setStyle(2)
+            new ButtonBuilder({ custom_id: 'playerLoop', label: 'Loop' }).setStyle(2),
          )
          const row2 = new ActionRowBuilder().addComponents(
             new ButtonBuilder({ custom_id: 'playerQueue', label: 'List' }).setStyle(2),
-            new ButtonBuilder({ custom_id: 'playerVol', label: 'Vol' }).setStyle(2),
-            new ButtonBuilder({ custom_id: 'playerAdd', label: 'Add' }).setStyle(4),
             new ButtonBuilder({ custom_id: 'playerSeek', label: 'Seek' }).setStyle(2),
-            new ButtonBuilder({ custom_id: 'playerClear', label: 'Clear' }).setStyle(2)
+            new ButtonBuilder({ custom_id: 'playerAdd', label: 'Add' }).setStyle(4),
+            new ButtonBuilder({ custom_id: 'playerGrab', label: 'Grab' }).setStyle(2),
+            new ButtonBuilder({ custom_id: 'playerClear', label: 'Clear' }).setStyle(2),
          )
 
          const currentMessage = await queue.textChannel.send({ embeds: [embed], components: [row1, row2] }).catch(() => {})
-         const collector = currentMessage.createMessageComponentCollector({ time: getSecond(duration) * 1000 + 10000 })
+         const listener = currentMessage.createMessageComponentCollector()
 
-         collector.on('collect', async (interaction) => {
+         listener.on('collect', async (interaction) => {
             if (!interaction.isButton()) return
             const embed = EmbedBuilder.from(currentMessage.embeds[0])
-
+   
             const actions = {
-               playerAdd: async () => await require('../Button/add')(interaction),
-               playerClear: async () => await require('../Button/clear')(queue, embed, username, avatar),
-               playerLoop: async () => await require('../Button/loop')(queue, embed, username, avatar),
-               playerPrev: async () => await require('../Button/previous')(queue, embed, username, avatar),
-               playerQueue: async () => await require('../Button/queue')(client, queue, embed, username, avatar),
-               playerSeek: async () => await require('../Button/seek')(interaction),
-               playerShuf: async () => await require('../Button/shuffle')(queue, embed, username, avatar),
-               playerSkip: async () => await require('../Button/skip')(queue, embed, username, avatar),
-               playerStop: async () => await require('../Button/stop')(queue, song, collector, currentMessage),
-               playerVol: async () => await require('../Button/volume')(interaction),
+               playerAdd: loadButton('../Events/Button/add', interaction),
+               playerClear: loadButton('../Events/Button/clear', queue, embed, username, avatar),
+               playerGrab: loadButton('../Events/Button/grab', client, queue, song, embed, username, avatar, duration),
+               playerLoop: loadButton('../Events/Button/loop', queue, embed, username, avatar),
+               playerPrev: loadButton('../Events/Button/previous', queue, embed, username, avatar),
+               playerQueue: loadButton('../Events/Button/queue', client, queue, embed, username, avatar),
+               playerSeek: loadButton('../Events/Button/seek', interaction),
+               playerShuf: loadButton('../Events/Button/shuffle', queue, embed, username, avatar),
+               playerSkip: loadButton('../Events/Button/skip', queue, embed, username, avatar),
+               playerStop: loadButton('../Events/Button/stop', queue, song, listener, currentMessage),
             }
 
             const action = actions[interaction.customId]
             if (action) {
-               await action().catch(() => {})
+               await action().catch((e) => { console.log(e) })
                if (interaction.customId !== 'playerStop' && interaction.customId !== 'playerAdd') {
                   updateEmbed(interaction, currentMessage, embed)
                }
             }
          })
-         collector.on('end', async () => {
-            await currentMessage.delete().catch(() => {})
-         })
+
          queue.lastPlayingMessage = currentMessage
       }
    } catch {

@@ -1,6 +1,10 @@
 # MeowBot - Discord Bot
 Ultimate Discord Music Bot
 
+<div style="display: flex; justify-content: flex-end; position: relative; top: 10px; right: 10px;">
+    <img src="./Assets/Preview.png" alt="MeowBot Logo" width="100" height="100" style="border-radius: 50%;">
+</div>
+
 ## Prerequisites
 
 Before you begin, make sure you have the following installed:

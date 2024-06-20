@@ -4,7 +4,7 @@ const { capFirstChar, formatTime, loadButton, updateEmbed } = require('../../Fun
 module.exports = async (client, queue, song) => {
    try {
       if (queue && queue.textChannel) {
-         const username = capFirstChar(song.user.tag)
+         const username = capFirstChar(song.user.globalName)
          const avatar = song.user.avatarURL()
          const duration = formatTime(song.formattedDuration)
 
@@ -18,7 +18,7 @@ module.exports = async (client, queue, song) => {
             .setTimestamp()
 
          const row1 = new ActionRowBuilder().addComponents(
-            new ButtonBuilder({ custom_id: 'playerShuf', label: 'Shuf' }).setStyle(2),
+            new ButtonBuilder({ custom_id: 'playerShuf', label: 'Mix' }).setStyle(2),
             new ButtonBuilder({ custom_id: 'playerPrev', label: 'Back' }).setStyle(2),
             new ButtonBuilder({ custom_id: 'playerStop', label: 'Stop' }).setStyle(4),
             new ButtonBuilder({ custom_id: 'playerSkip', label: 'Skip' }).setStyle(2),
@@ -36,7 +36,6 @@ module.exports = async (client, queue, song) => {
          const listener = currentMessage.createMessageComponentCollector()
 
          listener.on('collect', async (interaction) => {
-            if (!interaction.isButton()) return
             const embed = EmbedBuilder.from(currentMessage.embeds[0])
    
             const actions = {
@@ -52,13 +51,8 @@ module.exports = async (client, queue, song) => {
                playerStop: loadButton('../Events/Button/stop', queue, song, listener, currentMessage),
             }
 
-            const action = actions[interaction.customId]
-            if (action) {
-               await action().catch((e) => { console.log(e) })
-               if (interaction.customId !== 'playerStop' && interaction.customId !== 'playerAdd') {
-                  updateEmbed(interaction, currentMessage, embed)
-               }
-            }
+            await actions[interaction.customId]().catch((e) => { console.log(e) })
+            if (!['playerStop', 'playerAdd'].includes(interaction.customId)) updateEmbed(interaction, currentMessage, embed)
          })
 
          queue.lastPlayingMessage = currentMessage

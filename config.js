@@ -16,11 +16,11 @@ module.exports = {
             state: 'From Pooba Saga With 💖',
             type: 2,
          },{
-            name: 'Ryo.o 🌸',
+            name: 'RyoKr 🌱',
             state: 'From Pooba Saga With 💖',
             type: 3,
          },{
-            name: 'Pooba Saga ✨',
+            name: 'Genshin ✨',
             state: 'From Pooba Saga With 💖',
             type: 5,
          },
@@ -32,6 +32,7 @@ module.exports = {
       embedGif: process.env.gif || 'https://cdn.discordapp.com/attachments/1236634193019277322/1248996386532233248/mikogif.gif?ex=6665b207&is=66646087&hm=e3373b433b6a9ca9b814592f175c4ebfd82c6e10d63348289675a8cba6d04c2c&',
 
       maxVol: 200,
+      filter: '',
    },
 
    voice: {

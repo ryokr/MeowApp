@@ -1,7 +1,9 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
 const { DisTubeHandler, Playlist } = require('distube')
+const fs = require('fs')
 
 module.exports = {
+   printData,
    getStatus,
    playMusic,
    getSecond,
@@ -15,9 +17,12 @@ module.exports = {
    queueActionRow,
 }
 
+function printData(data) {
+   console.log(data)
+}
+
 function getStatus() {
-   const statuses = ['online', 'idle', 'dnd']
-   return statuses[Math.floor(Math.random()*3)]
+   return ['online', 'idle', 'dnd'][Math.floor(Math.random() * 2)]
 }
 
 // Play
@@ -40,11 +45,13 @@ async function playMusic(client, interaction, name) {
    }
 }
 async function playSong(client, interaction, name) {
-   await client.player.play(interaction.member.voice.channel, name, {
-      member: interaction.member,
-      textChannel: interaction.channel,
-      interaction,
-   }).catch(() => {})
+   await client.player
+      .play(interaction.member.voice.channel, name, {
+         member: interaction.member,
+         textChannel: interaction.channel,
+         interaction,
+      })
+      .catch(() => {})
 }
 async function getVideoUrls(url) {
    try {
@@ -94,13 +101,13 @@ function deleteMessage(message, time) {
 }
 
 function capFirstChar(string) {
-   if (!string) return ''
-   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+   if (!string) return ' '
+   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 function formatTime(duration) {
    if (duration === 'Live') return duration
-   
+
    const parts = duration.split(':').map(Number)
 
    if (parts.length === 3) {

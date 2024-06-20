@@ -18,27 +18,19 @@ module.exports = {
    run: async (client, interaction) => {
       try {
          const name = interaction.options.getString('name')
-         const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
+         const embed = new EmbedBuilder().setColor(client.config.player.embedColor).setDescription('Meowing')
+         const msg = await interaction.reply({ embeds: [embed] })
 
-         if (!name) {
-            embed.setDescription('Please type music name or link')
-            const msg = await interaction.reply({ embeds: [embed] })
-            deleteMessage(msg, 20000)
-         } else {
-            embed.setDescription('Meowing')
-            const msg = await interaction.reply({ embeds: [embed] })
-
-            try {
-               await playMusic(client, interaction, name)
-            } catch {
-               embed.setDescription('Not found')
-               await interaction.editReply({ embeds: [embed] })
-            }
-
-            deleteMessage(msg, 10000)
+         try {
+            await playMusic(client, interaction, name)
+         } catch {
+            embed.setDescription('Not found')
+            await interaction.editReply({ embeds: [embed] })
          }
+
+         deleteMessage(msg, 10000)
       } catch {
          console.log('❌    Play Error')
       }
-   }
+   },
 }

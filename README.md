@@ -1,7 +1,7 @@
 # MeowBot - Discord Bot
 Ultimate Discord Music Bot
 
-<img src="./Assets/Preview.png" alt="Preview" width="800">
+<img src="./Assets/Preview.png" alt="Preview" width="830">
 
 ## Prerequisites
 

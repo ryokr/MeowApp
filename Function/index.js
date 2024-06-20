@@ -1,6 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
 const { DisTubeHandler, Playlist } = require('distube')
-const fs = require('fs')
 
 module.exports = {
    printData,

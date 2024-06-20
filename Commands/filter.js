@@ -44,7 +44,7 @@ module.exports = {
          const collector = message.createMessageComponentCollector({ filter, time: 120000 })
 
          collector.on('collect', async (button) => {
-            if (button.customId === 'close') {
+            if (button.customId === 'close' || !['3d', 'haas', 'vaporwave', 'nightcore'].includes(button.customId)) {
                collector.stop()
                return
             }

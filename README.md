@@ -97,7 +97,6 @@ node index.js
 
 > This bot can be hosted anywhere that supports Node.js
 
-
 ## Support
 
 > Contact me [ryohuy2410](https://discord.gg/fTuGFk9ayG) for any issue.

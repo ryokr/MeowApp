@@ -2,7 +2,7 @@
 Ultimate Discord Music Bot
 
 <div style="display: flex; justify-content: flex-end; position: relative; top: 10px; right: 10px;">
-    <img src="./Assets/Preview.png" alt="MeowBot Logo" width="1000" height="1000" style="border-radius: 50%;">
+    <img src="./Assets/Preview.png" alt="MeowBot Logo" width="700" style="border-radius: 50%;">
 </div>
 
 ## Prerequisites

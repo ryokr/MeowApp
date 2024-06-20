@@ -16,3 +16,5 @@ git add --all
 git commit -S -m 'Meow'
 git push -u origin main
 Set-Location -Path $Source
+
+Remove-Item -Path $Destination -Recurse -Force

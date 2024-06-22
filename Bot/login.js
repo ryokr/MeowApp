@@ -1,8 +1,8 @@
 const { getStatus } = require('../Function')
 
 module.exports = login = async (client) => {
-   client.login(client.config.TOKEN).catch(() => {
-      console.log('❌    LOGIN FAILED')
+   client.login(client.config.TOKEN).catch((e) => {
+      console.log('❌    LOGIN FAILED', e)
       process.exit(1)
    })
    

@@ -33,6 +33,7 @@ module.exports = {
 
       maxVol: 200,
       filter: '',
+      dj: '1229808909238407249',
    },
 
    voice: {

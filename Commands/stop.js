@@ -15,6 +15,9 @@ module.exports = {
          if (!queue || !queue.playing) {
             embed.setDescription('No music playing')
          } else {
+            if (queue.lastPlayingMessage != null) {
+               await queue.lastPlayingMessage.delete().catch(() => {})
+            }
             await queue.stop()
             embed.setDescription('Stopped the music and cleared the queue')
          }

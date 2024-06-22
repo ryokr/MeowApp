@@ -29,7 +29,7 @@ async function handleCommand(client, interaction) {
             const props = require(`${path}/${file}`)
 
             if (interaction.commandName === props.name) {
-               if (!hasDJRole(client, interaction.member)) {
+               if (interaction.guild.id === '677858109145874433' && !hasDJRole(client, interaction.member)) {
                   await interaction.reply({ content: `I'm sleeping, Call Cốn lào Please ❤️‍🔥`, ephemeral: true })
                   return
                }

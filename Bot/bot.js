@@ -13,11 +13,7 @@ if (!config.TOKEN) {
 }
 
 const client = new Client({
-   intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages,
-      GatewayIntentBits.GuildVoiceStates,
-   ],
+   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates],
 })
 
 client.config = config

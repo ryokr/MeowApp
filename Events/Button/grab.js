@@ -12,7 +12,7 @@ module.exports = async (client, queue, song, embed, username, avatar) => {
       //    { name: 'Duration', value: `${duration}`, inline: true },
       //    { name: 'Current Time', value: `${formatTime(queue.formattedCurrentTime)}`, inline: true },
       // )
-      .setFooter({ text: `🌱 • Requested by ${username}`, iconURL: avatar })
+      .setFooter({ text: `🌱 • ${username}`, iconURL: avatar })
       .setTimestamp()
 
    await queue.textChannel.send({ embeds: [grabEmbed] })

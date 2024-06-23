@@ -76,7 +76,7 @@ async function handleAddModal(client, interaction, embed) {
       const msg = await interaction.reply({ embeds: [embed] })
 
       await playMusic(client, interaction, songName)
-      deleteMessage(msg, 10000)
+      deleteMessage(msg, 100)
    }
 }
 async function handleSeekModal(interaction, queue, embed) {
@@ -92,7 +92,7 @@ async function handleSeekModal(interaction, queue, embed) {
       embed.setDescription(`Seeked to ${value}`)
    }
 
-   deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
+   deleteMessage(await interaction.reply({ embeds: [embed] }), 5000)
 }
 // async function handleVolumeModal(client, interaction, queue, embed) {
 //    const maxVol = client.config.player.maxVol;

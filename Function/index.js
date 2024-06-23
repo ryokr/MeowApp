@@ -3,7 +3,6 @@ const { DisTubeHandler, Playlist } = require('distube')
 const fs = require('fs').promises
 
 module.exports = {
-   printData,
    hasDJRole,
    handleCommand,
    handleModalSubmit,
@@ -18,10 +17,7 @@ module.exports = {
    updateEmbed,
    generateQueuePage,
    queueActionRow,
-}
-
-function printData(data) {
-   console.log(data)
+   printData,
 }
 
 // interactionCreate
@@ -144,8 +140,9 @@ async function playSong(client, interaction, name) {
       .play(interaction.member.voice.channel, name, {
          member: interaction.member,
          textChannel: interaction.channel,
-         interaction
-      }).catch(() => {})
+         interaction,
+      })
+      .catch(() => {})
 }
 async function getVideoUrls(url) {
    try {
@@ -249,4 +246,8 @@ function queueActionRow(page, total) {
       new ButtonBuilder({ custom_id: 'queueLast', label: 'Last Page' }).setStyle(2).setDisabled(page === total),
       new ButtonBuilder({ custom_id: 'queueClose', label: 'Close' }).setStyle(4)
    )
+}
+
+function printData(data) {
+   console.log(data)
 }

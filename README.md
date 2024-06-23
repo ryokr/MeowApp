@@ -95,6 +95,16 @@ To start MeowBot, run:
 node index.js
 ```
 
+## Commands
+
+- `play` -> Plays the requested song in voice channel you are in.
+- `search` -> Search the requested song.
+- `skip` -> Skip currently playing song.
+- `stop` -> Stop the music and clear the queue.
+- `filter` -> Change the filter.
+- `volume` -> Change player volume.
+
+
 ## Hosting
 
 > This bot can be hosted anywhere that supports Node.js

@@ -57,7 +57,7 @@ async function handleCommand(client, interaction) {
       }
    }
 
-   await execute(__dirname + '/../../Commands')
+   await execute(__dirname + '/../Commands')
 }
 async function handleModalSubmit(client, interaction) {
    const queue = client.player.getQueue(interaction.guild.id)

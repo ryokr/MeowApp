@@ -4,7 +4,7 @@ const { capFirstChar, formatTime, loadButton, updateEmbed } = require('../../Fun
 module.exports = async (client, queue, song) => {
    try {
       if (queue && queue.textChannel) {
-         const username = capFirstChar(song.user.globalName)
+         const username = 'Requested by ' + capFirstChar(song.user.globalName)
          const avatar = song.user.avatarURL()
          const duration = formatTime(song.formattedDuration)
 

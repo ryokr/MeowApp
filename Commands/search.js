@@ -59,7 +59,7 @@ module.exports = {
                if (button.customId === 'close') {
                   deleteMessage(message, 100)
                   listener.stop()
-               } else if (!isNaN(parseInt(button.customeId))){
+               } else if (!isNaN(button.customId) && button.customId >= '1' && button.customId <= '10'){
                   deleteMessage(message, 100)
                   
                   await client.player.play(interaction.member.voice.channel, results[Number(button.customId) - 1].url, {

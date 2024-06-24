@@ -117,9 +117,3 @@ node index.js
 
 > If you consider using this Bot, make sure to credit me ><.
 > Example: `From [ryohuy2410](https://discord.gg/fTuGFk9ayG) with luv, meowed by [modifier/your Name](<url>)` :3.
-
-## Contributing
-
-> If you wanna help improve the Bot, fix spelling or design Errors or if possible even code errors, you may create PULL REQUESTS.
-> Please consider, that [**ryokr**](https://github.com/ryokr) is the main Developer of this Bot, everyone else helped just once or sometimes more often.
-> Thanks to anyone who considers helping me :3.

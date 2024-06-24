@@ -53,13 +53,13 @@ module.exports = {
             const message = await interaction.reply({ embeds: [embed], components: [...rows, close] })
 
             const filter = (i) => i.user.id === interaction.user.id
-            const listener = message.createMessageComponentCollector({ filter, time: 10000 })
+            const listener = message.createMessageComponentCollector({ filter, time: 30000 })
 
             listener.on('collect', async (button) => {
                if (button.customId === 'close') {
                   deleteMessage(message, 100)
                   listener.stop()
-               } else {
+               } else if (!isNaN(parseInt(button.customeId))){
                   deleteMessage(message, 100)
                   
                   await client.player.play(interaction.member.voice.channel, results[Number(button.customId) - 1].url, {
@@ -68,6 +68,8 @@ module.exports = {
                      interaction,
                   })
                   listener.stop()
+               } else {
+                  deleteMessage(message, 100)
                }
             })
 

@@ -113,7 +113,7 @@ async function handleSeekModal(interaction, queue, embed) {
 // }
 
 function getStatus() {
-   return Math.random() < 0.6 ? 'online' : 'idle'
+   return Math.random() < 0.7 ? 'online' : 'idle'
 }
 
 // Play

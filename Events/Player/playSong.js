@@ -41,7 +41,7 @@ module.exports = async (client, queue, song) => {
             const actions = {
                playerAdd: loadButton('../Events/Button/add', interaction),
                playerClear: loadButton('../Events/Button/clear', queue, embed, username, avatar),
-               playerGrab: loadButton('../Events/Button/grab', client, queue, song, embed, username, avatar),
+               playerGrab: loadButton('../Events/Button/grab', client, queue, song, embed, username, avatar, duration),
                playerLoop: loadButton('../Events/Button/loop', queue, embed, username, avatar),
                playerPrev: loadButton('../Events/Button/previous', queue, embed, username, avatar),
                playerQueue: loadButton('../Events/Button/queue', client, queue, embed, username, avatar),

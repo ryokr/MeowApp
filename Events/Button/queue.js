@@ -52,7 +52,6 @@ module.exports = async (client, queue, embed, username, avatar) => {
 
       embed.setFooter({ text: `💽 • Queue Revealed • ${username}`, iconURL: avatar })
    } else {
-      
       embed.setFooter({ text: `💽 • Queue Empty • ${username}`, iconURL: avatar })
    }
 }

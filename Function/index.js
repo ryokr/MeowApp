@@ -240,11 +240,11 @@ function generateQueuePage(client, queue, start, page, total, pageLength, songLi
 }
 function queueActionRow(page, total) {
    return new ActionRowBuilder().addComponents(
-      new ButtonBuilder({ custom_id: 'queueFirst', label: 'First Page' }).setStyle(2).setDisabled(page === 1),
-      new ButtonBuilder({ custom_id: 'queueBack', label: 'Previous Page' }).setStyle(2).setDisabled(page === 1),
-      new ButtonBuilder({ custom_id: 'queueNext', label: 'Next Page' }).setStyle(2).setDisabled(page === total),
-      new ButtonBuilder({ custom_id: 'queueLast', label: 'Last Page' }).setStyle(2).setDisabled(page === total),
-      new ButtonBuilder({ custom_id: 'queueClose', label: 'Close' }).setStyle(4)
+      new ButtonBuilder({ custom_id: 'queueFirst', label: 'First Page', style: 2 }).setDisabled(page === 1),
+      new ButtonBuilder({ custom_id: 'queueBack', label: 'Previous Page', style: 2 }).setDisabled(page === 1),
+      new ButtonBuilder({ custom_id: 'queueNext', label: 'Next Page', style: 2 }).setDisabled(page === total),
+      new ButtonBuilder({ custom_id: 'queueLast', label: 'Last Page', style: 2 }).setDisabled(page === total),
+      new ButtonBuilder({ custom_id: 'queueClose', label: 'Close', style: 4 }),
    )
 }
 

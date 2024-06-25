@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 module.exports = {
-   TOKEN: process.env.tokenEi,
+   TOKEN: process.env.token,
 
    presence: {
       status: process.env.status,

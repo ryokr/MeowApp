@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
-const { capFirstChar, deleteMessage } = require('../Function')
+const { hasFilter, capFirstChar, deleteMessage } = require('../Function')
 
 module.exports = {
    name: 'filter',
@@ -21,14 +21,13 @@ module.exports = {
             return
          }
 
-         const filterState = (filter) => (queue.filters.has(filter) ? 'On ✔️' : 'Off ❌')
          const description = () =>
-            `\`\`\`3D・${filterState('3d')}\n` +
-            `Stereo・${filterState('haas')}\n` +
-            `Slowed・${filterState('vaporwave')}\n` +
-            `Nightcore・${filterState('nightcore')}\`\`\``
+            `\`\`\`${hasFilter(queue, '3d')}・3D\n` +
+            `${hasFilter(queue, 'haas')}・Stereo\n` +
+            `${hasFilter(queue, 'vaporwave')}・Slowed\n` +
+            `${hasFilter(queue, 'nightcore')}・Nightcore\`\`\``
 
-         embed.setAuthor({ name: '─────・ F I L T E R S ❤️‍🔥・─────', iconURL: interaction.guild.iconURL() }).setDescription(description())
+         embed.setAuthor({ name: '─────・ F I L T E R S 🌱・─────', iconURL: interaction.guild.iconURL() }).setDescription(description())
 
          const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder().setCustomId('3d').setLabel('3D').setStyle('Secondary'),

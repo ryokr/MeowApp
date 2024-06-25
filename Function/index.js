@@ -8,6 +8,7 @@ module.exports = {
    handleModalSubmit,
    getStatus,
    playMusic,
+   hasFilter,
    getSecond,
    deleteMessage,
    capFirstChar,
@@ -78,7 +79,7 @@ async function handleAddModal(client, interaction, embed) {
       const msg = await interaction.reply({ embeds: [embed] })
 
       await playMusic(client, interaction, songName)
-      deleteMessage(msg, 100)
+      deleteMessage(msg, 5000)
    }
 }
 async function handleSeekModal(interaction, queue, embed) {
@@ -165,6 +166,11 @@ async function getVideoUrls(url) {
    } catch (error) {
       throw error
    }
+}
+
+// Filter
+function hasFilter(queue, filter) {
+   return queue.filters.has(filter) ? '✔️' : '❌'
 }
 
 // Seek

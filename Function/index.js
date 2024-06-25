@@ -63,6 +63,8 @@ async function handleModalSubmit(client, interaction) {
       await handleAddModal(client, interaction, embed)
    } else if (interaction.customId === 'playerSeekModal') {
       await handleSeekModal(interaction, queue, embed)
+   } else if (interaction.customId === 'playerVolumeModal') {
+      await handleVolumeModal(client, interaction, queue, embed)
    }
 }
 async function handleAddModal(client, interaction, embed) {
@@ -94,23 +96,23 @@ async function handleSeekModal(interaction, queue, embed) {
 
    deleteMessage(await interaction.reply({ embeds: [embed] }), 5000)
 }
-// async function handleVolumeModal(client, interaction, queue, embed) {
-//    const maxVol = client.config.player.maxVol;
-//    const vol = parseInt(interaction.fields.getTextInputValue('playerVolumeInput'));
+async function handleVolumeModal(client, interaction, queue, embed) {
+   const maxVol = client.config.player.maxVol;
+   const vol = parseInt(interaction.fields.getTextInputValue('playerVolumeInput'));
 
-//    if (!queue || !queue.playing) {
-//       embed.setDescription('No music playing');
-//    } else if (queue.volume === vol) {
-//       embed.setDescription(`Volume is already set to ${vol}`);
-//    } else if (!vol || vol < 1 || vol > maxVol) {
-//       embed.setDescription(`Type a number between 1 and ${maxVol}`);
-//    } else {
-//       await queue.setVolume(vol);
-//       embed.setDescription(`Set the volume to ${vol}`);
-//    }
+   if (!queue || !queue.playing) {
+      embed.setDescription('No music playing');
+   } else if (queue.volume === vol) {
+      embed.setDescription(`Volume is already set to ${vol}`);
+   } else if (!vol || vol < 1 || vol > maxVol) {
+      embed.setDescription(`Type a number between 1 and ${maxVol}`);
+   } else {
+      await queue.setVolume(vol);
+      embed.setDescription(`Set the volume to ${vol}`);
+   }
 
-//    deleteMessage(await interaction.reply({ embeds: [embed] }), 10000);
-// }
+   deleteMessage(await interaction.reply({ embeds: [embed] }), 10000);
+}
 
 function getStatus() {
    return Math.random() < 0.7 ? 'online' : 'idle'
@@ -246,6 +248,17 @@ function queueActionRow(page, total) {
       new ButtonBuilder({ custom_id: 'queueLast', label: 'Last Page', style: 2 }).setDisabled(page === total),
       new ButtonBuilder({ custom_id: 'queueClose', label: 'Close', style: 4 }),
    )
+}
+
+function getGuilds(client) {
+   const guildNames = client.guilds.cache.map(guild => guild.name).join('\n')
+   fs.writeFile('guilds.txt', guildNames, (error) => {
+      if (error) {
+         console.log('Error writing to file:', error)
+      } else {
+         console.log('Guild names have been written to guilds.txt')
+      }
+   })
 }
 
 function printData(data) {

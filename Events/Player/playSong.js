@@ -12,7 +12,7 @@ module.exports = async (client, queue, song) => {
             .setColor(client.config.player.embedColor)
             .setThumbnail(client.config.player.embedGif)
             .setImage(song.thumbnail)
-            .setAuthor({ name: '─────・ L I V E 💖・─────', iconURL: queue.textChannel.guild.iconURL() })
+            .setAuthor({ name: '─────・ L I V E ❤️‍🔥・─────', iconURL: queue.textChannel.guild.iconURL() })
             .setDescription(`**[${song.name}](${song.url})**\n${song.uploader.name}・${duration}`)
             .setFooter({ text: `🧩 • ${username}`, iconURL: avatar })
             .setTimestamp()

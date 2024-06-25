@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 module.exports = {
-   TOKEN: process.env.token,
+   TOKEN: process.env.tokenEi,
 
    presence: {
       status: process.env.status,
@@ -31,9 +31,8 @@ module.exports = {
       embedColor: process.env.color || 'ff4400',
       embedGif: process.env.gif || 'https://cdn.discordapp.com/attachments/1236634193019277322/1248996386532233248/mikogif.gif?ex=6665b207&is=66646087&hm=e3373b433b6a9ca9b814592f175c4ebfd82c6e10d63348289675a8cba6d04c2c&',
 
-      maxVol: 200,
-      filter: '',
-      dj: '1229808909238407249',
+      maxVol: process.env.maxvol || 200,
+      dj: process.env.dj || '1229808909238407249',
    },
 
    voice: {

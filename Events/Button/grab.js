@@ -19,5 +19,5 @@ module.exports = async (client, queue, song, embed, username, avatar, duration) 
    }
    await channel.send({ embeds: [grabEmbed] })
 
-   embed.setFooter({ text: `💽 • Song Revealed • ${username}`, iconURL: avatar })
+   embed.setFooter({ text: `🥝 • Song Revealed • ${username}`, iconURL: avatar })
 }

@@ -50,7 +50,7 @@ module.exports = async (client, queue, embed, username, avatar) => {
          await queueMessage.edit({ components: [] }).catch(() => {})
       })
 
-      embed.setFooter({ text: `💽 • Queue Revealed • ${username}`, iconURL: avatar })
+      embed.setFooter({ text: `🌸 • Queue Revealed • ${username}`, iconURL: avatar })
    } else {
       embed.setFooter({ text: `💽 • Queue Empty • ${username}`, iconURL: avatar })
    }

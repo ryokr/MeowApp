@@ -12,9 +12,9 @@ Get-ChildItem -Path $Destination -Exclude ".git" | Remove-Item -Recurse -Force
 robocopy $Source $Destination /E /XD "$Source\node_modules" /XF "package-lock.json" ".env"
 
 Set-Location -Path $Destination
-git add --all
+git add .
 git commit -S -m 'Meow'
-git push -u origin main
+git push origin
 Set-Location -Path $Source
 
 Remove-Item -Path $Destination -Recurse -Force

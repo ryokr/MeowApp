@@ -9,7 +9,7 @@ module.exports = {
          {
             name: process.env.name || 'Meow Meow',
             state: process.env.state || 'From Pooba Saga With 💖',
-            type: parseInt(process.env.type) || 0, // 0_Play, 1_Stream, 2_Listen, 3_Watch 4_Custom 5_Compete
+            type: parseInt(process.env.type) || 0, // 0_Play, 1_Stream, 2_Listen, 3_Watch, 4_Custom, 5_Compete
             url: process.env.url || 'https://www.youtube.com/watch?v=Rl8uYgzQiJ8',
          },{
             name: 'Ryo.o 🌸',
@@ -19,10 +19,6 @@ module.exports = {
             name: 'RyoKr 🌱',
             state: 'From Pooba Saga With 💖',
             type: 3,
-         },{
-            name: 'Genshin ✨',
-            state: 'From Pooba Saga With 💖',
-            type: 5,
          },
       ],
    },

@@ -60,7 +60,7 @@ module.exports = {
             listener.on('collect', async (button) => {
                if (button.customId === 'searchClose') {
                   listener.stop()
-               } else if (button.customId.include('search')) {
+               } else if (button.customId.includes('search')) {
                   await client.player.play(interaction.member.voice.channel, results[Number(button.customId) - 1].url, {
                      member: interaction.member,
                      textChannel: interaction.channel,

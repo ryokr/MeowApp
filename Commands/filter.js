@@ -12,7 +12,7 @@ module.exports = {
          const queue = client.player.getQueue(interaction.guild.id)
          const embed = new EmbedBuilder()
             .setColor(client.config.player.embedColor)
-            .setFooter({ text: `🧩 • ${capFirstChar(interaction.user.globalName)}`, iconURL: interaction.user.avatarURL() })
+            .setFooter({ text: `🧩 • Requested by ${capFirstChar(interaction.user.globalName)}`, iconURL: interaction.user.avatarURL() })
             .setTimestamp()
 
          if (!queue || !queue.playing) {

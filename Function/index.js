@@ -243,7 +243,7 @@ function generateQueuePage(client, queue, start, page, total, pageLength, songLi
    return new EmbedBuilder()
       .setColor(client.config.player.embedColor)
       .setAuthor({ name: '─────・ P L A Y  L I S T 🌱・─────', iconURL: queue.textChannel.guild.iconURL() })
-      .setDescription(current.map((song) => `\n${index++}. [${song.name}](${song.url})・${formatTime(song.formattedDuration)}`).join(''))
+      .setDescription(current.map((song) => `\n${index++}. [${song.name}](${song.url})・${formatTime(song.duration)}`).join(''))
       .setFooter({ text: `💽 • Page ${page} / ${total}` })
 }
 function queueActionRow(page, total) {

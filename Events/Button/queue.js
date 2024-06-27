@@ -5,6 +5,7 @@ module.exports = async (client, queue, embed, username, avatar) => {
       const songList = queue.songs.map((song) => ({
          name: song.name,
          url: song.url,
+         duration: song.formattedDuration
       }))
       const pageLength = 10
       const total = Math.ceil(songList.length / pageLength)

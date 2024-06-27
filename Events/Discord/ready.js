@@ -6,9 +6,9 @@ module.exports = async (client) => {
 
    try {
       await rest.put(Routes.applicationCommands(client.user.id), { body: await client.commands })
-      console.log('\x1b[35m%s\x1b[0m', `⭕    🌑 ⬪ Commands Loaded`)
+      console.log('\x1b[35m%s\x1b[0m', `✔️    🌑 ⬪ Commands Loaded`)
    } catch {
       console.log('\x1b[35m%s\x1b[0m', `❌    🌑 ⬪ Commands Distracted`)
    }
-   console.log('\x1b[32m%s\x1b[0m', `⭕    🐸 ⬪ Logged in as -- ${client.user.username}`)
+   console.log('\x1b[32m%s\x1b[0m', `✔️    🐸 ⬪ Logged in as -- ${client.user.username}`)
 }

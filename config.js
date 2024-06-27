@@ -11,11 +11,28 @@ module.exports = {
             state: process.env.state || 'From Pooba Saga With 💖',
             type: parseInt(process.env.type) || 0, // 0_Play, 1_Stream, 2_Listen, 3_Watch, 4_Custom, 5_Compete
             url: process.env.url || 'https://www.youtube.com/watch?v=Rl8uYgzQiJ8',
-         },{
+         },
+         {
             name: 'Ryo.o 🌸',
             state: 'From Pooba Saga With 💖',
             type: 2,
-         },{
+         },
+         {
+            name: 'Time Traveler ⏳',
+            state: 'Meowing Through Time Loops',
+            type: 0,
+         },
+         {
+            name: 'Elemental Conjurer',
+            state: 'Harnessing the Power of the Elements',
+            type: 0,
+         },
+         {
+            name: 'Elden Ring 👑',
+            state: 'Me Meow Meow with Ranni',
+            type: 5,
+         },
+         {
             name: 'RyoKr 🌱',
             state: 'From Pooba Saga With 💖',
             type: 3,
@@ -37,7 +54,7 @@ module.exports = {
       leaveOnEmpty: false,
    },
 
-   shardManager: {
-      shardStatus: process.env.shard || false,
+   shard: {
+      status: process.env.shard || false,
    },
 }

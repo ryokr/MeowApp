@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder, EmbedBuilder} = require('discord.js')
-const { deleteMessage } = require('../Function')
+const { formatTime, deleteMessage } = require('../Function')
 
 module.exports = {
    name: 'search',
@@ -26,7 +26,7 @@ module.exports = {
             interaction,
          })
 
-         if (!results?.length) {
+         if (!results || results.length < 1) {
             embed.setDescription('No result')
             deleteMessage(await interaction.reply({ embed: [embed] }), 10000)
          } else {
@@ -34,8 +34,8 @@ module.exports = {
 
             embed
                .setAuthor({ name: '─────・ R E S U L T S 🌸・─────', iconURL: interaction.guild.iconURL() })
-               .setDescription(songs.map((song, i) => `${i + 1}. [${song.name}](${song.url})・${song.uploader.name}`).join('\n'))
-               .setFooter({ text: `✨ Choose a song` })
+               .setDescription(songs.map((song, i) => `${i + 1}. [${song.name}](${song.url})・${song.uploader.name}・${formatTime(song.formattedDuration)}`).join('\n'))
+               .setFooter({ text: `✨ • Choose a song` })
 
             const buttons = songs.map((song, i) =>
                new ButtonBuilder()
@@ -60,15 +60,16 @@ module.exports = {
             listener.on('collect', async (button) => {
                if (button.customId === 'searchClose') {
                   listener.stop()
+                  deleteMessage(message, 100)
                } else if (button.customId.includes('search')) {
-                  await client.player.play(interaction.member.voice.channel, results[Number(button.customId) - 1].url, {
+                  deleteMessage(message, 100)
+                  await client.player.play(interaction.member.voice.channel, results[Number(button.customId.replace('search', '')) - 1].url, {
                      member: interaction.member,
                      textChannel: interaction.channel,
                      interaction,
                   })
                   listener.stop()
                }
-               deleteMessage(message, 100)
             })
 
             listener.on('end', async () => {

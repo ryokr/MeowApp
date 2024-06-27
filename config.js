@@ -54,7 +54,5 @@ module.exports = {
       leaveOnEmpty: false,
    },
 
-   shard: {
-      status: process.env.shard || false,
-   },
+   shard: process.env.shard || false,
 }

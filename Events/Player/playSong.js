@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
-const { capFirstChar, formatTime, loadButton, updateEmbed } = require('../../Function')
+const { capFirstChar, formatTime, loadButton, updateEmbed, hasDJRole, reject } = require('../../Function')
 
 module.exports = async (client, queue, song) => {
    try {
@@ -36,6 +36,7 @@ module.exports = async (client, queue, song) => {
          const listener = currentMessage.createMessageComponentCollector()
 
          listener.on('collect', async (interaction) => {
+            if (!hasDJRole(client, interaction)) return reject(interaction)
             const embed = EmbedBuilder.from(currentMessage.embeds[0])
    
             const actions = {

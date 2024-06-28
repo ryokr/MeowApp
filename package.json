@@ -6,20 +6,20 @@
    "license": "MIT",
    "main": "index.js",
    "dependencies": {
+      "@distube/yt-dlp": "1.1.3",
+      "distube": "4.0.6",
+
       "@discordjs/builders": "^1.8.2",
       "@discordjs/opus": "^0.9.0",
       "@discordjs/rest": "^2.3.0",
       "@discordjs/voice": "^0.17.0",
-      "@distube/yt-dlp": "1.1.3",
       "discord-api-types": "^0.37.88",
-      "discord-nsfw": "^1.3.0",
       "discord.js": "^14.15.3",
-      "distube": "4.0.6",
+
       "dotenv": "^16.4.5",
       "express": "^4.18.2",
       "husky": "^9.0.11",
-      "libsodium-wrappers": "^0.7.13",
-      "nekos.life": "^3.0.0"
+      "libsodium-wrappers": "^0.7.13"
    },
    "engines": {
       "node": "18.20.2"

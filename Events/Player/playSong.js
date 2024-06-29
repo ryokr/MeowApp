@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
-const { capFirstChar, formatTime, loadButton, updateEmbed, hasDJRole, reject } = require('../../Function')
+const { capFirstChar, formatTime, loadButton, updateEmbed, auth, reject } = require('../../Function')
 
 module.exports = async (client, queue, song) => {
    try {

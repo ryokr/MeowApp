@@ -28,7 +28,7 @@ module.exports = {
 
 // interactionCreate
 function auth(client, interaction) {
-   return interaction.guild.id === '677858109145874433' && interaction.member.roles.cache.has(client.config.player.dj)
+   return interaction.guild.id === '677858109145874433' && !interaction.member.roles.cache.has(client.config.player.dj)
 }
 async function reject(interaction) {
    await interaction.reply({ content: `I'm sleeping, Call <@677857271530651649> Please ❤️‍🔥`, ephemeral: true })

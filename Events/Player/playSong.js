@@ -36,7 +36,7 @@ module.exports = async (client, queue, song) => {
          const listener = currentMessage.createMessageComponentCollector()
 
          listener.on('collect', async (interaction) => {
-            if (!hasDJRole(client, interaction)) return reject(interaction)
+            if (!auth(client, interaction)) return reject(interaction)
             const embed = EmbedBuilder.from(currentMessage.embeds[0])
    
             const actions = {

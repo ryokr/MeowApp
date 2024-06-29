@@ -3,7 +3,7 @@ const { DisTubeHandler, Playlist } = require('distube')
 const fs = require('fs').promises
 
 module.exports = {
-   hasDJRole,
+   auth,
    reject,
    handleCommand,
    handleModalSubmit,
@@ -27,8 +27,8 @@ module.exports = {
 }
 
 // interactionCreate
-function hasDJRole(client, interaction) {
-   return interaction.member.roles.cache.has(client.config.player.dj)
+function auth(client, interaction) {
+   return interaction.guild.id === '677858109145874433' && interaction.member.roles.cache.has(client.config.player.dj)
 }
 async function reject(interaction) {
    await interaction.reply({ content: `I'm sleeping, Call <@677857271530651649> Please ❤️‍🔥`, ephemeral: true })
@@ -41,7 +41,7 @@ async function handleCommand(client, interaction) {
             const props = require(`${path}/${file}`)
 
             if (interaction.commandName === props.name) {
-               if (interaction.guild.id === '677858109145874433' && !hasDJRole(client, interaction)) {
+               if (auth(client, interaction)) {
                   reject(interaction)
                   return
                }

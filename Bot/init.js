@@ -1,6 +1,6 @@
 const fs = require('fs').promises
 
-module.exports = botInit = async (client) => {
+module.exports = async (client) => {
    await loadEvents(client, client, __dirname + '/../Events/Discord')
    await loadEvents(client, client.player, __dirname + '/../Events/Player')
    await loadCommands(client, __dirname + '/../Commands')

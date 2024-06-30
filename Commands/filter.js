@@ -60,7 +60,7 @@ module.exports = {
             deleteMessage(message, 100)
          })
       } catch {
-         console.error('❌    Filter Error')
+         console.error('❌   Filter Error')
       }
    }
 }

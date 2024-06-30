@@ -1,6 +1,6 @@
 const express = require('express')
 
-module.exports = serverStart = () => {
+module.exports = () => {
    const app = express()
    const PORT = 4000
 

@@ -7,7 +7,6 @@ module.exports = {
    reject,
    handleCommand,
    handleModalSubmit,
-   getStatus,
    playMusic,
    hasFilter,
    getSecond,
@@ -123,10 +122,6 @@ async function handleVolumeModal(client, interaction, queue, embed) {
    deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
 }
 
-function getStatus() {
-   return Math.random() < 0.7 ? 'online' : 'idle'
-}
-
 // Play
 async function playMusic(client, interaction, name) {
    if (!name.includes('list=RD')) {
@@ -178,7 +173,7 @@ async function getVideoUrls(url) {
 
 // Filter
 function hasFilter(queue, filter) {
-   return queue.filters.has(filter) ? '✔️' : '❌'
+   return queue.filters.has(filter) ? '🟢' : '⚫'
 }
 
 // Seek

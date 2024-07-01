@@ -13,7 +13,7 @@ module.exports = async (client, queue, song) => {
             .setThumbnail(client.config.player.embedGif)
             .setImage(song.thumbnail)
             .setAuthor({ name: '─────・ L I V E ❤️‍🔥・─────', iconURL: queue.textChannel.guild.iconURL() })
-            .setDescription(`**[${song.name}](${song.url})**\n${song.uploader.name}・${duration}`)
+            .setDescription(`**[${capFirstChar(song.name)}](${song.url})**\n${song.uploader.name}・${duration}`)
             .setFooter({ text: `🧩 • ${username}`, iconURL: avatar })
             .setTimestamp()
 
@@ -50,6 +50,7 @@ module.exports = async (client, queue, song) => {
                playerShuf: loadButton('../Events/Button/shuffle', queue, embed, username, avatar),
                playerSkip: loadButton('../Events/Button/skip', queue, embed, username, avatar),
                playerStop: loadButton('../Events/Button/stop', queue, song, listener, currentMessage),
+               playerVolume: loadButton('../Events/Button/volume', interaction),
             }
 
             await actions[interaction.customId]().catch((e) => { console.log(e) })

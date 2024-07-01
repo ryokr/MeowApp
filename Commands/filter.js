@@ -25,7 +25,7 @@ module.exports = {
             `${hasFilter(queue, '3d')}・3D\n` +
             `${hasFilter(queue, 'haas')}・Stereo\n` +
             `${hasFilter(queue, 'vaporwave')}・Slowed\n` +
-            `${hasFilter(queue, 'nightcore')}・Nightcore` //\`\`\`
+            `${hasFilter(queue, 'nightcore')}・Nightcore`
 
          embed.setAuthor({ name: '─────・ F I L T E R S 🌱・─────', iconURL: interaction.guild.iconURL() }).setDescription(description())
 

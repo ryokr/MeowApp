@@ -1,22 +1,17 @@
 # MeowBot - Discord Bot
-Ultimate Discord Music Bot
-
 <img src="./Assets/Preview.png" alt="Preview" width="830">
 
 ## Prerequisites
 
 Before you begin, make sure you have the following installed:
 
-- **[Node.js](https://nodejs.org/en/)** (Version 18.20.2)
-- **[NPM](https://www.npmjs.com/)** (comes bundled with Node.js)
-- **[FFMPEG](https://www.ffmpeg.org/)**
+- **[Node.js](https://nodejs.org/en/)** `Version 18.20.2`
+- **[FFMPEG](https://www.ffmpeg.org/)** `Lastest`
 
 
 ## Installation
 
-Follow these steps to set up MeowBot:
-
-1. **Clone the Repository**
+1. **Clone the Repo**
 
     ```bash
     git clone https://github.com/ryokr/MeowBot.git
@@ -39,14 +34,12 @@ Follow these steps to set up MeowBot:
 
 To ensure MeowBot works properly, set the following permissions:
 
-- **Application Scope** Enable `applications.commands` `bot` in the **OAuth2** tab on [Developer Portal](https://discord.com/developers/applications/).
+- **Application Scope** Enable `applications.commands` `bot` in the **OAuth2** tab on [Dev Portal](https://discord.com/developers/applications/).
 
-- **Intents** Enable `PRESENCE INTENT` `SERVER MEMBERS INTENT` `MESSAGE CONTENT INTENT` in the **Bot** tab on [Developer Portal](https://discord.com/developers/applications/).
+- **Intents** Enable `PRESENCE INTENT` `SERVER MEMBERS INTENT` `MESSAGE CONTENT INTENT` in the **Bot** tab on [Dev Portal](https://discord.com/developers/applications/).
 
 
 ## Configuration
-
-After installation, configure the bot:
 
 1. **Create Variables**
 
@@ -56,12 +49,12 @@ After installation, configure the bot:
 
     Copy and paste the content below to `.env` file u have created.
     
-    - `token`:(String) The token of your bot.
-    - `status`:(String) Can be `online`, `ilde`, `dnd`.
-    - `name`:(String) Name of your activity. Ex: Genshin Impact.
-    - `state`:(String) More info about activity. Ex: For 69 hours.
-    - `type`:(Integer) 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
-    - `color`:(String - HEX Format) ff4400 - Orange for default.
+    - `token`- `String` The token of your bot.
+    - `status` - `String` Can be `online`, `ilde`, `dnd`.
+    - `name` - `String` Name of your activity. Ex: Genshin Impact.
+    - `state` - `String` More info about activity. Ex: For 69 hours.
+    - `type` - `Integer` 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
+    - `color` - `String - HEX Format` ff4400 - Orange for default.
 
     **Template**
     ```
@@ -77,7 +70,7 @@ After installation, configure the bot:
 
     **Example**
     ```
-    token = 123456 
+    token = 123456
 
     status = idle
     name = Genshin Impact
@@ -107,7 +100,7 @@ node index.js
 
 ## Hosting
 
-> This bot can be hosted anywhere that supports Node.js
+> This bot can be hosted anywhere that supports `Node.js`. Make sure to include `FFMPEG`.
 
 ## Support
 

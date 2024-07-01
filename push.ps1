@@ -2,10 +2,11 @@ $Local = Get-Location
 $Repo = Join-Path $Local "..\MeowBot"
 $Parent = Get-Item -Path ".."
 
-$RepoURL = "https://github.com/ryokr/MeowBot.git"
+$RepoURL1 = "https://github.com/ryokr/MeowBot.git"
+$RepoURL2 = "https://github.com/Pooba-Saga/MeowBot.git"
 
 Set-Location -Path $Parent
-git clone $RepoURL
+git clone $RepoURL1
 Set-Location -Path $Local
 
 Get-ChildItem -Path $Repo -Exclude ".git" | Remove-Item -Recurse -Force

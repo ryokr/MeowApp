@@ -9,9 +9,7 @@ module.exports = async (client, interaction) => {
 
       if (interaction.type === InteractionType.ApplicationCommand) {
          await handleCommand(client, interaction)
-      }
-
-      if (interaction.type === InteractionType.ModalSubmit) {
+      } else if (interaction.type === InteractionType.ModalSubmit) {
          await handleModalSubmit(client, interaction)
       }
    } catch (e) {

@@ -26,6 +26,7 @@ module.exports = {
 
       maxVol: parseInt(process.env.maxvol) || 200,
       dj: process.env.dj || '1256261739021074564',
+      guildId: process.env.guild || '677858109145874433',
    },
 
    leave: Boolean(process.env.leave) || false,

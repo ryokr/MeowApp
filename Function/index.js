@@ -1,4 +1,4 @@
-const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, ModalBuilder, TextInputBuilder } = require('discord.js')
 const { DisTubeHandler, Playlist } = require('distube')
 const fs = require('fs').promises
 
@@ -18,6 +18,7 @@ module.exports = {
    updateEmbed,
    generateQueuePage,
    queueActionRow,
+   showModal,
    printData,
    createGuild,
    leaveGuild,
@@ -27,7 +28,7 @@ module.exports = {
 
 // interactionCreate
 function auth(client, interaction) {
-   return interaction.guild.id === '677858109145874433' && interaction.member.roles.cache.has(client.config.player.dj)
+   return interaction.guild.id === client.config.player.guildId && interaction.member.roles.cache.has(client.config.player.dj)
 }
 async function reject(interaction) {
    await interaction.reply({ content: `I'm sleeping, Call <@677857271530651649> Please ❤️‍🔥`, ephemeral: true })
@@ -173,7 +174,7 @@ async function getVideoUrls(url) {
 
 // Filter
 function hasFilter(queue, filter) {
-   return queue.filters.has(filter) ? '🟢' : '⚫'
+   return queue.filters.has(filter) ? '🟢' : '🟠'
 }
 
 // Seek
@@ -239,7 +240,7 @@ async function updateEmbed(interaction, currentMsg, embed) {
    await Promise.all([currentMsg.edit({ embeds: [embed] }), interaction.deferUpdate()]).catch(() => {})
 }
 
-// Queue reveal
+// Queue
 function generateQueuePage(client, queue, start, page, total, pageLength, songList) {
    let index = start + 1
    const current = songList.slice(start, start + pageLength)
@@ -257,6 +258,20 @@ function queueActionRow(page, total) {
       new ButtonBuilder({ custom_id: 'queueLast', label: 'Last Page', style: 2 }).setDisabled(page === total),
       new ButtonBuilder({ custom_id: 'queueClose', label: 'Close', style: 4 })
    )
+}
+
+// Modal
+async function showModal(interaction, customId, title, inputId, label, placeholder) {
+   const modal = new ModalBuilder().setCustomId(customId).setTitle(title)
+
+   const textInput = new TextInputBuilder()
+      .setCustomId(inputId)
+      .setLabel(label)
+      .setStyle('Short')
+      .setPlaceholder(placeholder)
+
+   modal.addComponents(new ActionRowBuilder().addComponents(textInput))
+   await interaction.showModal(modal)
 }
 
 function getGuilds(client) {

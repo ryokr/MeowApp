@@ -30,5 +30,5 @@ module.exports = {
    },
 
    leave: Boolean(process.env.leave) || false,
-   shard: Boolean(process.env.shard) || false,
+   shard: Boolean(process.env.shard) || false
 }

@@ -174,7 +174,7 @@ async function getVideoUrls(url) {
 
 // Filter
 function hasFilter(queue, filter) {
-   return queue.filters.has(filter) ? '🟢' : '🟠'
+   return queue.filters.has(filter) ? '🟢' : '❌'
 }
 
 // Seek

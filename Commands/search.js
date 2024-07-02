@@ -4,7 +4,6 @@ const { formatTime, deleteMessage } = require('../Function')
 module.exports = {
    name: 'search',
    description: 'Search music',
-   permissions: '0x0000000000000800',
    voiceChannel: true,
    options: [
       {

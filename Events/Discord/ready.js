@@ -5,7 +5,7 @@ module.exports = async (client) => {
    const rest = new REST({ version: '10' }).setToken(client.config.TOKEN)
 
    try {
-      await rest.put(Routes.applicationCommands(client.user.id), { body: await client.commands })
+      await rest.put(Routes.applicationCommands(client.user.id), { body: await client.reloads })
       console.log('\x1b[35m%s\x1b[0m', `✔️    🌑 ⬪ Commands Loaded`)
    } catch {
       console.log('\x1b[35m%s\x1b[0m', `❌    🌑 ⬪ Commands Distracted`)

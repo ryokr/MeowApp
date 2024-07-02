@@ -4,7 +4,6 @@ const { playMusic, deleteMessage } = require('../Function')
 module.exports = {
    name: 'play',
    description: 'Play music',
-   permissions: '0x0000000000000800',
    voiceChannel: true,
    options: [
       {
@@ -23,14 +22,14 @@ module.exports = {
 
          try {
             await playMusic(client, interaction, name)
+            deleteMessage(msg, 1000)
          } catch {
             embed.setDescription('Not found')
             await interaction.editReply({ embeds: [embed] })
+            deleteMessage(msg, 5000)
          }
-
-         deleteMessage(msg, 10000)
       } catch {
          console.log('❌    Play Error')
       }
-   },
+   }
 }

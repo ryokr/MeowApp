@@ -4,7 +4,6 @@ const { deleteMessage } = require('../Function')
 module.exports = {
    name: 'stop',
    description: 'Stop the music and clear the queue',
-   permissions: '0x0000000000000800',
    voiceChannel: true,
    
    run: async (client, interaction) => {

@@ -4,7 +4,6 @@ const { hasFilter, capFirstChar, deleteMessage } = require('../Function')
 module.exports = {
    name: 'filter',
    description: 'Modify filters',
-   permissions: '0x0000000000000800',
    voiceChannel: true,
 
    run: async (client, interaction) => {

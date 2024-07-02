@@ -1,9 +1,33 @@
+const { Collection } = require('discord.js')
 const fs = require('fs').promises
 
 module.exports = async (client) => {
+   await loadCommands(client, __dirname + '/../Commands')
    await loadEvents(client, client, __dirname + '/../Events/Discord')
    await loadEvents(client, client.player, __dirname + '/../Events/Player')
-   await loadCommands(client, __dirname + '/../Commands')
+}
+
+const loadCommands = async (client, path) => {
+   client.commands = new Collection()
+   client.reloads = []
+   
+   try {
+      const files = await fs.readdir(path)
+
+      for (const file of files) {
+         const command = require(`${path}/${file}`)
+
+         client.commands.set(command.name, command)
+         client.reloads.push({
+            name: command.name,
+            description: command.description,
+            options: command.options,
+         })
+      }
+   } catch (e) {
+      console.log(e)
+      process.exit(1)
+   }
 }
 
 const loadEvents = async (client, emitter, path) => {
@@ -16,25 +40,6 @@ const loadEvents = async (client, emitter, path) => {
 
          emitter.on(eventName, module.bind(null, client))
          delete require.cache[require.resolve(`${path}/${file}`)]
-      }
-   } catch (e) {
-      console.log(e)
-      process.exit(1)
-   }
-}
-
-const loadCommands = async (client, path) => {
-   client.commands = []
-   try {
-      const files = await fs.readdir(path)
-
-      for (const file of files) {
-         const props = require(`${path}/${file}`)
-         client.commands.push({
-            name: props.name,
-            description: props.description,
-            options: props.options,
-         })
       }
    } catch (e) {
       console.log(e)

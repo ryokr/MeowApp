@@ -4,6 +4,9 @@ const { capFirstChar, formatTime, loadButton, updateEmbed, auth, reject } = requ
 module.exports = async (client, queue, song) => {
    try {
       if (queue && queue.textChannel) {
+         const emojiId = '794215346428968960'
+         const emoji = `<:x:${emojiId}>` // ・${emoji}
+
          const username = 'Requested by ' + capFirstChar(song.user.globalName)
          const avatar = song.user.avatarURL()
          const duration = formatTime(song.formattedDuration)

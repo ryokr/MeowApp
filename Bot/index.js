@@ -9,7 +9,7 @@ const server = require('./server')
 module.exports = class MeowBot {
    constructor(config) {
       this.client = new Client({
-         intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
+         intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]
       })
 
       this.client.config = config

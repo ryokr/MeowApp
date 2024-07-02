@@ -4,7 +4,6 @@ const { deleteMessage } = require('../Function')
 module.exports = {
    name: 'skip',
    description: 'Skip song',
-   permissions: '0x0000000000000800',
    voiceChannel: true,
    options: [
       {

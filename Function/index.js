@@ -34,35 +34,28 @@ async function reject(interaction) {
    await interaction.reply({ content: `I'm sleeping, Call <@677857271530651649> Please ❤️‍🔥`, ephemeral: true })
 }
 async function handleCommand(client, interaction) {
-   const execute = async (path) => {
-      try {
-         const files = await fs.readdir(path)
-         for (const file of files) {
-            const props = require(`${path}/${file}`)
+   try {
+      if (!interaction.isCommand()) return
 
-            if (interaction.commandName === props.name) {
-               if (!auth(client, interaction)) {
-                  reject(interaction)
-                  return
-               }
+      const command = client.commands.get(interaction.commandName)
 
-               if (props.voiceChannel && !interaction.member.voice.channelId) {
-                  deleteMessage(await interaction.reply({ content: 'Join Voice Channel' }), 10000)
-                  return
-               }
-
-               await props.run(client, interaction)
-               return
-            }
-         }
-         await interaction.reply({ content: 'Command not found.', ephemeral: true })
-      } catch (e) {
-         console.error('❌ Command Load Error\n', e)
-         await interaction.reply({ content: 'Failed to load command.', ephemeral: true })
+      if (!command) {
+         await interaction.reply({ content: 'Command not found', ephemeral: true })
+         return
       }
+      if (!auth(client, interaction)) {
+         reject(interaction)
+         return
+      }
+      if (command.voiceChannel && !interaction.member.voice.channelId) {
+         deleteMessage(await interaction.reply({ content: 'Join Voice Channel' }), 10000)
+         return
+      }
+      await command.run(client, interaction)
+   } catch (e) {
+      console.error('❌ Command Load Error\n', e)
+      await interaction.reply({ content: 'Failed to load command', ephemeral: true })
    }
-
-   await execute(__dirname + '/../Commands')
 }
 async function handleModalSubmit(client, interaction) {
    const queue = client.player.getQueue(interaction.guild.id)
@@ -87,7 +80,7 @@ async function handleAddModal(client, interaction, embed) {
       const msg = await interaction.reply({ embeds: [embed] })
 
       await playMusic(client, interaction, songName)
-      deleteMessage(msg, 5000)
+      deleteMessage(msg, 1000)
    }
 }
 async function handleSeekModal(interaction, queue, embed) {
@@ -264,11 +257,7 @@ function queueActionRow(page, total) {
 async function showModal(interaction, customId, title, inputId, label, placeholder) {
    const modal = new ModalBuilder().setCustomId(customId).setTitle(title)
 
-   const textInput = new TextInputBuilder()
-      .setCustomId(inputId)
-      .setLabel(label)
-      .setStyle('Short')
-      .setPlaceholder(placeholder)
+   const textInput = new TextInputBuilder().setCustomId(inputId).setLabel(label).setStyle('Short').setPlaceholder(placeholder)
 
    modal.addComponents(new ActionRowBuilder().addComponents(textInput))
    await interaction.showModal(modal)

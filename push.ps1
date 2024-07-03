@@ -1,12 +1,29 @@
+$RepoURLs = @(
+   "https://github.com/ryokr/MeowBot.git",
+   "https://github.com/Pooba-Saga/MeowBot1.git",
+   "https://github.com/Pooba-Saga/MeowBot2.git"
+)
+
+if ($args.Count -eq 0) {
+   Write-Host "No argument provided"
+   exit
+}
+
+$arg = [int]$args[0]
+if ($arg -lt 0 -or $arg -ge $RepoURLs.Count) {
+   Write-Host "Invalid argument. Please provide a valid numeric argument (0, 1, or 2)."
+   exit
+}
+
+$SelectedRepoURL = $RepoURLs[$arg]
+$RepoName = ($SelectedRepoURL -split "/")[-1] -replace "\.git$", ""
+
 $Local = Get-Location
-$Repo = Join-Path $Local "..\MeowBot"
+$Repo = Join-Path $Local "..\$RepoName"
 $Parent = Get-Item -Path ".."
 
-$RepoURL1 = "https://github.com/ryokr/MeowBot.git"
-$RepoURL2 = "https://github.com/Pooba-Saga/MeowBot.git"
-
 Set-Location -Path $Parent
-git clone $RepoURL1
+git clone $SelectedRepoURL
 Set-Location -Path $Local
 
 Get-ChildItem -Path $Repo -Exclude ".git" | Remove-Item -Recurse -Force

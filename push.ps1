@@ -1,12 +1,7 @@
 $RepoURLs = @(
    "https://github.com/Pooba-Saga/MeowBot-Ei",
-   "https://github.com/Pooba-Saga/MeowBot-Yae",
-   "https://github.com/Pooba-Saga/MeowBot-Clorinde",
-   "https://github.com/Pooba-Saga/MeowBot-Roxy",
-   "https://github.com/Pooba-Saga/MeowBot-Robin",
    "https://github.com/ryokr/MeowBot"
 )
-
 $Local = Get-Location
 $Parent = Get-Item -Path ".."
 
@@ -19,10 +14,10 @@ foreach ($RepoURL in $RepoURLs) {
    Set-Location -Path $Local
 
    Get-ChildItem -Path $Repo -Exclude ".git" | Remove-Item -Recurse -Force
-   if ($RepoName -ne "MeowBot") {
-      robocopy $Local $Repo /E /XD "$Local\node_modules" /XF "package-lock.json" ".env" "push.ps1"
+   if ($RepoName -eq "MeowBot") {
+      robocopy $Local $Repo /E /XD "$Local\node_modules" /XF ".env" "package-lock.json" 
    } else {
-      robocopy $Local $Repo /E /XD "$Local\node_modules" /XF "package-lock.json" ".env"
+      robocopy $Local $Repo /E /XD "$Local\node_modules" "$Local\.github" /XF ".env" ".prettierrc" "CODE_OF_CONDUCT.md" "CONTRIBUTING.md" "LICENSE" "README.md" "SECURITY.md" "package-lock.json"
    }
 
    Set-Location -Path $Repo
@@ -33,5 +28,4 @@ foreach ($RepoURL in $RepoURLs) {
 
    Remove-Item -Path $Repo -Recurse -Force
 }
-
 clear

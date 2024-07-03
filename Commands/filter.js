@@ -15,7 +15,7 @@ module.exports = {
             .setTimestamp()
 
          if (!queue || !queue.playing) {
-            embed.setDescription('No music playing')
+            embed.setDescription('No music is currently playing')
             deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
             return
          }

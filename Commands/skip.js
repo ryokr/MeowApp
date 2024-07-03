@@ -16,12 +16,12 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
+         const number = interaction.options.getNumber('number')
          const queue = client.player.getQueue(interaction.guild.id)
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
-         const number = interaction.options.getNumber('number')
 
          if (!queue || !queue.playing) {
-            embed.setDescription('No music playing')
+            embed.setDescription('No music is currently playing')
          } else if (number) {
             if (number > queue.songs.length) embed.setDescription('Exceeded current no of songs')
             if (isNaN(number) || number < 1) embed.setDescription('Invalid Number')

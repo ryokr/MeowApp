@@ -16,13 +16,13 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
-         const queue = client.player.getQueue(interaction.guild.id)
-         const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
          const maxVol = client.config.player.maxVol
          const vol = interaction.options.getInteger('volume')
+         const queue = client.player.getQueue(interaction.guild.id)
+         const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
 
          if (!queue || !queue.playing) {
-            embed.setDescription('No music playing')
+            embed.setDescription('No music is currently playing')
          } else if (queue.volume === vol) {
             embed.setDescription(`Volume is already set to ${vol}`)
          } else if (!vol || vol < 1 || vol > maxVol) {

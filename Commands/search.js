@@ -18,7 +18,7 @@ module.exports = {
       try {
          const name = interaction.options.getString('name')
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
-         
+
          const results = await client.player.search(name, {
             member: interaction.member,
             textChannel: interaction.channel,

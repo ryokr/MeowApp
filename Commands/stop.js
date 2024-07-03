@@ -12,7 +12,7 @@ module.exports = {
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
 
          if (!queue || !queue.playing) {
-            embed.setDescription('No music playing')
+            embed.setDescription('No music is currently playing')
          } else {
             if (queue.lastPlayingMessage != null) {
                await queue.lastPlayingMessage.delete().catch(() => {})

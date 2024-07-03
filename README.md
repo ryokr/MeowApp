@@ -49,12 +49,12 @@ To ensure MeowBot works properly, set the following permissions:
 
     Copy and paste the content below to `.env` file u have created.
     
-    - `token`- `String` The token of your bot.
-    - `status` - `String` Can be `online`, `ilde`, `dnd`.
-    - `name` - `String` Name of your activity. Ex: Genshin Impact.
-    - `state` - `String` More info about activity. Ex: For 69 hours.
-    - `type` - `Integer` 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
-    - `color` - `String - HEX Format` ff4400 - Orange for default.
+    - `token`   - `String` The token of your bot.
+    - `status`  - `String` Can be `online`, `ilde`, `dnd`.
+    - `name`    - `String` Name of your activity. Ex: Genshin Impact.
+    - `state`   - `String` More info about activity. Ex: For 69 hours.
+    - `type`    - `Integer` 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
+    - `color`   - `String - HEX Format` ff4400 - Orange for default.
 
     **Template**
     ```
@@ -90,12 +90,13 @@ node index.js
 
 ## Commands
 
-- `play` -> Plays the requested song in voice channel you are in.
-- `search` -> Search the requested song.
-- `skip` -> Skip currently playing song.
-- `stop` -> Stop the music and clear the queue.
-- `filter` -> Change the filter.
-- `volume` -> Change player volume.
+- `play`    -> Plays the requested song in voice channel you are in.
+- `search`  -> Search the requested song.
+- `skip`    -> Skip currently playing song.
+- `stop`    -> Stop the music and clear the queue.
+- `remove`  -> Remove a song at specific position.
+- `filter`  -> Change the filter.
+- `volume`  -> Change player volume.
 
 
 ## Hosting

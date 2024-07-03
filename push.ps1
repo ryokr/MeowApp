@@ -1,5 +1,9 @@
 $RepoURLs = @(
    "https://github.com/Pooba-Saga/MeowBot-Ei",
+   "https://github.com/Pooba-Saga/MeowBot-Yae",
+   "https://github.com/Pooba-Saga/MeowBot-Clorinde",
+   "https://github.com/Pooba-Saga/MeowBot-Roxy",
+   "https://github.com/Pooba-Saga/MeowBot-Robin",
    "https://github.com/ryokr/MeowBot"
 )
 $Local = Get-Location
@@ -17,7 +21,7 @@ foreach ($RepoURL in $RepoURLs) {
    if ($RepoName -eq "MeowBot") {
       robocopy $Local $Repo /E /XD "$Local\node_modules" /XF ".env" "package-lock.json" 
    } else {
-      robocopy $Local $Repo /E /XD "$Local\node_modules" "$Local\.github" /XF ".env" ".prettierrc" "CODE_OF_CONDUCT.md" "CONTRIBUTING.md" "LICENSE" "README.md" "SECURITY.md" "package-lock.json"
+      robocopy $Local $Repo /E /XD "$Local\node_modules" "$Local\.github" "$Local\Assets" /XF ".env" ".prettierrc" "package-lock.json" "push.ps1" "CODE_OF_CONDUCT.md" "CONTRIBUTING.md" "LICENSE" "README.md" "SECURITY.md"
    }
 
    Set-Location -Path $Repo

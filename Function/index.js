@@ -23,12 +23,18 @@ module.exports = {
    createGuild,
    leaveGuild,
    listGuilds,
-   sleep,
+   sleep
 }
 
 // interactionCreate
 function auth(client, interaction) {
-   return interaction.guild.id === client.config.player.guildId && interaction.member.roles.cache.has(client.config.player.dj)
+   if (interaction.guild.id === client.config.player.guildId && interaction.member.roles.cache.has(client.config.player.dj)) {
+      return true
+   } else if (interaction.guild.id !== client.config.player.guildId) {
+      return true
+   } else {
+      return false
+   }
 }
 async function reject(interaction) {
    await interaction.reply({ content: `I'm sleeping, Call <@677857271530651649> Please ❤️‍🔥`, ephemeral: true })

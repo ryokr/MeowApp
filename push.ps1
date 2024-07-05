@@ -19,7 +19,7 @@ foreach ($RepoURL in $RepoURLs) {
 
    Get-ChildItem -Path $Repo -Exclude ".git" | Remove-Item -Recurse -Force
    if ($RepoName -eq "MeowBot") {
-      robocopy $Local $Repo /E /XD "$Local\node_modules" /XF ".env" "package-lock.json" 
+      robocopy $Local $Repo /E /XD "$Local\node_modules" /XF ".env" "package-lock.json"
    } else {
       robocopy $Local $Repo /E /XD "$Local\node_modules" "$Local\.github" "$Local\Assets" /XF ".env" ".prettierrc" "package-lock.json" "push.ps1" "CODE_OF_CONDUCT.md" "CONTRIBUTING.md" "LICENSE" "README.md" "SECURITY.md"
    }

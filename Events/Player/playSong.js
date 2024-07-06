@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
-const { capFirstChar, formatTime, loadButton, updateEmbed, auth, reject } = require('../../Function')
+const { capFirstChar, formatTime, loadButton, updateEmbed, auth, reject } = require('../../Functions')
 
 module.exports = async (client, queue, song) => {
    try {
@@ -43,17 +43,17 @@ module.exports = async (client, queue, song) => {
             const embed = EmbedBuilder.from(currentMessage.embeds[0])
    
             const actions = {
-               playerAdd: loadButton('../Events/Button/add', interaction),
-               playerClear: loadButton('../Events/Button/clear', queue, embed, username, avatar),
-               playerGrab: loadButton('../Events/Button/grab', client, queue, song, embed, username, avatar),
-               playerLoop: loadButton('../Events/Button/loop', queue, embed, username, avatar),
-               playerPrev: loadButton('../Events/Button/previous', queue, embed, username, avatar),
-               playerQueue: loadButton('../Events/Button/queue', client, queue, embed, username, avatar),
-               playerSeek: loadButton('../Events/Button/seek', interaction),
-               playerShuf: loadButton('../Events/Button/shuffle', queue, embed, username, avatar),
-               playerSkip: loadButton('../Events/Button/skip', queue, embed, username, avatar),
-               playerStop: loadButton('../Events/Button/stop', queue, song, listener, currentMessage),
-               playerVolume: loadButton('../Events/Button/volume', interaction),
+               playerAdd: loadButton('../Buttons/add', interaction),
+               playerClear: loadButton('../Buttons/clear', queue, embed, username, avatar),
+               playerGrab: loadButton('../Buttons/grab', client, queue, song, embed, username, avatar),
+               playerLoop: loadButton('../Buttons/loop', queue, embed, username, avatar),
+               playerPrev: loadButton('../Buttons/previous', queue, embed, username, avatar),
+               playerQueue: loadButton('../Buttons/queue', client, queue, embed, username, avatar),
+               playerSeek: loadButton('../Buttons/seek', interaction),
+               playerShuf: loadButton('../Buttons/shuffle', queue, embed, username, avatar),
+               playerSkip: loadButton('../Buttons/skip', queue, embed, username, avatar),
+               playerStop: loadButton('../Buttons/stop', queue, song, listener, currentMessage),
+               playerVolume: loadButton('../Buttons/volume', interaction),
             }
 
             await actions[interaction.customId]().catch((e) => { console.log(e) })

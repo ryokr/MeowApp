@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js')
-const { formatTime, deleteMessage } = require('../../Function')
+const { formatTime, deleteMessage } = require('../../Functions')
 
 module.exports = async (client, queue, song, embed, username, avatar) => {
    const grabEmbed = new EmbedBuilder()
-      .setColor(client.config.player.embedColor)
+      .setColor('FF4400')
       .setImage(client.config.player.embedGifGrab)
       .setAuthor({ name: '─────・ I N F O R M A T I O N 💖・─────', iconURL: queue.textChannel.guild.iconURL() })
       .setDescription(`\`\`\`${song.url}\`\`\``)

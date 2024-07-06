@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
-const { playMusic, deleteMessage } = require('../Function')
+const { playMusic, deleteMessage } = require('../Functions')
 
 module.exports = {
    name: 'play',

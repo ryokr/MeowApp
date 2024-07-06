@@ -5,18 +5,10 @@ module.exports = {
 
    presence: {
       status: process.env.status,
-      activities: [
-         {
-            name: process.env.name || 'Meow Meow',
-            state: process.env.state || 'From Pooba Saga With 💖',
-            type: parseInt(process.env.type) || 0, // 0_Play, 1_Stream, 2_Listen, 3_Watch, 4_Custom, 5_Compete
-         },
-         {
-            name: 'Pooba Saga 🌸',
-            state: 'From Pooba Saga With 💖',
-            type: 2,
-         },
-      ],
+      
+      name: process.env.name || 'Meow Meow',
+      state: process.env.state || 'From Pooba Saga With 💖',
+      type: parseInt(process.env.type) || 0,
    },
 
    player: {
@@ -25,9 +17,9 @@ module.exports = {
       embedGifGrab: 'https://cdn.discordapp.com/attachments/1236634193019277322/1256240007169970258/NOW_WITH_MONA.gif?ex=66800c2d&is=667ebaad&hm=99aa0bd08020875ff5e204b6be7de9a2bdfda34b1a46f085cbcf1649a0b29708&',
 
       dj: process.env.dj || '1256261739021074564',
-      guildId: process.env.guild || '677858109145874433',
+      guildId: process.env.guildId || '677858109145874433',
 
-      maxVol: parseInt(process.env.maxvol) || 200,
+      maxVol: parseInt(process.env.maxVol) || 200,
    },
 
    leave: Boolean(process.env.leave) || false,

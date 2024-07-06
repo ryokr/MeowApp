@@ -1,5 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, EmbedBuilder } = require('discord.js')
-const { hasFilter, capFirstChar, deleteMessage } = require('../Function')
+const { hasFilter, capFirstChar, deleteMessage } = require('../Functions')
 
 module.exports = {
    name: 'filter',

@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType, ActionRowBuilder, ButtonBuilder, EmbedBuilder} = require('discord.js')
-const { formatTime, deleteMessage } = require('../Function')
+const { formatTime, deleteMessage } = require('../Functions')
 
 module.exports = {
    name: 'search',

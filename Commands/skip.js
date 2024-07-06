@@ -1,5 +1,5 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js')
-const { deleteMessage } = require('../Function')
+const { deleteMessage } = require('../Functions')
 
 module.exports = {
    name: 'skip',

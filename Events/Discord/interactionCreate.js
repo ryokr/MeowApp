@@ -1,4 +1,4 @@
-const { handleCommand, handleModalSubmit } = require('../../Function')
+const { handleCommand, handleModalSubmit } = require('../../Functions')
 const { InteractionType } = require('discord.js')
 
 module.exports = async (client, interaction) => {

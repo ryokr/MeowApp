@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Nupakachi</title>
 </head>
 
@@ -18,8 +15,6 @@
 <script type="module">
    import * as THREE from 'https://cdn.skypack.dev/three@0.136.0'
    import { OrbitControls } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls'
-
-   console.clear()
 
    let scene = new THREE.Scene()
    scene.background = new THREE.Color(0x160016)
@@ -41,9 +36,7 @@
    controls.enableDamping = true
    controls.enablePan = false
 
-   let gu = {
-      time: { value: 0 },
-   }
+   let gu = { time: { value: 0 } }
 
    let sizes = []
    let shift = []
@@ -114,8 +107,7 @@
                `#include <clipping_planes_fragment>`,
                `#include <clipping_planes_fragment>
                float d = length(gl_PointCoord.xy - 0.5);
-               //if (d > 0.5) discard;
-            `
+               //if (d > 0.5) discard;`
             )
             .replace(
                `vec4 diffuseColor = vec4( diffuse, opacity );`,

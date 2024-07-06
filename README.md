@@ -54,7 +54,7 @@ To ensure MeowBot works properly, set the following permissions:
     - `name`    - `String` Name of your activity. Ex: Genshin Impact.
     - `state`   - `String` More info about activity. Ex: For 69 hours.
     - `type`    - `Integer` 0 - Play, 1 - Stream, 2 - Listen, 3 - Watch, 4 - Custom, 5 - Compete.
-    - `color`   - `String - HEX Format` ff4400 - Orange for default.
+    - `color`   - `String - HEX Format` Color of the embeds
 
     **Template**
     ```

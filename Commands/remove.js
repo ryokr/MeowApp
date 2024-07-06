@@ -18,7 +18,8 @@ module.exports = {
       try {
          const position = interaction.options.getInteger('position')
          const queue = client.player.getQueue(interaction.guild.id)
-         const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
+         const embed = new EmbedBuilder().setColor(client.config.player.embedColor).setDescription('Meowing')
+         await interaction.reply({ embeds: [embed] })
 
          if (!queue || !queue.playing) {
             embed.setDescription('No music is currently playing')
@@ -26,11 +27,20 @@ module.exports = {
             embed.setDescription('Please provide a valid song position in the queue')
          } else {
             const removedSong = queue.songs.splice(position - 1, 1)[0]
-            embed.setDescription(`Removed **${removedSong.name}**`)
+            embed
+               .setThumbnail(song.thumbnail)
+               .setDescription(`Removed [${removedSong.name}](${removedSong.url})・Requested by <@${song.user.id}>`)
+
+            return await interaction.editReply({ embeds: [embed] })
          }
 
-         deleteMessage(await interaction.reply({ embeds: [embed] }), 5000)
+         deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
       } catch {
+         const embed = new EmbedBuilder()
+            .setColor(client.config.player.embedColor)
+            .setDescription('Queue empty')
+
+         deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
          console.log('❌    Remove Error')
       }
    }

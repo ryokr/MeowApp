@@ -46,3 +46,22 @@ const loadEvents = async (client, emitter, path) => {
       process.exit(1)
    }
 }
+
+const loadButtons = async (client, path) => {
+   client.buttons = new Collection()
+   
+   try {
+      const files = await fs.readdir(path)
+
+      for (const file of files) {
+         const buttonName = file.split('.')[0]
+         const module = require(`${path}/${file}`)
+
+         client.buttons.set(buttonName, module)
+         delete require.cache[require.resolve(`${path}/${file}`)]
+      }
+   } catch (e) {
+      console.log(e)
+      process.exit(1)
+   }
+}

@@ -11,6 +11,7 @@ module.exports = {
          const queue = client.player.getQueue(interaction.guild.id)
          const embed = new EmbedBuilder()
             .setColor(client.config.player.embedColor)
+            .setAuthor({ name: '─────・ F I L T E R S 🌱・─────', iconURL: interaction.guild.iconURL() })
             .setFooter({ text: `🧩 • Requested by ${capFirstChar(interaction.user.globalName)}`, iconURL: interaction.user.avatarURL() })
             .setTimestamp()
 
@@ -26,7 +27,7 @@ module.exports = {
             `${hasFilter(queue, 'vaporwave')}・Slowed\n` +
             `${hasFilter(queue, 'nightcore')}・Nightcore`
 
-         embed.setAuthor({ name: '─────・ F I L T E R S 🌱・─────', iconURL: interaction.guild.iconURL() }).setDescription(description())
+         embed.setDescription(description())
 
          const row = new ActionRowBuilder().addComponents(
             new ButtonBuilder().setCustomId('3d').setLabel('3D').setStyle('Secondary'),

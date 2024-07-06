@@ -9,7 +9,8 @@ module.exports = {
    handleModalSubmit,
    playMusic,
    hasFilter,
-   getSecond,
+   getSeconds,
+   getMiliSeconds,
    deleteMessage,
    capFirstChar,
    formatTime,
@@ -23,7 +24,7 @@ module.exports = {
    createGuild,
    leaveGuild,
    listGuilds,
-   sleep
+   sleep,
 }
 
 // interactionCreate
@@ -91,7 +92,7 @@ async function handleAddModal(client, interaction, embed) {
 }
 async function handleSeekModal(interaction, queue, embed) {
    const value = interaction.fields.getTextInputValue('playerSeekInput')
-   const position = getSecond(value)
+   const position = getSeconds(value)
 
    if (!queue || !queue.playing) {
       embed.setDescription('No music playing')
@@ -177,7 +178,7 @@ function hasFilter(queue, filter) {
 }
 
 // Seek
-function getSecond(str) {
+function getSeconds(str) {
    if (!str) return 0
 
    const timeUnits = { h: 3600, m: 60, s: 1 }
@@ -194,6 +195,9 @@ function getSecond(str) {
       totalSeconds += value * timeUnits[unit]
    }
    return totalSeconds
+}
+function getMiliSeconds(str) {
+   return getSeconds(str) * 1000
 }
 
 function deleteMessage(message, time) {

@@ -1,6 +1,6 @@
-const { generateQueuePage, queueActionRow } = require('../Functions')
+const { generateQueuePage, queueActionRow, capFirstChar } = require('../../Functions')
 
-module.exports = async (client, queue, embed, username, avatar) => {
+module.exports = async (interaction, client, queue, embed) => {
    if (queue.songs.length > 1) {
       const songList = queue.songs.map((song) => ({
          name: song.name,
@@ -51,8 +51,8 @@ module.exports = async (client, queue, embed, username, avatar) => {
          await queueMessage.edit({ components: [] }).catch(() => {})
       })
 
-      embed.setFooter({ text: `🌸 • Queue Revealed • ${username}`, iconURL: avatar })
+      embed.setFooter({ text: `🌸 Queue Revealed by ${capFirstChar(interaction.user.globalName)}`, iconURL: interaction.user.avatarURL() })
    } else {
-      embed.setFooter({ text: `💽 • Queue Empty • ${username}`, iconURL: avatar })
+      embed.setFooter({ text: `💽 Queue Empty`, iconURL: queue.songs[0].user.avatarURL() })
    }
 }

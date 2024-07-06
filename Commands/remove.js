@@ -23,12 +23,14 @@ module.exports = {
 
          if (!queue || !queue.playing) {
             embed.setDescription('No music is currently playing')
+            deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
          } else if (queue.songs.length <= 1) {
             embed.setDescription('Removed')
             try {
                await queue.stop()
                await queue.lastPlayingMessage.delete()
             } catch {}
+            deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
          } else if (position < 1 || position > queue.songs.length) {
             embed.setDescription('Please provide a valid song position in the queue')
          } else {
@@ -38,10 +40,7 @@ module.exports = {
                .setDescription(`Removed [${removedSong.name}](${removedSong.url})・Requested by <@${removedSong.user.id}>`)
                
             await interaction.editReply({ embeds: [embed] })
-            return 
          }
-
-         deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
       } catch {
          console.log('❌    Remove Error')
       }

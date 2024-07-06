@@ -16,6 +16,7 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
+         await interaction.deferReply()
          const name = interaction.options.getString('name')
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
 
@@ -27,7 +28,7 @@ module.exports = {
 
          if (!results || results.length < 1) {
             embed.setDescription('No result')
-            deleteMessage(await interaction.reply({ embed: [embed] }), 10000)
+            deleteMessage(await interaction.editReply({ embed: [embed] }), 10000)
          } else {
             const songs = results.slice(0, 10)
 
@@ -51,7 +52,7 @@ module.exports = {
                new ButtonBuilder().setLabel('Close').setStyle('Danger').setCustomId('searchClose')
             )
 
-            const message = await interaction.reply({ embeds: [embed], components: [...rows, close] })
+            const message = await interaction.editReply({ embeds: [embed], components: [...rows, close] })
 
             const filter = (i) => i.user.id === interaction.user.id
             const listener = message.createMessageComponentCollector({ filter, time: 30000 })

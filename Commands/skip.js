@@ -16,6 +16,7 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
+         await interaction.deferReply()
          const number = interaction.options.getNumber('number')
          const queue = client.player.getQueue(interaction.guild.id)
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor)
@@ -41,7 +42,7 @@ module.exports = {
             }
          }
 
-         deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
+         deleteMessage(await interaction.editReply({ embeds: [embed] }), 10000)
       } catch {
          console.log('❌    Skip Error')
       }

@@ -16,32 +16,34 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
+         await interaction.deferReply()
          const position = interaction.options.getInteger('position')
          const queue = client.player.getQueue(interaction.guild.id)
          const embed = new EmbedBuilder().setColor(client.config.player.embedColor).setDescription('Meowing')
-         await interaction.reply({ embeds: [embed] })
 
          if (!queue || !queue.playing) {
             embed.setDescription('No music is currently playing')
+         } else if (queue.songs.length <= 1) {
+            embed.setDescription('Removed')
+            try {
+               await queue.stop()
+               await queue.lastPlayingMessage.delete()
+            } catch {}
          } else if (position < 1 || position > queue.songs.length) {
             embed.setDescription('Please provide a valid song position in the queue')
          } else {
             const removedSong = queue.songs.splice(position - 1, 1)[0]
             embed
-               .setThumbnail(song.thumbnail)
-               .setDescription(`Removed [${removedSong.name}](${removedSong.url})・Requested by <@${song.user.id}>`)
-
-            return await interaction.editReply({ embeds: [embed] })
+               .setThumbnail(removedSong.thumbnail)
+               .setDescription(`Removed [${removedSong.name}](${removedSong.url})・Requested by <@${removedSong.user.id}>`)
+               
+            await interaction.editReply({ embeds: [embed] })
+            return 
          }
 
          deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
-      } catch {
-         const embed = new EmbedBuilder()
-            .setColor(client.config.player.embedColor)
-            .setDescription('Queue empty')
-
-         deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
-         console.log('❌    Remove Error')
+      } catch (e){
+         console.log('❌    Remove Error', e)
       }
    }
 }

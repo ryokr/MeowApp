@@ -1,4 +1,9 @@
 $RepoURLs = @(
+   "https://github.com/Pooba-Saga/MeowBot-Ei",
+   "https://github.com/Pooba-Saga/MeowBot-Yae",
+   "https://github.com/Pooba-Saga/MeowBot-Clorinde",
+   "https://github.com/Pooba-Saga/MeowBot-Roxy",
+   "https://github.com/Pooba-Saga/MeowBot-Robin",
    "https://github.com/ryokr/MeowBot"
 )
 $Local = Get-Location

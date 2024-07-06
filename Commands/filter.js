@@ -8,6 +8,7 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
+         await interaction.deferReply()
          const queue = client.player.getQueue(interaction.guild.id)
          const embed = new EmbedBuilder()
             .setColor(client.config.player.embedColor)
@@ -17,7 +18,7 @@ module.exports = {
 
          if (!queue || !queue.playing) {
             embed.setDescription('No music is currently playing')
-            deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
+            deleteMessage(await interaction.editReply({ embeds: [embed] }), 10000)
             return
          }
 
@@ -37,7 +38,7 @@ module.exports = {
             new ButtonBuilder().setCustomId('filterClose').setLabel('Close').setStyle('Danger')
          )
 
-         const message = await interaction.reply({ embeds: [embed], components: [row] })
+         const message = await interaction.editReply({ embeds: [embed], components: [row] })
          const filter = (i) => i.user.id === interaction.user.id
          const collector = message.createMessageComponentCollector({ filter, time: 120000 })
 

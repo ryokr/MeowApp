@@ -16,6 +16,7 @@ module.exports = {
 
    run: async (client, interaction) => {
       try {
+         await interaction.deferReply()
          const maxVol = client.config.player.maxVol
          const vol = interaction.options.getInteger('volume')
          const queue = client.player.getQueue(interaction.guild.id)
@@ -32,7 +33,7 @@ module.exports = {
             embed.setDescription(`Set the volume to ${vol}`)
          }
 
-         deleteMessage(await interaction.reply({ embeds: [embed] }), 10000)
+         deleteMessage(await interaction.editReply({ embeds: [embed] }), 10000)
       } catch {
          console.log('❌    Set Volume Error')
       }

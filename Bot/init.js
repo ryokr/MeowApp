@@ -5,6 +5,7 @@ module.exports = async (client) => {
    await loadCommands(client, __dirname + '/../Commands')
    await loadEvents(client, client, __dirname + '/../Events/Discord')
    await loadEvents(client, client.player, __dirname + '/../Events/Player')
+   await loadButtons(client, __dirname + '/../Buttons')
 }
 
 const loadCommands = async (client, path) => {
@@ -54,10 +55,9 @@ const loadButtons = async (client, path) => {
       const files = await fs.readdir(path)
 
       for (const file of files) {
-         const buttonName = file.split('.')[0]
-         const module = require(`${path}/${file}`)
+         const button = require(`${path}/${file}`)
 
-         client.buttons.set(buttonName, module)
+         client.buttons.set(button.name, button)
          delete require.cache[require.resolve(`${path}/${file}`)]
       }
    } catch (e) {

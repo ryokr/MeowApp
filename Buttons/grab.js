@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js')
-const { formatTime, deleteMessage } = require('../../Functions')
+const { formatTime, deleteMessage } = require('../Functions')
 
 module.exports = async (client, queue, song, embed, username, avatar) => {
    const grabEmbed = new EmbedBuilder()

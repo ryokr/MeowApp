@@ -1,4 +1,4 @@
-const { generateQueuePage, queueActionRow } = require('../../Functions')
+const { generateQueuePage, queueActionRow } = require('../Functions')
 
 module.exports = async (client, queue, embed, username, avatar) => {
    if (queue.songs.length > 1) {

@@ -42,8 +42,8 @@ module.exports = {
          }
 
          deleteMessage(await interaction.editReply({ embeds: [embed] }), 5000)
-      } catch (e){
-         console.log('❌    Remove Error', e)
+      } catch {
+         console.log('❌    Remove Error')
       }
    }
 }

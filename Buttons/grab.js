@@ -12,14 +12,21 @@ module.exports = {
          .setFooter({ text: `🌱 Current time ${formatTime(queue.formattedCurrentTime)}`, iconURL: queue.songs[0].user.avatarURL() })
          .setTimestamp()
 
-      deleteMessage(await queue.textChannel.send({ embeds: [grabEmbed] }), 40000)
+      deleteMessage(queue.textChannel.send({ embeds: [grabEmbed] }), 40000)
       embed.setFooter({ text: `🥝 Song revealed by ${capFirstChar(interaction.user.globalName)}`, iconURL: interaction.user.avatarURL() })
 
       const channel = client.channels.cache.get('1256209937810456607')
-      if (!channel) {
-         return
+      if (!channel) return
+      channel.send(queue.songs[0].url)
+      channel.send({ embeds: [grabEmbed.setColor('FF4400')] })
+
+      if (interaction.guild.id === client.config.player.guildId) {
+         const addEmbed = new EmbedBuilder()
+            .setColor(client.config.player.embedColor)
+            .setThumbnail(queue.songs[0].thumbnail)
+            .setDescription(`Added [${queue.songs[0].name}](${queue.songs[0].url})・Requested by <@${queue.songs[0].user.id}>`)
+
+      queue.textChannel.send({ embeds: [addEmbed] }).catch(() => {})
       }
-      await channel.send(queue.songs[0].url)
-      await channel.send({ embeds: [grabEmbed.setColor('FF4400')] })
    }
 }

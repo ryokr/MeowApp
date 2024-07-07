@@ -98,11 +98,6 @@ node index.js
 - `filter`  -> Change the filter.
 - `volume`  -> Change player volume.
 
-
-## Hosting
-
-> This bot can be hosted anywhere that supports `Node.js`. Make sure to include `FFMPEG`.
-
 ## Support
 
 > Contact me [ryohuy2410](https://discord.gg/fTuGFk9ayG) for any issue.

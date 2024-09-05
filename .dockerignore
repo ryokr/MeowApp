@@ -1,0 +1,6 @@
+node_modules
+push.ps1
+Dockerfile
+.dockerignore
+.env
+.prettierrc
